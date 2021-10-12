@@ -5,6 +5,40 @@ import Logo from "../Assets/Logo2.png";
 import { useHistory } from "react-router-dom";
 
 function SignIn() {
+  function signInProcess() {
+    var data = {
+      email: document.getElementById("signInMail").value,
+      password: document.getElementById("signInPass").value,
+    };
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (
+      re.test(String(data.email).toLowerCase()) &&
+      data.password.length >= 8 &&
+      data.password.length <= 20
+    ) {
+      console.log("s");
+      fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          response.json();
+          console.log(response);
+        })
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      console.log("a");
+    }
+  }
   let history = useHistory();
   function goHome() {
     history.push("/");
@@ -33,16 +67,20 @@ function SignIn() {
             <div className="logInput full-w">
               <p>Email</p>
               <input
+                id="signInMail"
                 type="text"
                 placeholder="Email@example.com"
-                minLength="8"
-                maxLength="20"
-                required
               ></input>
               <p>Şifre</p>
-              <input type="password" placeholder="•••••"></input>
+              <input
+                id="signInPass"
+                type="password"
+                placeholder="•••••"
+              ></input>
             </div>
-            <button className="full-w">Giriş Yap</button>
+            <button onClick={() => signInProcess()} className="full-w">
+              Giriş Yap
+            </button>
             <p>
               Hesabın yok mu?{" "}
               <a className="c-pointer" onClick={() => goRegister()}>

@@ -3,6 +3,7 @@
   margin: 0;
   border: 0;
   padding: 0;
+  font-family: "Nunito", sans-serif;
 }
 button {
   cursor: pointer;
@@ -92,4 +93,10 @@ input {
 }
 .color4b9ce2 {
   color: #4b9ce2;
+}
+.bgf77474 {
+  background-color: #f77474;
+}
+.colorf77474 {
+  color: #f77474;
 }

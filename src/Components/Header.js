@@ -16,6 +16,9 @@ function Header() {
   function goAddProduct() {
     history.push("/addproduct");
   }
+  function goMyAccount() {
+    history.push("/myaccount/");
+  }
   return (
     <header>
       <div className="d-flex width80 space-between">

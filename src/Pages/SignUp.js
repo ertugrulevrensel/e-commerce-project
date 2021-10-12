@@ -5,6 +5,40 @@ import Logo from "../Assets/Logo2.png";
 import { useHistory } from "react-router-dom";
 
 function SignUp() {
+  function signUpProcess() {
+    var data = {
+      email: document.getElementById("signUpMail").value,
+      password: document.getElementById("signUpPass").value,
+    };
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (
+      re.test(String(data.email).toLowerCase()) &&
+      data.password.length >= 8 &&
+      data.password.length <= 20
+    ) {
+      console.log("s");
+      fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => {
+          response.json();
+          console.log(response);
+        })
+        .then((data) => {
+          console.log("Success:", data);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    } else {
+      console.log("a");
+    }
+  }
   let history = useHistory();
   function goHome() {
     history.push("/");
@@ -33,16 +67,20 @@ function SignUp() {
             <div className="logInput full-w">
               <p>Email</p>
               <input
+                id="signUpMail"
                 type="text"
                 placeholder="Email@example.com"
-                minLength="8"
-                maxLength="20"
-                required
               ></input>
               <p>Şifre</p>
-              <input type="password" placeholder="•••••"></input>
+              <input
+                id="signUpPass"
+                type="password"
+                placeholder="•••••"
+              ></input>
             </div>
-            <button className="full-w">Üye Ol</button>
+            <button onClick={() => signUpProcess()} className="full-w">
+              Üye Ol
+            </button>
             <p>
               Hesabın var mı?{" "}
               <a className="c-pointer" onClick={() => goLogin()}>

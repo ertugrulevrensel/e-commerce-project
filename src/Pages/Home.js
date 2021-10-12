@@ -13,7 +13,7 @@ function Home(props) {
         <div className="banner border-r-8">
           <img src={Banner} alt=""></img>
         </div>
-        <Category />
+        <Category category={props.category} />
         <ProductList
           getID={props.getID}
           setID={props.setID}

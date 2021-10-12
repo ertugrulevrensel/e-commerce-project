@@ -13,10 +13,10 @@
   border: 1px solid #4b9ce2;
   background-color: #f0f8ff;
 }
-p {
+.paragraph {
   margin-top: 25px;
 }
-b {
+.bold {
   margin-bottom: 25px;
 }
 .description {

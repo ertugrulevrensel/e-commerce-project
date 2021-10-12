@@ -1,7 +1,7 @@
 import React from "react";
 import "../Category.css";
 
-function Category() {
+function Category(props) {
   var category = [
     { title: "ayakkabı", id: "62pL2inlLwf8zwJAOram" },
     { title: "tişört", id: "LgFcz5mxlMCGbMG0tBkQ" },
@@ -16,7 +16,7 @@ function Category() {
   return (
     <ul className="category d-flex space-between">
       <li className="checkedLi">Hepsi</li>
-      {category.map((item) => {
+      {props.category.map((item) => {
         return <li key={item.id}>{item.title}</li>;
       })}
       <li>Diğer</li>

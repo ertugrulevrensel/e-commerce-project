@@ -1,0 +1,41 @@
+.profileDetail {
+  padding: 15px 30px;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.profileDetail > img {
+  width: 38px;
+  height: 38px;
+}
+.offersArea {
+  padding: 20px 30px;
+}
+.offersArea > div:first-child > p {
+  margin-bottom: 5px;
+}
+.offersArea > div:first-child {
+  gap: 30px;
+  border-bottom: 1px solid #f2f2f2;
+}
+.receivedOffer {
+  margin: 20px 0;
+  padding: 10px;
+  border: 1px solid #f2f2f2;
+  gap: 10px;
+}
+.receivedOffer > img {
+  width: 78px;
+  height: 84px;
+}
+.receivedOffer > div {
+  gap: 7px;
+}
+.receivedOfferValue {
+  padding: 8px 10px;
+}
+.receivedOfferButton {
+  margin-left: auto;
+}
+.receivedOfferButton > button {
+  padding: 5px 20px;
+}

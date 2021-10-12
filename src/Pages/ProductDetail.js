@@ -1,5 +1,5 @@
 import React from "react";
-import "../ProjectDetail.css";
+import "../ProductDetail.css";
 import BuyModal from "../Components/BuyModal";
 import Header from "../Components/Header";
 import OfferModal from "../Components/OfferModal";
