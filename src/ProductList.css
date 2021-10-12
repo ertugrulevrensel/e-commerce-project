@@ -1,0 +1,20 @@
+.productList {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.productList > div > b {
+  margin-top: 26px;
+}
+.product > div > img {
+  width: 100%;
+}
+.brand {
+  color: #4b9ce2;
+}
+.product {
+  background-color: #fff;
+  padding: 10px;
+}
+.productImg {
+  margin-bottom: 5px;
+}

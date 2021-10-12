@@ -1,0 +1,40 @@
+.logInput {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+.registerImg > img {
+  height: 100vh;
+}
+.login {
+  padding: 70px 90px;
+  background-color: #fff;
+  margin-top: 55px;
+}
+.login p {
+  margin: 5px 0;
+}
+.logInput > input {
+  padding: 10px 15px;
+  background-color: #f4f4f4;
+  height: 45px;
+  width: 100%;
+  border-radius: 8px;
+}
+.logInput > input:focus {
+  border: 1px solid #4b9ce2;
+  background-color: #f0f8ff;
+}
+.login > button {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #4b9ce2;
+  color: #fff;
+  margin-bottom: 40px;
+}
+p > a {
+  color: #4b9ce2;
+  text-decoration: none;
+}
+.logo > img {
+  width: 225px;
+}

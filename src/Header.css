@@ -1,0 +1,22 @@
+header {
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+header > div {
+  padding: 18px 0;
+}
+.headerButtons {
+  gap: 10px;
+}
+.headerButtons > button {
+  width: 125px;
+  background: var(--unnamed-color-f0f8ff) 0% 0% no-repeat padding-box;
+  background: #f0f8ff 0% 0% no-repeat padding-box;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+.headerButtons > button > * {
+  margin: 5px;
+}
