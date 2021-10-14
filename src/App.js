@@ -89,6 +89,7 @@ function App() {
             status={getStatus}
             setStatus={setStatus}
             getIsOauth={getIsOauth}
+            getToken={getToken}
           />
         </Route>
       </Switch>

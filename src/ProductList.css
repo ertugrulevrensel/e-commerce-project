@@ -2,14 +2,12 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
-.productList > div > b {
-  margin-top: 26px;
-}
 .product > div > img {
   width: 100%;
 }
 .brand {
   color: #4b9ce2;
+  font: normal normal bold 15px/22px Nunito;
 }
 .product {
   background-color: #fff;
@@ -17,4 +15,13 @@
 }
 .productImg {
   margin-bottom: 5px;
+}
+.productColor {
+  font: normal normal normal 13px/22px Nunito;
+  color: #3e3e3e;
+}
+.productPrice {
+  font: normal normal normal 18px/22px Nunito;
+  color: #3e3e3e;
+  margin-top: 25px;
 }

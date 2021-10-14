@@ -47,7 +47,7 @@ function OfferModal(props) {
       if (response.status === 401) {
         document.getElementById("failSign").classList.remove("d-none");
         document.getElementById("succes").classList.add("d-none");
-      } else if (response.status === 201) {
+      } else if (response.status === 201 || response.status === 200) {
         document.getElementById("succes").classList.remove("d-none");
         document.getElementById("failSign").classList.add("d-none");
         props.setOfferValue(Number(price.toFixed(2)));

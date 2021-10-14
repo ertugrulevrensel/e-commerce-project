@@ -32,16 +32,22 @@ function Account(props) {
   function selectList(list) {
     if (list === "received") {
       document
-        .getElementById("receivedOfferList")
+        .getElementById("receivedOfferListButton")
         .classList.add("selectedList");
       document
-        .getElementById("givenOfferList")
+        .getElementById("givenOfferListButton")
         .classList.remove("selectedList");
+      document.getElementById("givenOffers").classList.add("d-none");
+      document.getElementById("receivedOffers").classList.remove("d-none");
     } else {
       document
-        .getElementById("receivedOfferList")
+        .getElementById("receivedOfferListButton")
         .classList.remove("selectedList");
-      document.getElementById("givenOfferList").classList.add("selectedList");
+      document
+        .getElementById("givenOfferListButton")
+        .classList.add("selectedList");
+      document.getElementById("givenOffers").classList.remove("d-none");
+      document.getElementById("receivedOffers").classList.add("d-none");
     }
   }
   function receivedOfferAccept(id1, id2, id4) {
@@ -65,43 +71,79 @@ function Account(props) {
         <div className="d-flex offerListButton">
           <div
             onClick={() => selectList("received")}
-            id="receivedOfferList"
+            id="receivedOfferListButton"
             className="selectedList c-pointer"
           >
             <p>Teklif Aldıklarım</p>
           </div>
           <div
             onClick={() => selectList("given")}
-            id="givenOfferList"
+            id="givenOfferListButton"
             className="c-pointer"
           >
             <p>Teklif Verdiklerim</p>
           </div>
         </div>
-        <div>
-          {props.getProductList.map((product) => {
+        <div id="givenOffers" className="d-none">
+          {getGivenOffer.map((offer) => {
             return (
               <div
-                key={product.id}
+                key={offer.id}
                 className="receivedOffer border-r-8 d-flex full-w"
               >
-                <img src={product.imageUrl} alt=""></img>
+                <img src={offer.product.imageUrl} alt=""></img>
                 <div className="justify-center d-flex flex-d-col">
-                  <p>{product.title}</p>
+                  <p>{offer.product.title}</p>
                   <div className="receivedOfferValue grayBackground border-r-8">
                     <p>
-                      Alınan Teklif: <b>119,90</b>
+                      Verilen Teklif: <b>{offer.offeredPrice}</b>
+                    </p>
+                  </div>
+                </div>
+                <div className="d-flex receivedOfferButton align-center">
+                  {offer.status === "offered" ? (
+                    <p className="color4b9ce2">Teklif Verildi</p>
+                  ) : offer.status === "accepted" ? (
+                    <div>
+                      <p className="color4b9ce2">Onaylandı</p>
+                      <button className="bg4b9ce2 colorf0f8ff border-r-8">
+                        Satın Al
+                      </button>
+                    </div>
+                  ) : (
+                    <div>
+                      <p className="colorf77474">Reddedildi</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <div id="receivedOffers">
+          {getReceivedOffer.map((offer) => {
+            return (
+              <div
+                key={offer.id}
+                className="receivedOffer border-r-8 d-flex full-w"
+              >
+                <img src={offer.product.imageUrl} alt=""></img>
+                <div className="justify-center d-flex flex-d-col">
+                  <p>{offer.product.title}</p>
+                  <div className="receivedOfferValue grayBackground border-r-8">
+                    <p>
+                      Verilen Teklif: <b>{offer.offeredPrice}</b>
                     </p>
                   </div>
                 </div>
                 <div className="d-flex receivedOfferButton align-center">
                   <button
-                    id={product.id + 1}
+                    id={offer.id + 1}
                     onClick={() =>
                       receivedOfferAccept(
-                        product.id + 1,
-                        product.id + 2,
-                        product.id + 4
+                        offer.id + 1,
+                        offer.id + 2,
+                        offer.id + 4
                       )
                     }
                     className="bg4b9ce2 colorf0f8ff border-r-8"
@@ -109,22 +151,22 @@ function Account(props) {
                     Onayla
                   </button>
                   <button
-                    id={product.id + 2}
+                    id={offer.id + 2}
                     onClick={() =>
                       receivedOfferReject(
-                        product.id + 1,
-                        product.id + 2,
-                        product.id + 3
+                        offer.id + 1,
+                        offer.id + 2,
+                        offer.id + 3
                       )
                     }
                     className="colorf0f8ff border-r-8 bgf77474"
                   >
                     Reddet
                   </button>
-                  <p id={product.id + 3} className="d-none colorf77474">
+                  <p id={offer.id + 3} className="d-none colorf77474">
                     Reddedildi
                   </p>
-                  <p id={product.id + 4} className="d-none color4b9ce2">
+                  <p id={offer.id + 4} className="d-none color4b9ce2">
                     Onaylandı
                   </p>
                 </div>

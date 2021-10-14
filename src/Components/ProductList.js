@@ -23,11 +23,13 @@ function ProductList(props) {
               <p className="brand">
                 <b>{product.brand.title}</b>
               </p>
-              <div className="d-flex">
+              <div className="d-flex productColor">
                 <b>Renk: </b> <p> {product.color.title}</p>
               </div>
             </div>
-            <b>{product.price} TL</b>
+            <div className="productPrice">
+              <b>{product.price} TL</b>
+            </div>
           </div>
         );
       })}

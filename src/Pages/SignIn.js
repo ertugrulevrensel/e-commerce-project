@@ -25,25 +25,21 @@ function SignIn(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
-        .then((response) => {
-          response.json();
-          console.log(response);
-          if (response.status === 409) {
-            document.getElementById("failSign").classList.remove("d-none");
-          } else {
-            document.getElementById("failSign").classList.add("d-none");
-            props.setIsOauth(true);
-            props.setEmail(data.email);
-            props.setToken(
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDEzODY3MH0.7gm4kn4GHvvvY2VPTLhDapF15f_DEXF0UKanTqFTiCA"
-            );
-            goHome();
-          }
-        })
-        .finally((datass) => {
-          console.log(datass);
-        });
+      }).then((response) => {
+        response.json();
+        console.log(response);
+        if (response.status === 409) {
+          document.getElementById("failSign").classList.remove("d-none");
+        } else {
+          document.getElementById("failSign").classList.add("d-none");
+          props.setIsOauth(true);
+          props.setEmail(data.email);
+          props.setToken(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDEzODY3MH0.7gm4kn4GHvvvY2VPTLhDapF15f_DEXF0UKanTqFTiCA"
+          );
+          goHome();
+        }
+      });
     } else {
       document.getElementById("failSign").classList.add("d-none");
     }

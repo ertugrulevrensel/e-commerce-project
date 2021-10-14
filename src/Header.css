@@ -16,6 +16,9 @@ header > div {
   align-items: center;
   justify-content: center;
   display: flex;
+  font: normal normal bold 15px/20px Nunito;
+  letter-spacing: 0px;
+  color: #4b9ce2;
 }
 .headerButtons > button > * {
   margin: 5px;
