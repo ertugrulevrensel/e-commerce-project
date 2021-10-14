@@ -4,8 +4,9 @@ import Logo from "../Assets/Logo.png";
 import Add from "../Assets/Add-product.png";
 import Profile from "../Assets/Profile.png";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react/cjs/react.development";
 
-function Header() {
+function Header(props) {
   let history = useHistory();
   function goHome() {
     history.push("/");
@@ -19,6 +20,16 @@ function Header() {
   function goMyAccount() {
     history.push("/myaccount/");
   }
+  useEffect(() => {
+    if (props.getIsOauth) {
+      document.getElementById("myAccountButton").classList.remove("d-none");
+      document.getElementById("loginButton").classList.add("d-none");
+    } else {
+      document.getElementById("myAccountButton").classList.add("d-none");
+      document.getElementById("loginButton").classList.remove("d-none");
+      document.getElementById("addProductButton").classList.add("d-none");
+    }
+  });
   return (
     <header>
       <div className="d-flex width80 space-between">
@@ -29,13 +40,21 @@ function Header() {
           alt=""
         ></img>
         <div className="d-flex headerButtons">
-          <button onClick={() => goAddProduct()}>
+          <button id="addProductButton" onClick={() => goAddProduct()}>
             <img src={Add} alt=""></img>
             <p>Ürün Ekle</p>
           </button>
-          <button onClick={() => goLogin()}>
+          <button id="loginButton" onClick={() => goLogin()}>
             <img src={Profile} alt=""></img>
             <p>Giriş Yap</p>
+          </button>
+          <button
+            id="myAccountButton"
+            className="d-none"
+            onClick={() => goMyAccount()}
+          >
+            <img src={Profile} alt=""></img>
+            <p>Hesabım</p>
           </button>
         </div>
       </div>

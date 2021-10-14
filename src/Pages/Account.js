@@ -1,9 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../Account.css";
 import profile from "../Assets/Profile-image.png";
 import Header from "../Components/Header";
 
 function Account(props) {
+  const [getGivenOffer, setGivenOffer] = useState([]);
+  const [getReceivedOffer, setReceivedOffer] = useState([]);
+
+  useEffect(() => {
+    fetch("http://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+      headers: { Authorization: `Bearer ${props.getToken}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setGivenOffer(data);
+      });
+
+    fetch("http://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
+      headers: { Authorization: `Bearer ${props.getToken}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setReceivedOffer(data);
+      });
+    console.log("rec:", getReceivedOffer);
+    console.log("giv:", getGivenOffer);
+  }, []);
+
+  function selectList(list) {
+    if (list === "received") {
+      document
+        .getElementById("receivedOfferList")
+        .classList.add("selectedList");
+      document
+        .getElementById("givenOfferList")
+        .classList.remove("selectedList");
+    } else {
+      document
+        .getElementById("receivedOfferList")
+        .classList.remove("selectedList");
+      document.getElementById("givenOfferList").classList.add("selectedList");
+    }
+  }
   function receivedOfferAccept(id1, id2, id4) {
     document.getElementById(id2).classList.add("d-none");
     document.getElementById(id1).classList.add("d-none");
@@ -16,15 +56,27 @@ function Account(props) {
   }
   return (
     <div className="grayBackground">
-      <Header />
+      <Header getIsOauth={props.getIsOauth} />
       <div className="d-flex profileDetail whiteBackground border-r-8 width80 align-center">
         <img src={profile} alt=""></img>
-        <p>aysegul@example.com</p>
+        <p>{props.getEmail}</p>
       </div>
       <div className="width80 whiteBackground offersArea">
-        <div className="d-flex">
-          <p>Teklif Aldıklarım</p>
-          <p>Teklif Verdiklerim</p>
+        <div className="d-flex offerListButton">
+          <div
+            onClick={() => selectList("received")}
+            id="receivedOfferList"
+            className="selectedList c-pointer"
+          >
+            <p>Teklif Aldıklarım</p>
+          </div>
+          <div
+            onClick={() => selectList("given")}
+            id="givenOfferList"
+            className="c-pointer"
+          >
+            <p>Teklif Verdiklerim</p>
+          </div>
         </div>
         <div>
           {props.getProductList.map((product) => {

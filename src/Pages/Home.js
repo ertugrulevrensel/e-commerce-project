@@ -8,7 +8,7 @@ import ProductList from "../Components/ProductList";
 function Home(props) {
   return (
     <div className="full-w grayBackground">
-      <Header />
+      <Header getIsOauth={props.getIsOauth} />
       <div className="width80 homeBody">
         <div className="banner border-r-8">
           <img src={Banner} alt=""></img>

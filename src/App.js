@@ -8,14 +8,17 @@ import React, { useState, useEffect } from "react";
 import AddProduct from "./Pages/AddProduct";
 import Account from "./Pages/Account";
 function App() {
+  const [getIsOauth, setIsOauth] = useState(false);
+  const [getToken, setToken] = useState("");
+  const [getEmail, setEmail] = useState();
   const [getID, setID] = useState();
   const [getProductList, setProductList] = useState([]);
   const [getCategory, setCategory] = useState([]);
   const [getColor, setColor] = useState([]);
   const [getBrand, setBrand] = useState([]);
   const [getStatus, setStatus] = useState([]);
+
   useEffect(() => {
-    // get all product and set product state
     fetch("http://bootcampapi.techcs.io/api/fe/v1/product/all")
       .then((response) => response.json())
       .then((data) => {
@@ -27,25 +30,7 @@ function App() {
       .then((data) => {
         setCategory(data);
       });
-    // //get all colors and set color state
-    // fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/color/all")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setColor(data);
-    //   });
-    // //get all brands and set brand state
-    // fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/brand/all")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setBrand(data);
-    //   });
-    // //get all status and set status state
-    // fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/status/all")
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setStatus(data);
-    //   });
-  });
+  }, []);
   return (
     <Router>
       <Switch>
@@ -56,20 +41,32 @@ function App() {
             getProductList={getProductList}
             setProductList={setProductList}
             category={getCategory}
+            getIsOauth={getIsOauth}
           />
         </Route>
         <Route path="/login">
-          <SignIn />
+          <SignIn
+            getIsOauth={getIsOauth}
+            setIsOauth={setIsOauth}
+            setEmail={setEmail}
+            setToken={setToken}
+          />
         </Route>
         <Route path="/register">
-          <SignUp />
+          <SignUp
+            getIsOauth={getIsOauth}
+            setIsOauth={setIsOauth}
+            setEmail={setEmail}
+            setToken={setToken}
+          />
         </Route>
         <Route path="/myaccount/">
           <Account
-            getID={getID}
-            setID={setID}
             getProductList={getProductList}
             setProductList={setProductList}
+            getIsOauth={getIsOauth}
+            getEmail={getEmail}
+            getToken={getToken}
           />
         </Route>
         <Route path="/product/">
@@ -78,14 +75,20 @@ function App() {
             setID={setID}
             getProductList={getProductList}
             setProductList={setProductList}
+            getIsOauth={getIsOauth}
+            getToken={getToken}
           />
         </Route>
         <Route path="/addproduct">
           <AddProduct
             category={getCategory}
             color={getColor}
+            setColor={setColor}
             brand={getBrand}
+            setBrand={setBrand}
             status={getStatus}
+            setStatus={setStatus}
+            getIsOauth={getIsOauth}
           />
         </Route>
       </Switch>

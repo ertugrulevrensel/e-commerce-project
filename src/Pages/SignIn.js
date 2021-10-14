@@ -1,15 +1,17 @@
 import React from "react";
 import "../SignIn-Up.css";
 import img from "../Assets/Login-reg.png";
+import fail from "../Assets/fail.png";
 import Logo from "../Assets/Logo2.png";
 import { useHistory } from "react-router-dom";
 
-function SignIn() {
+function SignIn(props) {
   function signInProcess() {
     var data = {
       email: document.getElementById("signInMail").value,
       password: document.getElementById("signInPass").value,
     };
+    console.log(data);
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
@@ -17,7 +19,6 @@ function SignIn() {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      console.log("s");
       fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signin", {
         method: "POST",
         headers: {
@@ -28,15 +29,23 @@ function SignIn() {
         .then((response) => {
           response.json();
           console.log(response);
+          if (response.status === 409) {
+            document.getElementById("failSign").classList.remove("d-none");
+          } else {
+            document.getElementById("failSign").classList.add("d-none");
+            props.setIsOauth(true);
+            props.setEmail(data.email);
+            props.setToken(
+              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDEzODY3MH0.7gm4kn4GHvvvY2VPTLhDapF15f_DEXF0UKanTqFTiCA"
+            );
+            goHome();
+          }
         })
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+        .finally((datass) => {
+          console.log(datass);
         });
     } else {
-      console.log("a");
+      document.getElementById("failSign").classList.add("d-none");
     }
   }
   let history = useHistory();
@@ -88,6 +97,13 @@ function SignIn() {
               </a>
             </p>
           </div>
+        </div>
+        <div
+          id="failSign"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>Emailiniz veya şifreniz hatalı.</p>
         </div>
       </div>
     </>

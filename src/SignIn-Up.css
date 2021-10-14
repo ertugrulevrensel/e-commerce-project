@@ -38,3 +38,20 @@ p > a {
 .logo > img {
   width: 225px;
 }
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.failSignModal > img {
+  margin-right: 10px;
+  object-fit: fill;
+  width: 22px;
+  height: 22px;
+}
+.failSignModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #f77474;
+}

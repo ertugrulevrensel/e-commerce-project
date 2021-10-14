@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../ProductDetail.css";
 import BuyModal from "../Components/BuyModal";
 import Header from "../Components/Header";
 import OfferModal from "../Components/OfferModal";
+import succes from "../Assets/succes.png";
 
 function ProductDetail(props) {
+  const [getofferValue, setOfferValue] = useState("0");
+  useEffect(() => {
+    if (getofferValue !== "0") {
+      document
+        .getElementsByClassName("offeredValue")[0]
+        .classList.remove("d-none");
+    }
+  });
   var tmp;
   props.getProductList.map((product) => {
     if (product.id === props.getID) {
@@ -19,7 +28,7 @@ function ProductDetail(props) {
   }
   return (
     <div className="grayBackground">
-      <Header />
+      <Header getIsOauth={props.getIsOauth} />
       <div className="width80 d-flex whiteBackground">
         <img
           className="productDetailImg border-r-8"
@@ -40,7 +49,12 @@ function ProductDetail(props) {
               <p>{tmp.status.title}</p>
             </div>
           </div>
-          <p className="margin30">{tmp.price} TL</p>
+          <p className="marginT30">{tmp.price} TL</p>
+          <div className="d-none offeredValue grayBackground d-flex semi-w border-r-8">
+            <p>
+              Verilen Teklif: <b>{getofferValue}</b>
+            </p>
+          </div>
           <div className="d-flex productButton margin30">
             <button
               onClick={() => toggleBuy()}
@@ -63,16 +77,19 @@ function ProductDetail(props) {
       </div>
       <OfferModal
         getID={props.getID}
-        setID={props.setID}
         getProductList={props.getProductList}
-        setProductList={props.setProductList}
+        getIsOauth={props.getIsOauth}
+        setOfferValue={setOfferValue}
+        getToken={props.getToken}
       />
-      <BuyModal
-        getID={props.getID}
-        setID={props.setID}
-        getProductList={props.getProductList}
-        setProductList={props.setProductList}
-      />
+      <BuyModal />
+      <div
+        id="succesBuy"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
+        <p>Satın Alındı.</p>
+      </div>
     </div>
   );
 }

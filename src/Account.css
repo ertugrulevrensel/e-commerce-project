@@ -10,12 +10,12 @@
 .offersArea {
   padding: 20px 30px;
 }
-.offersArea > div:first-child > p {
-  margin-bottom: 5px;
-}
-.offersArea > div:first-child {
-  gap: 30px;
+.offerListButton {
   border-bottom: 1px solid #f2f2f2;
+  margin-bottom: 5px;
+  gap: 30px;
+  font: normal normal normal 15px/20px Nunito;
+  color: #b1b1b1;
 }
 .receivedOffer {
   margin: 20px 0;
@@ -38,4 +38,9 @@
 }
 .receivedOfferButton > button {
   padding: 5px 20px;
+}
+.selectedList {
+  border-bottom: 1px solid #4b9ce2;
+  font: normal normal bold 15px/20px Nunito;
+  color: #4b9ce2;
 }

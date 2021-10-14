@@ -2,9 +2,10 @@ import React from "react";
 import "../SignIn-Up.css";
 import img from "../Assets/Login-reg.png";
 import Logo from "../Assets/Logo2.png";
+import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
 
-function SignUp() {
+function SignUp(props) {
   function signUpProcess() {
     var data = {
       email: document.getElementById("signUpMail").value,
@@ -17,26 +18,31 @@ function SignUp() {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      console.log("s");
       fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      })
-        .then((response) => {
-          response.json();
-          console.log(response);
-        })
-        .then((data) => {
-          console.log("Success:", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      }).then((response) => {
+        response.json();
+        if (response.status === 409) {
+          document.getElementById("repetitive").classList.remove("d-none");
+          document.getElementById("unValid").classList.add("d-none");
+        } else {
+          document.getElementById("repetitive").classList.add("d-none");
+          document.getElementById("unValid").classList.add("d-none");
+          props.setIsOauth(true);
+          props.setEmail(data.email);
+          props.setToken(
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDEzODY3MH0.7gm4kn4GHvvvY2VPTLhDapF15f_DEXF0UKanTqFTiCA"
+          );
+          goHome();
+        }
+      });
     } else {
-      console.log("a");
+      document.getElementById("unValid").classList.remove("d-none");
+      document.getElementById("repetitive").classList.add("d-none");
     }
   }
   let history = useHistory();
@@ -88,6 +94,27 @@ function SignUp() {
               </a>
             </p>
           </div>
+        </div>
+        {/* <div
+          id="failSign"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>Emailiniz veya şifreniz hatalı.</p>
+        </div> */}
+        <div
+          id="repetitive"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>Kullanıcı zaten kayıtlı.</p>
+        </div>
+        <div
+          id="unValid"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>Geçerli email ve şifre giriniz.</p>
         </div>
       </div>
     </>

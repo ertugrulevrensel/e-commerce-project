@@ -1,4 +1,4 @@
-#offerModal > div {
+#offerModal > div:first-child {
   z-index: 1;
   height: 460px;
   width: 480px;
@@ -67,4 +67,38 @@ div > label {
 }
 .bg4b9ce2O7 {
   background-color: rgba(75, 156, 226, 0.7);
+}
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.failSignModal > img {
+  margin-right: 10px;
+  object-fit: fill;
+  width: 22px;
+  height: 22px;
+}
+.failSignModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #f77474;
+}
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.succesBuyModal > img {
+  margin-right: 10px;
+  object-fit: fill;
+  width: 22px;
+  height: 22px;
+}
+.succesBuyModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #46af32;
 }

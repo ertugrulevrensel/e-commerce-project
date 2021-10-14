@@ -5,7 +5,6 @@ import Header from "../Components/Header";
 
 function AddProduct(props) {
   useEffect(() => {
-    //get all colors and set color state
     fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/color/all")
       .then((response) => response.json())
       .then((data) => {
@@ -23,10 +22,10 @@ function AddProduct(props) {
       .then((data) => {
         props.setStatus(data);
       });
-  });
+  }, []);
   return (
     <div className="grayBackground">
-      <Header />
+      <Header getIsOauth={props.getIsOauth} />
       <div className="d-flex width80 addProductArea whiteBackground">
         <div className="full-w">
           <b className="bold">Ürün Detayları</b>
@@ -50,7 +49,11 @@ function AddProduct(props) {
                 placeholder="Kategori Seç"
               >
                 {props.category.map((item) => {
-                  return <option value={item.id}>{item.title}</option>;
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -61,7 +64,11 @@ function AddProduct(props) {
                 placeholder="Marka Seç"
               >
                 {props.brand.map((item) => {
-                  return <option value={item.id}>{item.title}</option>;
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -74,7 +81,11 @@ function AddProduct(props) {
                 placeholder="Renk Seç"
               >
                 {props.color.map((item) => {
-                  return <option value={item.id}>{item.title}</option>;
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -85,7 +96,11 @@ function AddProduct(props) {
                 placeholder="Kullanım Durumu Seç"
               >
                 {props.status.map((item) => {
-                  return <option value={item.id}>{item.title}</option>;
+                  return (
+                    <option key={item.id} value={item.id}>
+                      {item.title}
+                    </option>
+                  );
                 })}
               </select>
             </div>

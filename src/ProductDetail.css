@@ -13,6 +13,9 @@
 .margin30 {
   margin: 30px 0;
 }
+.marginT30 {
+  margin-top: 30px;
+}
 .productButton {
   gap: 10px;
 }
@@ -25,4 +28,29 @@
   background-color: #f0f8ff;
   color: #4b9ce2;
   padding: 10px;
+}
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.succesBuyModal > img {
+  margin-right: 10px;
+  object-fit: fill;
+  width: 22px;
+  height: 22px;
+}
+.succesBuyModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #46af32;
+}
+.offeredValue {
+  padding: 8px 10px;
+  font: normal normal normal 15px/20px Nunito;
+  color: #b1b1b1;
+}
+.offeredValue > p > b {
+  color: #525252;
 }
