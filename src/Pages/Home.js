@@ -19,6 +19,8 @@ function Home(props) {
           setID={props.setID}
           getProductList={props.getProductList}
           setProductList={props.setProductList}
+          getProduct={props.getProduct}
+          setProduct={props.setProduct}
         />
       </div>
     </div>

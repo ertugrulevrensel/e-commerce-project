@@ -6,34 +6,38 @@ import succes from "../Assets/succes.png";
 import cookie from "js-cookie";
 
 function OfferModal(props) {
-  console.log(cookie.get());
-  var tmp;
-  props.getProductList.map((product) => {
-    if (product.id === props.getID) {
-      tmp = product;
-    }
-  });
+  // var tmp;
+  // props.getProductList.map((product) => {
+  //   if (product.id === props.getID) {
+  //     tmp = product;
+  //   }
+  // });
   function toggleModal() {
     document.getElementById("offerModal").classList.toggle("d-none");
+    document.getElementById("failSign").classList.add("d-none");
+    document.getElementById("succes").classList.add("d-none");
+    document.getElementById("failOffer").classList.add("d-none");
   }
   function offerProduct() {
     console.log(props.getIsOauth);
 
     if (document.getElementById("customOffer").value > 0) {
-      console.log("price");
-      goOffer(document.getElementById("customOffer").value);
+      let offerCustom = Number(document.getElementById("customOffer").value);
+      goOffer(offerCustom);
     } else {
       var element = document.getElementsByName("offerPercent");
       for (let i = 0; i < element.length; i++) {
         if (element[i].checked) {
-          let offer = element[i].value * tmp.price;
+          let offer = element[i].value * props.getProduct.price;
+          console.log(offer);
           goOffer(offer);
         }
       }
     }
   }
   function goOffer(price) {
-    var url = "http://bootcampapi.techcs.io/api/fe/v1/product/offer/" + tmp.id;
+    var url =
+      "http://bootcampapi.techcs.io/api/fe/v1/product/offer/" + props.getID;
     fetch(url, {
       method: "POST",
       headers: {
@@ -47,10 +51,16 @@ function OfferModal(props) {
       if (response.status === 401) {
         document.getElementById("failSign").classList.remove("d-none");
         document.getElementById("succes").classList.add("d-none");
+        document.getElementById("failOffer").classList.add("d-none");
       } else if (response.status === 201 || response.status === 200) {
         document.getElementById("succes").classList.remove("d-none");
         document.getElementById("failSign").classList.add("d-none");
+        document.getElementById("failOffer").classList.add("d-none");
         props.setOfferValue(Number(price.toFixed(2)));
+      } else {
+        document.getElementById("failOffer").classList.remove("d-none");
+        document.getElementById("failSign").classList.add("d-none");
+        document.getElementById("succes").classList.add("d-none");
       }
     });
   }
@@ -69,9 +79,13 @@ function OfferModal(props) {
         </div>
 
         <div className="bgf0f8ff full-w d-flex border-r-8 align-center">
-          <img className="border-r-8" src={tmp.imageUrl} alt=""></img>
-          <p>{tmp.title}</p>
-          <p className="buyPrice">{tmp.price} TL</p>
+          <img
+            className="border-r-8"
+            src={props.getProduct.imageUrl}
+            alt=""
+          ></img>
+          <p>{props.getProduct.title}</p>
+          <p className="buyPrice">{props.getProduct.price} TL</p>
         </div>
         <div className="offerArea full-w">
           <div className="d-flex full-w align-center border-r-8">
@@ -111,7 +125,7 @@ function OfferModal(props) {
             <input
               id="customOffer"
               className="full-w"
-              type="text"
+              type="number"
               name="offerPercent"
               placeholder="Teklif Belirle"
             ></input>
@@ -132,6 +146,13 @@ function OfferModal(props) {
       >
         <img src={fail} alt=""></img>
         <p>Giriş Yapmadınız.</p>
+      </div>
+      <div
+        id="failOffer"
+        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+      >
+        <img src={fail} alt=""></img>
+        <p>Kendi Ürününüze Teklif Yapamazsınız.</p>
       </div>
       <div
         id="succes"

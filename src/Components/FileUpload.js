@@ -8,6 +8,7 @@ import axios from "axios";
 function FileUpload(props) {
   const [getUploadStatus, setUploadStatus] = useState("Yükleme Başarısız.");
   const initApp = () => {
+    console.log("init");
     const droparea = document.querySelector(".uploadArea");
 
     const active = () => droparea.classList.add("green-border");
@@ -103,13 +104,6 @@ function FileUpload(props) {
         <p>{getUploadStatus}</p>
       </div>
     </div>
-    // <div class="droparea">
-    //   <i class="far fa-images"></i>
-    //   <p>Drop your .png or .jpg files here!</p>
-    //   <p>
-    //     <small>Up to 20 images, No max file size.</small>
-    //   </p>
-    // </div>
   );
 }
 

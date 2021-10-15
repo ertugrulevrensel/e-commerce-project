@@ -13,6 +13,7 @@ function App() {
   const [getEmail, setEmail] = useState();
   const [getID, setID] = useState();
   const [getProductList, setProductList] = useState([]);
+
   const [getCategory, setCategory] = useState([]);
   const [getColor, setColor] = useState([]);
   const [getBrand, setBrand] = useState([]);
@@ -73,10 +74,9 @@ function App() {
           <ProductDetail
             getID={getID}
             setID={setID}
-            getProductList={getProductList}
-            setProductList={setProductList}
             getIsOauth={getIsOauth}
             getToken={getToken}
+            getProductList={getProductList}
           />
         </Route>
         <Route path="/addproduct">
