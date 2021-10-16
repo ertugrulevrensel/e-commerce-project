@@ -1,8 +1,6 @@
 import React from "react";
 import "../Modal.css";
 import fail from "../Assets/fail.png";
-import succes from "../Assets/succes.png";
-import axios from "axios";
 
 function BuyModal(props) {
   function toggleModal() {

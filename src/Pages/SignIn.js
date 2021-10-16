@@ -35,7 +35,7 @@ function SignIn(props) {
           props.setIsOauth(true);
           props.setEmail(data.email);
           props.setToken(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV2cmVuY2VsbDI0QGdtYWlsLmNvbSIsImlkIjoiUVJHd1lTa1JlZlZuRlRzcHpZak0iLCJpYXQiOjE2MzQzMjU4Nzh9.1SU-j98esFsc23x2mDFnyCgd5hJe-SQeMR9zphPJPeQ"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDQyMTA3Mn0.y6uqAXlFLVs4jrKkHI6q9kxOAgqK2_qhqJvsQXqpOEM"
           );
           goHome();
         }
@@ -45,6 +45,9 @@ function SignIn(props) {
     }
   }
   let history = useHistory();
+  if (props.getIsOauth) {
+    history.push("/");
+  }
   function goHome() {
     history.push("/");
   }
@@ -53,7 +56,7 @@ function SignIn(props) {
   }
   return (
     <>
-      <div className="d-flex registerImg grayBackground">
+      <div className="d-flex registerImg">
         <img src={img} alt=""></img>
         <div className="full-w d-flex align-center justify-center flex-d-col">
           <div className="logo">

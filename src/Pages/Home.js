@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../Home.css";
 import Header from "../Components/Header";
 import Banner from "../Assets/Banner.png";
@@ -6,8 +6,15 @@ import Category from "../Components/Category";
 import ProductList from "../Components/ProductList";
 
 function Home(props) {
+  useEffect(() => {
+    fetch("http://bootcampapi.techcs.io/api/fe/v1/product/all")
+      .then((response) => response.json())
+      .then((data) => {
+        props.setProductList(data);
+      });
+  }, []); //eslint-disable-line
   return (
-    <div className="full-w grayBackground">
+    <div className="full-w">
       <Header getIsOauth={props.getIsOauth} />
       <div className="width80 homeBody">
         <div className="banner border-r-8">

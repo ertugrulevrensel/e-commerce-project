@@ -46,6 +46,9 @@ function SignUp(props) {
     }
   }
   let history = useHistory();
+  if (props.getIsOauth) {
+    history.push("/");
+  }
   function goHome() {
     history.push("/");
   }
@@ -54,7 +57,7 @@ function SignUp(props) {
   }
   return (
     <>
-      <div className="d-flex registerImg grayBackground">
+      <div className="d-flex registerImg">
         <img src={img} alt=""></img>
         <div className="full-w d-flex align-center justify-center flex-d-col">
           <div className="logo">

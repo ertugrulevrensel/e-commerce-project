@@ -13,18 +13,12 @@ function App() {
   const [getEmail, setEmail] = useState();
   const [getID, setID] = useState();
   const [getProductList, setProductList] = useState([]);
-
   const [getCategory, setCategory] = useState([]);
   const [getColor, setColor] = useState([]);
   const [getBrand, setBrand] = useState([]);
   const [getStatus, setStatus] = useState([]);
 
   useEffect(() => {
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/product/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setProductList(data);
-      });
     //get all categories and set category state
     fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
       .then((response) => response.json())

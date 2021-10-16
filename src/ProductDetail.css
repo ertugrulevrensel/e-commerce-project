@@ -52,12 +52,12 @@
   font: normal normal normal 16px/23px Nunito;
   color: #46af32;
 }
-.offeredValue {
+#offeredValuediv {
   padding: 8px 10px;
   font: normal normal normal 15px/20px Nunito;
   color: #b1b1b1;
 }
-.offeredValue > p > b {
+#offeredValuediv > p > b {
   color: #525252;
 }
 .notOnSale {

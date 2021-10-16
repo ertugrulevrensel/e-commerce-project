@@ -6,13 +6,18 @@ import Header from "../Components/Header";
 import ReceivedOffer from "../Components/ReceivedOffer";
 import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
+import { useHistory } from "react-router-dom";
 
 function Account(props) {
   const [getGivenOffer, setGivenOffer] = useState([]);
   const [getReceivedOffer, setReceivedOffer] = useState([]);
   const [getStatus, setStatus] = useState("");
+  let history = useHistory();
 
   useEffect(() => {
+    if (!props.getIsOauth) {
+      history.push("/");
+    }
     fetch("http://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
       headers: { Authorization: `Bearer ${props.getToken}` },
     })
@@ -30,7 +35,7 @@ function Account(props) {
         console.log(data);
         setReceivedOffer(data);
       });
-  }, []);
+  }, []); //eslint-disable-line
 
   function selectList(list) {
     if (list === "received") {
@@ -55,7 +60,7 @@ function Account(props) {
   }
 
   return (
-    <div className="grayBackground">
+    <div>
       <Header getIsOauth={props.getIsOauth} />
       <div className="d-flex profileDetail whiteBackground border-r-8 width80 align-center">
         <img src={profile} alt=""></img>

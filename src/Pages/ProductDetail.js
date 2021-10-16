@@ -8,7 +8,7 @@ import fail from "../Assets/fail.png";
 
 function ProductDetail(props) {
   var tmp;
-  props.getProductList.map((product) => {
+  /*eslint-disable-line*/ props.getProductList.map((product) => {
     if (product.id === props.getID) {
       tmp = product;
     }
@@ -25,13 +25,9 @@ function ProductDetail(props) {
         console.log(data);
         setProduct(data);
       });
-    if (getofferValue > 0) {
-      document
-        .getElementsByClassName("offeredValue")[0]
-        .classList.remove("d-none");
-    }
+
     console.log(getProduct);
-  }, "");
+  }, ""); // eslint-disable-line
   function cancelOffer() {
     fetch(
       `http://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getID}`
@@ -40,7 +36,9 @@ function ProductDetail(props) {
       if (response.status === 200 || response.status === 201) {
         document.getElementById("succesBuy").classList.remove("d-none");
         document.getElementById("failCancelOffer").classList.add("d-none");
+        document.getElementById("offeredValuediv").classList.add("d-none");
         setStatus("Teklif Geri Çeklidi.");
+        setOfferValue("0");
       } else if (response.status === 401) {
         document.getElementById("failCancelOffer").classList.remove("d-none");
         document.getElementById("succesBuy").classList.add("d-none");
@@ -60,7 +58,7 @@ function ProductDetail(props) {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   return (
-    <div className="grayBackground">
+    <div>
       <Header getIsOauth={props.getIsOauth} />
       <div className="width80 d-flex whiteBackground">
         <img
@@ -68,7 +66,7 @@ function ProductDetail(props) {
           src={getProduct.imageUrl}
           alt=""
         ></img>
-        <div className="productDetailArea">
+        <div className="productDetailArea full-w">
           <p className="productTitle">{getProduct.title}</p>
           <div className="d-flex">
             <div className="productDescription">
@@ -91,7 +89,10 @@ function ProductDetail(props) {
           <p className="marginT30">{getProduct.price} TL</p>
           {!getProduct.isSold && getProduct.isOfferable ? (
             <div>
-              <div className="d-none offeredValue grayBackground d-flex semi-w border-r-8">
+              <div
+                id="offeredValuediv"
+                className="d-none grayBackground d-flex semi-w border-r-8"
+              >
                 <p>
                   Verilen Teklif: <b>{getofferValue}</b>
                 </p>
@@ -120,11 +121,20 @@ function ProductDetail(props) {
                 )}
               </div>
             </div>
-          ) : (
+          ) : getProduct.isSold ? (
             <div className=" notOnSale semi-w border-r-8">
               Bu Ürün Satışta Değil
             </div>
-          )}
+          ) : !getProduct.isOfferable ? (
+            <div className="d-flex productButton margin30">
+              <button
+                onClick={() => toggleBuy()}
+                className="productBuyButton semi-w border-r-8"
+              >
+                Satın Al
+              </button>
+            </div>
+          ) : null}
 
           <div className="productDesc">
             <p>Açıklama</p>

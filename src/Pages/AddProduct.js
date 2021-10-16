@@ -2,14 +2,19 @@ import React, { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import "../AddProduct.css";
 import Header from "../Components/Header";
-import upload from "../Assets/upload.png";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import FileUpload from "../Components/FileUpload";
+import { useHistory } from "react-router-dom";
 
 function AddProduct(props) {
   const [getAddingStatus, setAddingStatus] = useState();
+  const [getImageUrl, setImageUrl] = useState();
+  let history = useHistory();
   useEffect(() => {
+    if (!props.getIsOauth) {
+      history.push("/");
+    }
     fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/color/all")
       .then((response) => response.json())
       .then((data) => {
@@ -27,8 +32,8 @@ function AddProduct(props) {
       .then((data) => {
         props.setStatus(data);
       });
-  }, []);
-  function deneme() {
+  }, []); // eslint-disable-line
+  function saveProduct() {
     var infos = [];
     var isOffer = document.querySelector("[name=isOfferable]").checked;
     infos = document.querySelectorAll("[name=addProductInfo]");
@@ -54,8 +59,7 @@ function AddProduct(props) {
       },
       price: infos[6].value,
       isOfferable: isOffer,
-      imageUrl:
-        "https://storage.googleapis.com/frontend-bootcamp-e9376.appspot.com/products/images/image6.png?GoogleAccessId=firebase-adminsdk-dli7s%40frontend-bootcamp-e9376.iam.gserviceaccount.com&Expires=16731003600&Signature=TNgrEMNmmvG1neAcgYmxdlR44V%2B32qnbXUMJ7lZu98MgDmQn6gMgjv3SUqohw957hu%2Fq37RE3aCbl4BMVYv6ocwBsg9TBYbwsvF%2B%2FG1hDJyzkdIi5eAbSd8IfsCfv5QEti%2FQtjaeD2fQHKxZsyuNedZw0QJI8XLlJ1xruPoL%2FWBIJM0jqAaRIMIbET0UdaSEFjkWAY8fCMCMA6StQHOXmerJeH%2F%2BrIf7OiSaTcnl%2B560%2FGakWlkDWArMhz9NzmliygIigxrEdmqv1HnObMKGpAAipQt9RQskMqqyRPK3yOm4VCTUkH4GU0vI%2Fey5dwIC0eStdsQbWixPrhJSKE0oUw%3D%3D",
+      imageUrl: getImageUrl,
     };
     console.log(body);
     fetch("http://bootcampapi.techcs.io/api/fe/v1/product/create", {
@@ -67,7 +71,6 @@ function AddProduct(props) {
       body: JSON.stringify(body),
     }).then((response) => {
       response.json();
-      console.log(response);
       if (response.status === 401) {
         setAddingStatus("Giriş Yapmadınız.");
         document.getElementById("failAdd").classList.remove("d-none");
@@ -80,7 +83,7 @@ function AddProduct(props) {
     });
   }
   return (
-    <div className="grayBackground">
+    <div>
       <Header getIsOauth={props.getIsOauth} />
       <div className=" width80 addProductArea whiteBackground">
         <div className="d-flex">
@@ -189,12 +192,12 @@ function AddProduct(props) {
             <p className="bold">
               <b>Ürün Görseli</b>
             </p>
-            <FileUpload getToken={props.getToken} />
+            <FileUpload getToken={props.getToken} setImageUrl={setImageUrl} />
           </div>
         </div>
         <div className="saveButtonDiv d-flex full-w ">
           <button
-            onClick={() => deneme()}
+            onClick={() => saveProduct()}
             className="bg4b9ce2 colorf0f8ff border-r-8"
           >
             Kaydet

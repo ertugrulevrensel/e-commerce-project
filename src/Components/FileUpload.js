@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import uploads from "../Assets/upload.png";
 import "../FileUpload.css";
 import succes from "../Assets/succes.png";
@@ -7,6 +7,7 @@ import axios from "axios";
 
 function FileUpload(props) {
   const [getUploadStatus, setUploadStatus] = useState("Yükleme Başarısız.");
+
   const initApp = () => {
     console.log("init");
     const droparea = document.querySelector(".uploadArea");
@@ -31,8 +32,10 @@ function FileUpload(props) {
 
     droparea.addEventListener("drop", getDropFile);
   };
+  useEffect(() => {
+    initApp();
+  });
 
-  document.addEventListener("DOMContentLoaded", initApp);
   function postFile(file) {
     if (file.length > 1) {
       setUploadStatus("Birden fazla dosya yüklemeyiniz.");
@@ -49,15 +52,24 @@ function FileUpload(props) {
       document.getElementById("failUpload").classList.remove("d-none");
       console.log("hata3");
     } else {
-      console.log(file);
+      console.log("file", file[0]);
       document.getElementById("failUpload").classList.add("d-none");
-      axios("http://bootcampapi.techcs.io/api/fe/v1/file/upload/image", file, {
-        methot: "POST",
-        headers: {
-          Authorization: `Bearer ${props.getToken}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }).then((response) => console.log(response));
+      const formData = new FormData();
+      formData.append("file", file[0], file[0].name);
+      axios
+        .post(
+          "http://bootcampapi.techcs.io/api/fe/v1/file/upload/image",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${props.getToken}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          props.setImageUrl(response.data.url);
+        });
     }
   }
   function getInputFile() {

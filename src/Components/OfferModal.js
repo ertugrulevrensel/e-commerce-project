@@ -3,7 +3,6 @@ import "../Modal.css";
 import exit from "../Assets/x.png";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
-import cookie from "js-cookie";
 
 function OfferModal(props) {
   // var tmp;
@@ -56,6 +55,7 @@ function OfferModal(props) {
         document.getElementById("succes").classList.remove("d-none");
         document.getElementById("failSign").classList.add("d-none");
         document.getElementById("failOffer").classList.add("d-none");
+        document.getElementById("offeredValuediv").classList.remove("d-none");
         props.setOfferValue(Number(price.toFixed(2)));
       } else {
         document.getElementById("failOffer").classList.remove("d-none");
