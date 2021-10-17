@@ -19,6 +19,7 @@ function Account(props) {
       history.push("/");
     }
     fetch("http://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+      // withCredentials: true,
       headers: { Authorization: `Bearer ${props.getToken}` },
     })
       .then((response) => response.json())

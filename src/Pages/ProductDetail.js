@@ -5,6 +5,7 @@ import Header from "../Components/Header";
 import OfferModal from "../Components/OfferModal";
 import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
+import ProductButton from "../Components/ProductButton";
 
 function ProductDetail(props) {
   var tmp;
@@ -13,7 +14,7 @@ function ProductDetail(props) {
       tmp = product;
     }
   });
-
+  // const [getCancelOfferID, setCancelOfferID] = useState("");
   const [getofferValue, setOfferValue] = useState("0");
   const [getProduct, setProduct] = useState(tmp);
   const [getStatus, setStatus] = useState();
@@ -25,38 +26,8 @@ function ProductDetail(props) {
         console.log(data);
         setProduct(data);
       });
-
-    console.log(getProduct);
   }, ""); // eslint-disable-line
-  function cancelOffer() {
-    fetch(
-      `http://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getID}`
-    ).then((response) => {
-      response.json();
-      if (response.status === 200 || response.status === 201) {
-        document.getElementById("succesBuy").classList.remove("d-none");
-        document.getElementById("failCancelOffer").classList.add("d-none");
-        document.getElementById("offeredValuediv").classList.add("d-none");
-        setStatus("Teklif Geri Çeklidi.");
-        setOfferValue("0");
-      } else if (response.status === 401) {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
-        document.getElementById("succesBuy").classList.add("d-none");
-        setStatus("Lütfen Giriş Yapınız.");
-      } else {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
-        document.getElementById("succesBuy").classList.add("d-none");
-        setStatus("Teklif Geri Çekme Başarısız.");
-      }
-    });
-  }
 
-  function toggleOffer() {
-    document.getElementById("offerModal").classList.toggle("d-none");
-  }
-  function toggleBuy() {
-    document.getElementById("buyModal").classList.toggle("d-none");
-  }
   return (
     <div>
       <Header getIsOauth={props.getIsOauth} />
@@ -87,54 +58,14 @@ function ProductDetail(props) {
             </div>
           </div>
           <p className="marginT30">{getProduct.price} TL</p>
-          {!getProduct.isSold && getProduct.isOfferable ? (
-            <div>
-              <div
-                id="offeredValuediv"
-                className="d-none grayBackground d-flex semi-w border-r-8"
-              >
-                <p>
-                  Verilen Teklif: <b>{getofferValue}</b>
-                </p>
-              </div>
-              <div className="d-flex productButton margin30">
-                <button
-                  onClick={() => toggleBuy()}
-                  className="productBuyButton full-w border-r-8"
-                >
-                  Satın Al
-                </button>
-                {getofferValue > 0 ? (
-                  <button
-                    onClick={() => cancelOffer()}
-                    className="productOfferButton full-w border-r-8"
-                  >
-                    Teklifi Geri Çek
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => toggleOffer()}
-                    className="productOfferButton full-w border-r-8"
-                  >
-                    Teklif Ver
-                  </button>
-                )}
-              </div>
-            </div>
-          ) : getProduct.isSold ? (
-            <div className=" notOnSale semi-w border-r-8">
-              Bu Ürün Satışta Değil
-            </div>
-          ) : !getProduct.isOfferable ? (
-            <div className="d-flex productButton margin30">
-              <button
-                onClick={() => toggleBuy()}
-                className="productBuyButton semi-w border-r-8"
-              >
-                Satın Al
-              </button>
-            </div>
-          ) : null}
+          <ProductButton
+            getProduct={getProduct}
+            getofferValue={getofferValue}
+            getCancelOfferID={props.getCancelOfferID}
+            setStatus={setStatus}
+            setOfferValue={setOfferValue}
+            getToken={props.getToken}
+          />
 
           <div className="productDesc">
             <p>Açıklama</p>

@@ -3,13 +3,17 @@
   margin: 30px 0;
   border-bottom: 1px solid #e0e0e0;
 }
-.category > li {
+.category > button {
   padding-bottom: 15px;
   text-transform: capitalize;
   font: normal normal 600 18px/24px Nunito;
   color: #525252;
 }
 .checkedLi {
+  border-bottom: 2px solid #4b9ce2;
+  color: #4b9ce2 !important;
+}
+.category > button:focus {
   border-bottom: 2px solid #4b9ce2;
   color: #4b9ce2;
 }

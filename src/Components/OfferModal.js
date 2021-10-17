@@ -44,25 +44,27 @@ function OfferModal(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ offeredPrice: Number(price.toFixed(2)) }),
-    }).then((response) => {
-      response.json();
-      console.log(response);
-      if (response.status === 401) {
-        document.getElementById("failSign").classList.remove("d-none");
-        document.getElementById("succes").classList.add("d-none");
-        document.getElementById("failOffer").classList.add("d-none");
-      } else if (response.status === 201 || response.status === 200) {
-        document.getElementById("succes").classList.remove("d-none");
-        document.getElementById("failSign").classList.add("d-none");
-        document.getElementById("failOffer").classList.add("d-none");
-        document.getElementById("offeredValuediv").classList.remove("d-none");
-        props.setOfferValue(Number(price.toFixed(2)));
-      } else {
-        document.getElementById("failOffer").classList.remove("d-none");
-        document.getElementById("failSign").classList.add("d-none");
-        document.getElementById("succes").classList.add("d-none");
-      }
-    });
+    })
+      .then((response) => {
+        response.json();
+        console.log(response);
+        if (response.status === 401) {
+          document.getElementById("failSign").classList.remove("d-none");
+          document.getElementById("succes").classList.add("d-none");
+          document.getElementById("failOffer").classList.add("d-none");
+        } else if (response.status === 201 || response.status === 200) {
+          document.getElementById("succes").classList.remove("d-none");
+          document.getElementById("failSign").classList.add("d-none");
+          document.getElementById("failOffer").classList.add("d-none");
+          document.getElementById("offeredValuediv").classList.remove("d-none");
+          props.setOfferValue(Number(price.toFixed(2)));
+        } else {
+          document.getElementById("failOffer").classList.remove("d-none");
+          document.getElementById("failSign").classList.add("d-none");
+          document.getElementById("succes").classList.add("d-none");
+        }
+      })
+      .then((data) => console.log("teklif id: ", data));
   }
 
   return (

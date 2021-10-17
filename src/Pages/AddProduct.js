@@ -110,9 +110,11 @@ function AddProduct(props) {
                 <p className="paragraph">Kategori</p>
                 <select
                   className="inputArea border-r-8 full-w"
-                  placeholder="Kategori Seç"
                   name="addProductInfo"
                 >
+                  <option value="" disabled selected>
+                    Kategori seç
+                  </option>
                   {props.category.map((item) => {
                     return (
                       <option key={item.id} value={[item.title, item.id]}>
@@ -126,9 +128,11 @@ function AddProduct(props) {
                 <p className="paragraph">Marka</p>
                 <select
                   className="inputArea border-r-8 full-w"
-                  placeholder="Marka Seç"
                   name="addProductInfo"
                 >
+                  <option value="" disabled selected>
+                    Marka seç
+                  </option>
                   {props.brand.map((item) => {
                     return (
                       <option key={item.id} value={[item.title, item.id]}>
@@ -144,9 +148,11 @@ function AddProduct(props) {
                 <p className="paragraph">Renk</p>
                 <select
                   className="inputArea border-r-8 full-w"
-                  placeholder="Renk Seç"
                   name="addProductInfo"
                 >
+                  <option value="" disabled selected>
+                    Renk seç
+                  </option>
                   {props.color.map((item) => {
                     return (
                       <option key={item.id} value={[item.title, item.id]}>
@@ -160,9 +166,11 @@ function AddProduct(props) {
                 <p className="paragraph">Kullanım Durumu</p>
                 <select
                   className="inputArea border-r-8 full-w"
-                  placeholder="Kullanım Durumu Seç"
                   name="addProductInfo"
                 >
+                  <option value="" disabled selected>
+                    Kullanım durumu seç
+                  </option>
                   {props.status.map((item) => {
                     return (
                       <option key={item.id} value={[item.title, item.id]}>

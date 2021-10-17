@@ -2,13 +2,36 @@ import React from "react";
 import "../Category.css";
 
 function Category(props) {
+  function categoryID(id) {
+    document.getElementById("allCategory").classList.remove("checkedLi");
+    props.setCategoryID(id);
+  }
+  function showAllCategory() {
+    props.setCategoryID(undefined);
+  }
   return (
     <ul className="category d-flex space-between">
-      <li className="checkedLi">Hepsi</li>
+      <button
+        id="allCategory"
+        onClick={() => showAllCategory()}
+        className="checkedLi"
+        checked
+      >
+        Hepsi
+      </button>
       {props.category.map((item) => {
-        return <li key={item.id}>{item.title}</li>;
+        return (
+          <button
+            id={item.id}
+            className="c-pointer"
+            onClick={() => categoryID(item.id)}
+            key={item.id}
+          >
+            {item.title}
+          </button>
+        );
       })}
-      <li>Diğer</li>
+      <button onClick={() => showAllCategory()}>Diğer</button>
     </ul>
   );
 }

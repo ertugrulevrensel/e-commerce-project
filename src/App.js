@@ -17,6 +17,7 @@ function App() {
   const [getColor, setColor] = useState([]);
   const [getBrand, setBrand] = useState([]);
   const [getStatus, setStatus] = useState([]);
+  const [getCancelOfferID, setCancelOfferID] = useState("");
 
   useEffect(() => {
     //get all categories and set category state
@@ -37,6 +38,8 @@ function App() {
             setProductList={setProductList}
             category={getCategory}
             getIsOauth={getIsOauth}
+            setCancelOfferID={setCancelOfferID}
+            getToken={getToken}
           />
         </Route>
         <Route path="/login">
@@ -71,6 +74,7 @@ function App() {
             getIsOauth={getIsOauth}
             getToken={getToken}
             getProductList={getProductList}
+            getCancelOfferID={getCancelOfferID}
           />
         </Route>
         <Route path="/addproduct">
