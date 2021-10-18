@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../Home.css";
+import "./Home.scss";
 import Header from "../Components/Header";
 import Banner from "../Assets/Banner.png";
 import Category from "../Components/Category";
@@ -8,7 +8,7 @@ import ProductList from "../Components/ProductList";
 function Home(props) {
   const [getCategoryID, setCategoryID] = useState();
   useEffect(() => {
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/product/all")
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/product/all")
       .then((response) => response.json())
       .then((data) => {
         if (getCategoryID === undefined) {
@@ -21,10 +21,8 @@ function Home(props) {
             }
           });
           props.setProductList(categoryFilter);
-          console.log(categoryFilter);
         }
       });
-    console.log("syc");
   }, [getCategoryID]); //eslint-disable-line
   return (
     <div className="full-w">
@@ -37,6 +35,7 @@ function Home(props) {
         <ProductList
           getID={props.getID}
           setID={props.setID}
+          getIsOauth={props.getIsOauth}
           getProductList={props.getProductList}
           setProductList={props.setProductList}
           getProduct={props.getProduct}

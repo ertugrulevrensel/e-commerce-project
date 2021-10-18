@@ -1,0 +1,49 @@
+.productList {
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.brand {
+  color: #4b9ce2;
+  font: normal normal bold 15px/22px Nunito;
+}
+.product {
+  background-color: #fff;
+  padding: 10px;
+  & > div > img {
+    width: 100%;
+  }
+}
+.productImg {
+  margin-bottom: 5px;
+}
+.productColor {
+  font: normal normal normal 13px/22px Nunito;
+  color: #3e3e3e;
+}
+.productPrice {
+  font: normal normal normal 18px/22px Nunito;
+  color: #3e3e3e;
+  margin-top: 25px;
+  margin-top: auto;
+}
+@media screen and (max-width: 1230px) and (min-width: 761px) {
+  .productList {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media screen and (max-width: 760px) {
+  .productList {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .width80 {
+    width: 100%;
+    padding: 10px;
+  }
+  .product {
+    padding: 5px;
+    & > div > img {
+      max-width: 100%;
+    }
+  }
+}

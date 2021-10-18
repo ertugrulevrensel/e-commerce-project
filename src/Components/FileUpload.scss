@@ -1,0 +1,104 @@
+.uploadArea {
+  border: 1px dashed #b1b1b1;
+  padding: 20px;
+}
+.uploadImg {
+  width: 30px;
+  height: 30px;
+}
+.uploadFont {
+  font: normal normal normal 14px/15px Nunito;
+  color: #525252;
+}
+.uploadTypeText {
+  font: normal normal normal 12px/14px Nunito;
+  color: #b1b1b1;
+  margin-top: 10px;
+}
+#inputElement {
+  top: 0;
+  z-index: 1;
+}
+.inputElementButton {
+  background-color: #f4f4f4;
+  border-radius: 15px;
+  font: normal normal normal 15px/23px Nunito;
+  color: #b1b1b1;
+  padding: 5px 20px;
+  margin: 5px 0 10px 0;
+}
+.green-border {
+  border-color: green;
+}
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: contain;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #46af32;
+  }
+}
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: contain;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #f77474;
+  }
+}
+#viewUploadImg {
+  max-width: 130px;
+  height: auto;
+  padding: 10px;
+}
+#viewImg {
+  max-width: 110px;
+  height: auto;
+}
+.deleteImgIcon {
+  position: absolute;
+  left: 85%;
+  top: 0;
+  background-color: white;
+  border-radius: 100%;
+  max-width: 20px;
+}
+#progressBarArea {
+  padding: 60px 0;
+}
+.progressBar {
+  background-color: #eaeaea;
+  height: 5px;
+  width: 80%;
+  border-radius: 2px;
+  & > div {
+    height: 5px;
+    border-radius: 2px;
+    background-color: #4b9ce2;
+  }
+}
+@media screen and (max-width: 760px) {
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
+}

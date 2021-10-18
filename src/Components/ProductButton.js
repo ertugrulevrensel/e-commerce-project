@@ -2,11 +2,10 @@ import axios from "axios";
 import React from "react";
 
 function ProductButton(props) {
-  console.log(props.getCancelOfferID);
   function cancelOffer() {
     axios
       .delete(
-        `http://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getCancelOfferID}`,
+        `https://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getCancelOfferID}`,
         {
           headers: {
             Authorization: `Bearer ${props.getToken}`,
@@ -15,8 +14,6 @@ function ProductButton(props) {
         }
       )
       .then((response) => {
-        // response.json();
-        console.log(response);
         if (response.status === 200 || response.status === 201) {
           document.getElementById("succesBuy").classList.remove("d-none");
           document.getElementById("failCancelOffer").classList.add("d-none");
@@ -41,7 +38,7 @@ function ProductButton(props) {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   return (
-    <>
+    <div className="responsiveButton">
       {!props.getProduct.isSold && props.getProduct.isOfferable ? (
         <div>
           <div
@@ -90,7 +87,7 @@ function ProductButton(props) {
           </button>
         </div>
       ) : null}
-    </>
+    </div>
   );
 }
 

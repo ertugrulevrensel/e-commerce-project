@@ -13,13 +13,15 @@ function GivenOffer(props) {
             key={offer.id}
             className="receivedOffer border-r-8 d-flex full-w"
           >
-            <img src={offer.product.imageUrl} alt=""></img>
-            <div className="justify-center d-flex flex-d-col">
-              <p>{offer.product.title}</p>
-              <div className="receivedOfferValue grayBackground border-r-8">
-                <p>
-                  Verilen Teklif: <b>{offer.offeredPrice}</b>
-                </p>
+            <div className="d-flex full-w">
+              <img src={offer.product.imageUrl} alt=""></img>
+              <div className="pad15">
+                <p>{offer.product.title}</p>
+                <div className="receivedOfferValue grayBackground border-r-8">
+                  <p>
+                    Verilen Teklif: <b>{offer.offeredPrice}</b>
+                  </p>
+                </div>
               </div>
             </div>
             {offer.status === "offered" ? (
@@ -44,7 +46,7 @@ function GivenOffer(props) {
                 </div>
               ) : (
                 <div className="d-flex receivedOfferButton align-center">
-                  <p className="color4b9ce2">Satın Alındı</p>
+                  <p className="color46af32">Satın Alındı</p>
                 </div>
               )
             ) : (

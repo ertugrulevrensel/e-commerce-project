@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../Account.css";
+import "./Account.scss";
 import profile from "../Assets/Profile-image.png";
 import GivenOffer from "../Components/GivenOffer";
 import Header from "../Components/Header";
@@ -18,22 +18,20 @@ function Account(props) {
     if (!props.getIsOauth) {
       history.push("/");
     }
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
       // withCredentials: true,
       headers: { Authorization: `Bearer ${props.getToken}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setGivenOffer(data);
       });
 
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
       headers: { Authorization: `Bearer ${props.getToken}` },
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setReceivedOffer(data);
       });
   }, []); //eslint-disable-line
@@ -63,51 +61,53 @@ function Account(props) {
   return (
     <div>
       <Header getIsOauth={props.getIsOauth} />
-      <div className="d-flex profileDetail whiteBackground border-r-8 width80 align-center">
-        <img src={profile} alt=""></img>
-        <p>{props.getEmail}</p>
-      </div>
-      <div className="width80 whiteBackground offersArea">
-        <div className="d-flex offerListButton">
-          <div
-            onClick={() => selectList("received")}
-            id="receivedOfferListButton"
-            className="selectedList c-pointer"
-          >
-            <p>Teklif Aldıklarım</p>
-          </div>
-          <div
-            onClick={() => selectList("given")}
-            id="givenOfferListButton"
-            className="c-pointer"
-          >
-            <p>Teklif Verdiklerim</p>
-          </div>
+      <div className="width80">
+        <div className="d-flex profileDetail whiteBackground border-r-8 align-center">
+          <img src={profile} alt=""></img>
+          <p>{props.getEmail}</p>
         </div>
-        <GivenOffer
-          getGivenOffer={getGivenOffer}
-          setStatus={setStatus}
-          getToken={props.getToken}
-        />
-        <ReceivedOffer
-          getReceivedOffer={getReceivedOffer}
-          setStatus={setStatus}
-          getToken={props.getToken}
-        />
-      </div>
-      <div
-        id="succesBuy"
-        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
-      >
-        <img src={succes} alt=""></img>
-        <p>{getStatus}</p>
-      </div>
-      <div
-        id="failAcceptOffer"
-        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
-      >
-        <img src={fail} alt=""></img>
-        <p>{getStatus}</p>
+        <div className="whiteBackground offersArea">
+          <div className="d-flex offerListButton">
+            <div
+              onClick={() => selectList("received")}
+              id="receivedOfferListButton"
+              className="selectedList c-pointer"
+            >
+              <p>Teklif Aldıklarım</p>
+            </div>
+            <div
+              onClick={() => selectList("given")}
+              id="givenOfferListButton"
+              className="c-pointer"
+            >
+              <p>Teklif Verdiklerim</p>
+            </div>
+          </div>
+          <GivenOffer
+            getGivenOffer={getGivenOffer}
+            setStatus={setStatus}
+            getToken={props.getToken}
+          />
+          <ReceivedOffer
+            getReceivedOffer={getReceivedOffer}
+            setStatus={setStatus}
+            getToken={props.getToken}
+          />
+        </div>
+        <div
+          id="succesBuy"
+          className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+        >
+          <img src={succes} alt=""></img>
+          <p>{getStatus}</p>
+        </div>
+        <div
+          id="failAcceptOffer"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>{getStatus}</p>
+        </div>
       </div>
     </div>
   );

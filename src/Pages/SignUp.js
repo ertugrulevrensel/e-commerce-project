@@ -1,5 +1,5 @@
 import React from "react";
-import "../SignIn-Up.css";
+import "./SignIn-Up.scss";
 import img from "../Assets/Login-reg.png";
 import Logo from "../Assets/Logo2.png";
 import fail from "../Assets/fail.png";
@@ -18,7 +18,7 @@ function SignUp(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signup", {
+      fetch("https://bootcampapi.techcs.io/api/fe/v1/authorization/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -68,9 +68,9 @@ function SignUp(props) {
               alt=""
             ></img>
           </div>
-          <div className="d-flex flex-d-col login align-center">
+          <div className="d-flex flex-d-col login border-r-8 align-center">
             <div className="d-flex align-center flex-d-col">
-              <h3>Üye Ol</h3>
+              <b>Üye Ol</b>
               <p>Fırsatlardan yararlanmak için üye ol!</p>
             </div>
             <div className="logInput full-w">
@@ -93,7 +93,7 @@ function SignUp(props) {
             <p>
               Hesabın var mı?{" "}
               <a className="c-pointer" onClick={() => goLogin()}>
-                Giriş Yap
+                <b>Giriş Yap</b>
               </a>
             </p>
           </div>

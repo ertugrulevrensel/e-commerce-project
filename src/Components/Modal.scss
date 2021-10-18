@@ -1,0 +1,114 @@
+#offerModal {
+  inset: 0;
+  & > div:first-child {
+    z-index: 1;
+    height: 460px;
+    width: 480px;
+    padding: 20px;
+    top: 50%;
+    left: 50%;
+  }
+}
+#buyModal {
+  inset: 0;
+  & > div > div {
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+  }
+}
+.modals {
+  & > div {
+    padding: 6px;
+    & > p {
+      padding: 7px;
+    }
+    & > img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+  & > p {
+    margin-bottom: 15px;
+  }
+}
+.buyPrice {
+  margin-left: auto;
+}
+.offerArea > div {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  margin: 15px 0;
+}
+.customOfferDiv,
+#customOffer {
+  background-color: #f4f4f4;
+}
+div > label {
+  margin: 0 5px;
+}
+.exit {
+  background-color: #fff;
+  margin-left: auto;
+  & > img {
+    width: 18px;
+    height: 18px;
+  }
+}
+.confirmButton {
+  width: 315px;
+  padding: 10px;
+  color: #fff;
+}
+.buyModalButton {
+  gap: 10px;
+  & > button {
+    padding: 10px;
+  }
+}
+.bg4b9ce2O7 {
+  background-color: rgba(75, 156, 226, 0.7);
+}
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  z-index: 1;
+  & > img {
+    margin-right: 10px;
+    object-fit: contain;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #f77474;
+  }
+}
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: contain;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #46af32;
+  }
+}
+@media screen and (max-width: 760px) {
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
+}

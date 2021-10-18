@@ -1,21 +1,21 @@
 import { useHistory } from "react-router-dom";
-import "../ProductList.css";
+import "./ProductList.scss";
 function ProductList(props) {
   let history = useHistory();
   function goDetail(id) {
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-      headers: { Authorization: `Bearer ${props.getToken}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        for (let i = 0; i < data.length; i++) {
-          console.log(data[i].product.id, "xxx", id);
-          if (data[i].product.id === id) {
-            props.setCancelOfferID(data[i].id);
-            console.log("data[i].id");
+    if (props.getIsOauth) {
+      fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+        headers: { Authorization: `Bearer ${props.getToken}` },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          for (let i = 0; i < data.length; i++) {
+            if (data[i].product.id === id) {
+              props.setCancelOfferID(data[i].id);
+            }
           }
-        }
-      });
+        });
+    }
     props.setID(id);
     history.push(`/product/${id}`);
   }

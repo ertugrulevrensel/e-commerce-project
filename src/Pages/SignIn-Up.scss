@@ -1,0 +1,91 @@
+.logInput {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  & > input {
+    padding: 10px 15px;
+    background-color: #f4f4f4;
+    height: 45px;
+    width: 100%;
+    border-radius: 8px;
+    &:focus {
+      border: 1px solid #4b9ce2;
+      background-color: #f0f8ff;
+    }
+  }
+}
+.registerImg > img {
+  max-height: 100vh;
+}
+.login {
+  padding: 70px 90px;
+  background-color: #fff;
+  margin: 55px 10px 0 10px;
+  & p {
+    margin: 5px 0;
+  }
+  & > button {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #4b9ce2;
+    color: #fff;
+    margin-bottom: 40px;
+    font: normal normal bold 18px/24px Nunito;
+  }
+}
+p > a {
+  color: #4b9ce2;
+  text-decoration: none;
+}
+.logo > img {
+  max-width: 225px;
+}
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: fill;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #f77474;
+  }
+}
+.login > div:first-child > p,
+.logInput > p,
+.login > p:last-child {
+  font: normal normal normal 15px/20px Nunito;
+  color: #525252;
+}
+.login > div:first-child {
+  & > b {
+    font: normal normal bold 32px/43px Nunito;
+    color: #525252;
+  }
+}
+
+@media only screen and (max-width: 1020px) {
+  .registerImg > img {
+    display: none;
+  }
+  .logo {
+    margin-top: 30px;
+    & > img {
+      width: 150px;
+    }
+  }
+  .login {
+    width: 90%;
+    padding: 20px;
+  }
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
+}

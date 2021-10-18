@@ -1,5 +1,5 @@
 import React from "react";
-import "../Modal.css";
+import "./Modal.scss";
 import exit from "../Assets/x.png";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
@@ -18,8 +18,6 @@ function OfferModal(props) {
     document.getElementById("failOffer").classList.add("d-none");
   }
   function offerProduct() {
-    console.log(props.getIsOauth);
-
     if (document.getElementById("customOffer").value > 0) {
       let offerCustom = Number(document.getElementById("customOffer").value);
       goOffer(offerCustom);
@@ -28,7 +26,6 @@ function OfferModal(props) {
       for (let i = 0; i < element.length; i++) {
         if (element[i].checked) {
           let offer = element[i].value * props.getProduct.price;
-          console.log(offer);
           goOffer(offer);
         }
       }
@@ -36,7 +33,7 @@ function OfferModal(props) {
   }
   function goOffer(price) {
     var url =
-      "http://bootcampapi.techcs.io/api/fe/v1/product/offer/" + props.getID;
+      "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" + props.getID;
     fetch(url, {
       method: "POST",
       headers: {
@@ -47,7 +44,6 @@ function OfferModal(props) {
     })
       .then((response) => {
         response.json();
-        console.log(response);
         if (response.status === 401) {
           document.getElementById("failSign").classList.remove("d-none");
           document.getElementById("succes").classList.add("d-none");
@@ -154,7 +150,7 @@ function OfferModal(props) {
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
       >
         <img src={fail} alt=""></img>
-        <p>Kendi Ürününüze Teklif Yapamazsınız.</p>
+        <p>Teklif Yapılamadı.</p>
       </div>
       <div
         id="succes"

@@ -3,7 +3,7 @@ import React from "react";
 function ReceivedOffer(props) {
   function receivedOfferAccept(id) {
     var url =
-      "http://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
+      "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -28,7 +28,7 @@ function ReceivedOffer(props) {
   }
   function receivedOfferReject(id) {
     var url =
-      "http://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/" + id;
+      "https://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/" + id;
     fetch(url, {
       method: "POST",
       headers: {
@@ -59,13 +59,15 @@ function ReceivedOffer(props) {
             key={offer.id}
             className="receivedOffer border-r-8 d-flex full-w align-center"
           >
-            <img src={offer.product.imageUrl} alt=""></img>
-            <div className="justify-center d-flex flex-d-col">
-              <p>{offer.product.title}</p>
-              <div className="receivedOfferValue grayBackground border-r-8">
-                <p>
-                  Alınan Teklif: <b>{offer.offeredPrice}</b>
-                </p>
+            <div className="d-flex full-w">
+              <img src={offer.product.imageUrl} alt=""></img>
+              <div className="pad15">
+                <p>{offer.product.title}</p>
+                <div className="receivedOfferValue d-flex grayBackground border-r-8">
+                  <p>
+                    Alınan Teklif: <b>{offer.offeredPrice}</b>
+                  </p>
+                </div>
               </div>
             </div>
             {offer.status === "offered" ? (

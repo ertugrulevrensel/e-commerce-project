@@ -1,5 +1,5 @@
 import React from "react";
-import "../SignIn-Up.css";
+import "./SignIn-Up.scss";
 import img from "../Assets/Login-reg.png";
 import fail from "../Assets/fail.png";
 import Logo from "../Assets/Logo2.png";
@@ -12,7 +12,6 @@ function SignIn(props) {
       email: document.getElementById("signInMail").value,
       password: document.getElementById("signInPass").value,
     };
-    console.log(data);
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
@@ -20,7 +19,7 @@ function SignIn(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      fetch("http://bootcampapi.techcs.io/api/fe/v1/authorization/signin", {
+      fetch("https://bootcampapi.techcs.io/api/fe/v1/authorization/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +27,6 @@ function SignIn(props) {
         body: JSON.stringify(data),
       }).then((response) => {
         response.json();
-        console.log(response);
         if (response.status === 409) {
           document.getElementById("failSign").classList.remove("d-none");
         } else {
@@ -36,7 +34,7 @@ function SignIn(props) {
           props.setIsOauth(true);
           props.setEmail(data.email);
           props.setToken(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV2cmVuY2VsbDI0QGdtYWlsLmNvbSIsImlkIjoiUVJHd1lTa1JlZlZuRlRzcHpZak0iLCJpYXQiOjE2MzQ0Njc5MDB9.QeEy1MzHM4782rTOy2-P2JJ3-7DhKBzRxS7oGXXyejk"
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV2cmVuY2VsbDI0QGdtYWlsLmNvbSIsImlkIjoiUVJHd1lTa1JlZlZuRlRzcHpZak0iLCJpYXQiOjE2MzQ1NTczMDZ9.GvEQ86EplZPhmvlc6F09gOp0QJE3PvT5Rgj2Wd8MlOU"
           );
           goHome();
         }
@@ -70,7 +68,7 @@ function SignIn(props) {
           </div>
           <div className="d-flex flex-d-col login border-r-8 align-center">
             <div className="d-flex align-center flex-d-col">
-              <h3>Giriş Yap</h3>
+              <b>Giriş Yap</b>
               <p>Fırsatlardan yararlanmak için giriş yap!</p>
             </div>
             <div className="logInput full-w">
@@ -93,7 +91,7 @@ function SignIn(props) {
             <p>
               Hesabın yok mu?{" "}
               <a className="c-pointer" onClick={() => goRegister()}>
-                Üye Ol
+                <b>Üye Ol</b>
               </a>
             </p>
           </div>

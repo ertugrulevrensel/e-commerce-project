@@ -1,0 +1,46 @@
+header {
+  background-color: #fff;
+  margin-bottom: 20px;
+  & > div {
+    padding: 18px 0;
+  }
+}
+.headerButtons {
+  gap: 10px;
+  & > button {
+    padding: 10px 20px;
+    background: var(--unnamed-color-f0f8ff) 0% 0% no-repeat padding-box;
+    background: #f0f8ff 0% 0% no-repeat padding-box;
+    border-radius: 8px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    font: normal normal bold 15px/20px Nunito;
+    letter-spacing: 0px;
+    color: #4b9ce2;
+  }
+  & > button > * {
+    margin: 5px;
+  }
+}
+@media screen and (max-width: 760px) {
+  #addProductButton {
+    padding: 10px;
+    & > p {
+      display: none;
+    }
+  }
+  #myAccountButton {
+    padding: 5px 15px;
+  }
+  #loginButton {
+    padding: 5px 15px;
+  }
+  header {
+    margin: 0;
+    & > div > img:first-child {
+      max-width: 100px;
+      object-fit: contain;
+    }
+  }
+}

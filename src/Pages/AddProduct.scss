@@ -1,5 +1,6 @@
 .addProductArea {
   padding: 30px;
+  margin-top: 20px;
 }
 .padR45 {
   padding-right: 45px;
@@ -15,10 +16,10 @@
   background-color: #f4f4f4;
   padding: 10px 15px;
   margin-top: 5px;
-}
-.inputArea:focus {
-  border: 1px solid #4b9ce2;
-  background-color: #f0f8ff;
+  &:focus {
+    border: 1px solid #4b9ce2;
+    background-color: #f0f8ff;
+  }
 }
 .paragraph {
   margin-top: 25px;
@@ -46,11 +47,11 @@ select:focus-visible {
   width: 60px;
   height: 34px;
   margin-top: 25px;
-}
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
 }
 .slider {
   position: absolute;
@@ -62,17 +63,17 @@ select:focus-visible {
   background-color: #ccc;
   -webkit-transition: 0.4s;
   transition: 0.4s;
-}
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
+  &:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+  }
 }
 input:checked + .slider {
   background-color: #2196f3;
@@ -87,12 +88,11 @@ input:checked + .slider:before {
 }
 .slider.round {
   border-radius: 34px;
+  &:before {
+    border-radius: 50%;
+  }
 }
-
-.slider.round:before {
-  border-radius: 50%;
-}
-.saveButtonDiv > button {
+.saveButtonDiv > input {
   margin-left: auto;
   padding: 10px;
   width: 315px;
@@ -104,14 +104,53 @@ input:checked + .slider:before {
   top: 10%;
   left: 80%;
   padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: fill;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #f77474;
+  }
 }
-.failSignModal > img {
-  margin-right: 10px;
-  object-fit: fill;
-  width: 22px;
-  height: 22px;
+input:required:focus ~ input:required,
+input:required:focus {
+  background: #fff2f2;
+  border: 1px solid #f77474;
 }
-.failSignModal > p {
-  font: normal normal normal 16px/23px Nunito;
-  color: #f77474;
+@media screen and (max-width: 760px) {
+  .addProductArea {
+    padding: 15px 10px;
+    & > div:first-child {
+      flex-direction: column;
+    }
+  }
+  .padR45 {
+    padding: 0;
+    border: none;
+  }
+  .padL45 {
+    padding: 0;
+    margin-top: 25px;
+  }
+  .flexbox {
+    gap: 0;
+    flex-direction: column;
+  }
+  .semi-w {
+    width: 100%;
+  }
+  .saveButtonDiv {
+    margin-top: 25px;
+  }
+  .responsivePad10 {
+    padding: 0 10px;
+  }
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
 }

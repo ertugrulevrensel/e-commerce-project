@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     //get all categories and set category state
-    fetch("http://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
       .then((response) => response.json())
       .then((data) => {
         setCategory(data);

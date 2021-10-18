@@ -1,5 +1,5 @@
 import React from "react";
-import "../Modal.css";
+import "./Modal.scss";
 import fail from "../Assets/fail.png";
 
 function BuyModal(props) {
@@ -9,7 +9,7 @@ function BuyModal(props) {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   function buyProduct(id) {
-    let url = "http://bootcampapi.techcs.io/api/fe/v1/product/purchase/" + id;
+    let url = "https://bootcampapi.techcs.io/api/fe/v1/product/purchase/" + id;
     fetch(url, {
       method: "PUT",
       headers: {
@@ -18,7 +18,6 @@ function BuyModal(props) {
       body: JSON.stringify(id),
     }).then((response) => {
       if (response.status === 201 || response.status === 200) {
-        console.log(props.product);
         document.getElementById("succesBuy").classList.remove("d-none");
         document.getElementById("failSignBuy").classList.add("d-none");
         props.setStatus("Satın Alındı.");

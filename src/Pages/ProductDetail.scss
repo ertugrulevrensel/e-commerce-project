@@ -1,0 +1,131 @@
+.productDetailImg {
+  padding: 15px;
+  min-width: 50%;
+}
+.productDesc > p:first-child {
+  margin-top: 30px;
+}
+.productDetailArea {
+  margin: 30px 45px;
+  & > .priceValue {
+    font: normal normal normal 25px/23px Nunito;
+    letter-spacing: 0px;
+    color: #525252;
+  }
+}
+.productTitle {
+  margin-bottom: 5px;
+  font: normal normal normal 34px/23px Nunito;
+  color: #555555;
+}
+.productDescription > * {
+  margin: 20px 20px 0 0;
+  font: normal normal normal 15px/20px Nunito;
+  color: #525252;
+}
+.margin30 {
+  margin: 30px 0;
+}
+.marginT30 {
+  margin: 30px 0 2px 0;
+}
+.productButton {
+  gap: 10px;
+}
+.productBuyButton {
+  background-color: #4b9ce2;
+  color: #f0f8ff;
+  padding: 10px;
+  font: normal normal bold 18px/24px Nunito;
+}
+.productOfferButton {
+  background-color: #f0f8ff;
+  color: #4b9ce2;
+  padding: 10px;
+  font: normal normal bold 18px/24px Nunito;
+}
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+  & > img {
+    margin-right: 10px;
+    object-fit: fill;
+    width: 22px;
+    height: 22px;
+  }
+  & > p {
+    font: normal normal normal 16px/23px Nunito;
+    color: #46af32;
+  }
+}
+#offeredValuediv {
+  padding: 8px 10px;
+  font: normal normal normal 15px/20px Nunito;
+  color: #b1b1b1;
+  & > p > b {
+    color: #525252;
+  }
+}
+.notOnSale {
+  padding: 10px;
+  background-color: #fff0e2;
+  color: #faad60;
+  font: normal normal bold 18px/24px Nunito;
+}
+.productDesc:first-child {
+  font: normal normal bold 18px/24px Nunito;
+  color: #525252;
+}
+.productDesc:last-child {
+  font: normal normal normal 15px/23px Nunito;
+  color: #555555;
+}
+@media screen and (max-width: 760px) {
+  .responsiveDetail {
+    flex-direction: column;
+    padding: 5px;
+    margin-bottom: 60px;
+  }
+  .productDetailArea {
+    margin: 0;
+    padding: 5px;
+  }
+  .productDetailImg {
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+  .responsiveButton {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0px -3px 8px #1e364814;
+    background-color: #fff;
+    padding: 10px 10px;
+    & > .notOnSale {
+      width: 100%;
+    }
+    & > .margin30 {
+      margin: 0;
+    }
+    & > div > .margin30 {
+      margin: 0;
+    }
+    & > div:first-child {
+      width: 100%;
+    }
+  }
+  .productButton {
+    width: 100%;
+  }
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
+}

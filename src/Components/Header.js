@@ -1,5 +1,5 @@
 import React from "react";
-import "../Header.css";
+import "./Header.scss";
 import Logo from "../Assets/Logo.png";
 import Add from "../Assets/Add-product.png";
 import Profile from "../Assets/Profile.png";
