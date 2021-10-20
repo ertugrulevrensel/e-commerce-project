@@ -103,3 +103,49 @@ input {
 .colorf77474 {
   color: #f77474;
 }
+.succesBuyModal {
+  background-color: #f1fff0;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.succesBuyModal > img {
+  margin-right: 10px;
+  object-fit: contain;
+  width: 22px;
+  height: 22px;
+}
+.succesBuyModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #46af32;
+}
+.failSignModal {
+  background-color: #ffe5e5;
+  box-shadow: 0px 3px 12px #1e36482e;
+  top: 10%;
+  left: 80%;
+  padding: 20px 10px;
+}
+.failSignModal > img {
+  margin-right: 10px;
+  object-fit: contain;
+  width: 22px;
+  height: 22px;
+}
+.failSignModal > p {
+  font: normal normal normal 16px/23px Nunito;
+  color: #f77474;
+}
+.inputErr {
+  background-color: #fff2f2 !important;
+  border-color: #f77474 !important;
+  color: #f77474;
+}
+@media screen and (max-width: 760px) {
+  .failSignModal,
+  .succesBuyModal {
+    top: 3%;
+    left: 5%;
+  }
+}

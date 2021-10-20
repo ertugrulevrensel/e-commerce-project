@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function ReceivedOffer(props) {
+  useEffect(() => {
+    console.log("rece");
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
+      headers: { Authorization: `Bearer ${props.getToken}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        props.setReceivedOffer(data);
+      });
+  }, []);
   function receivedOfferAccept(id) {
+    console.log(props.getReceivedOffer);
     var url =
       "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
     fetch(url, {
@@ -13,15 +24,15 @@ function ReceivedOffer(props) {
     }).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
-        document.getElementById("succesAcceptOffer").classList.remove("d-none");
+        document.getElementById("succesBuy").classList.remove("d-none");
         props.setStatus("Teklif Kabul Edildi.");
       } else if (response.status === 401) {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
-        document.getElementById("succesAcceptOffer").classList.add("d-none");
+        document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
-        document.getElementById("succesAcceptOffer").classList.add("d-none");
+        document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Teklif Kabul Edilemedi.");
       }
     });
@@ -65,12 +76,13 @@ function ReceivedOffer(props) {
                 <p>{offer.product.title}</p>
                 <div className="receivedOfferValue d-flex grayBackground border-r-8">
                   <p>
-                    Alınan Teklif: <b>{offer.offeredPrice}</b>
+                    Alınan Teklif:{" "}
+                    <b>{Number(offer.offeredPrice.toFixed(3))}</b>
                   </p>
                 </div>
               </div>
             </div>
-            {offer.status === "offered" ? (
+            {offer.status === "offered" && !(offer.isSold === "sold") ? (
               <div className="d-flex receivedOfferButton align-center">
                 <button
                   onClick={() => receivedOfferAccept(offer.id)}
@@ -85,7 +97,7 @@ function ReceivedOffer(props) {
                   Reddet
                 </button>
               </div>
-            ) : offer.status === "accepted" ? (
+            ) : offer.status === "accepted" || offer.isSold === "sold" ? (
               <p className="color4b9ce2">Onaylandı</p>
             ) : (
               <p className="colorf77474">Reddedildi</p>

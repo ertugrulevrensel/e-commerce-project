@@ -29,17 +29,31 @@
       height: 50px;
     }
   }
+  & > div:first-child > p {
+    font: normal normal bold 25px/23px Nunito;
+    color: #525252;
+  }
   & > p {
     margin-bottom: 15px;
   }
 }
+.titleFont {
+  font: normal normal normal 13px/16px Nunito;
+  color: #555555;
+}
 .buyPrice {
   margin-left: auto;
+  font: normal normal bold 18px/32px Nunito;
+  color: #525252;
 }
 .offerArea > div {
   padding: 10px;
   border: 1px solid #e0e0e0;
   margin: 15px 0;
+  & > label {
+    font: normal normal normal 15px/20px Nunito;
+    color: #525252;
+  }
 }
 .customOfferDiv,
 #customOffer {
@@ -65,50 +79,30 @@ div > label {
   gap: 10px;
   & > button {
     padding: 10px;
+    font: normal normal bold 18px/24px Nunito;
   }
+}
+.buyTxt {
+  font: normal normal bold 25px/23px Nunito;
+  color: #525252;
+}
+.buyTitle {
+  font: normal normal normal 15px/23px Nunito;
+  color: #555555;
+  margin: 0 80px;
 }
 .bg4b9ce2O7 {
   background-color: rgba(75, 156, 226, 0.7);
 }
-.failSignModal {
-  background-color: #ffe5e5;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  z-index: 1;
-  & > img {
-    margin-right: 10px;
-    object-fit: contain;
-    width: 22px;
-    height: 22px;
-  }
-  & > p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #f77474;
-  }
-}
-.succesBuyModal {
-  background-color: #f1fff0;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & > img {
-    margin-right: 10px;
-    object-fit: contain;
-    width: 22px;
-    height: 22px;
-  }
-  & > p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #46af32;
-  }
-}
 @media screen and (max-width: 760px) {
-  .failSignModal,
-  .succesBuyModal {
-    top: 3%;
-    left: 5%;
+  #buyModal > div:first-child {
+    padding: 0 10px;
+    width: 100%;
+    & > .modals {
+      width: 100%;
+    }
+  }
+  .buyTitle {
+    margin: 0;
   }
 }

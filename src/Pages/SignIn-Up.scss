@@ -39,23 +39,6 @@ p > a {
 .logo > img {
   max-width: 225px;
 }
-.failSignModal {
-  background-color: #ffe5e5;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & > img {
-    margin-right: 10px;
-    object-fit: fill;
-    width: 22px;
-    height: 22px;
-  }
-  & > p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #f77474;
-  }
-}
 .login > div:first-child > p,
 .logInput > p,
 .login > p:last-child {
@@ -82,10 +65,5 @@ p > a {
   .login {
     width: 90%;
     padding: 20px;
-  }
-  .failSignModal,
-  .succesBuyModal {
-    top: 3%;
-    left: 5%;
   }
 }

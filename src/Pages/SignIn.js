@@ -19,26 +19,28 @@ function SignIn(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      fetch("https://bootcampapi.techcs.io/api/fe/v1/authorization/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        response.json();
-        if (response.status === 409) {
-          document.getElementById("failSign").classList.remove("d-none");
-        } else {
+      axios
+        .post(
+          "https://bootcampapi.techcs.io/api/fe/v1/authorization/signin",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
           document.getElementById("failSign").classList.add("d-none");
           props.setIsOauth(true);
           props.setEmail(data.email);
-          props.setToken(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV2cmVuY2VsbDI0QGdtYWlsLmNvbSIsImlkIjoiUVJHd1lTa1JlZlZuRlRzcHpZak0iLCJpYXQiOjE2MzQ1NTczMDZ9.GvEQ86EplZPhmvlc6F09gOp0QJE3PvT5Rgj2Wd8MlOU"
-          );
+          props.setToken(response.data.access_token);
           goHome();
-        }
-      });
+        })
+        .catch((err) => {
+          document.getElementById("failSign").classList.remove("d-none");
+          document.getElementById("signInMail").classList.add("inputErr");
+          document.getElementById("signInPass").classList.add("inputErr");
+        });
     } else {
       document.getElementById("failSign").classList.add("d-none");
     }

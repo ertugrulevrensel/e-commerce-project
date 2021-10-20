@@ -30,40 +30,6 @@
 .green-border {
   border-color: green;
 }
-.succesBuyModal {
-  background-color: #f1fff0;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & > img {
-    margin-right: 10px;
-    object-fit: contain;
-    width: 22px;
-    height: 22px;
-  }
-  & > p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #46af32;
-  }
-}
-.failSignModal {
-  background-color: #ffe5e5;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & > img {
-    margin-right: 10px;
-    object-fit: contain;
-    width: 22px;
-    height: 22px;
-  }
-  & > p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #f77474;
-  }
-}
 #viewUploadImg {
   max-width: 130px;
   height: auto;
@@ -93,12 +59,5 @@
     height: 5px;
     border-radius: 2px;
     background-color: #4b9ce2;
-  }
-}
-@media screen and (max-width: 760px) {
-  .failSignModal,
-  .succesBuyModal {
-    top: 3%;
-    left: 5%;
   }
 }

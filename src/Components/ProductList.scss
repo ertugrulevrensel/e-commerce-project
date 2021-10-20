@@ -33,7 +33,7 @@
 }
 @media screen and (max-width: 760px) {
   .productList {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: calc(50% - 5px) calc(50% - 5px);
     gap: 10px;
   }
   .width80 {

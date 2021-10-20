@@ -47,40 +47,6 @@
   font: normal normal bold 15px/20px Nunito;
   color: #4b9ce2;
 }
-.failSignModal {
-  background-color: #ffe5e5;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & img {
-    margin-right: 10px;
-    object-fit: fill;
-    width: 22px;
-    height: 22px;
-  }
-  & p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #f77474;
-  }
-}
-.succesBuyModal {
-  background-color: #f1fff0;
-  box-shadow: 0px 3px 12px #1e36482e;
-  top: 10%;
-  left: 80%;
-  padding: 20px 10px;
-  & img {
-    margin-right: 10px;
-    object-fit: fill;
-    width: 22px;
-    height: 22px;
-  }
-  & p {
-    font: normal normal normal 16px/23px Nunito;
-    color: #46af32;
-  }
-}
 .pad15 {
   padding: 15px 0;
 }
@@ -99,10 +65,5 @@
   }
   .offerListButton {
     justify-content: center;
-  }
-  .failSignModal,
-  .succesBuyModal {
-    top: 3%;
-    left: 5%;
   }
 }

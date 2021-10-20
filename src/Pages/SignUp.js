@@ -4,6 +4,7 @@ import img from "../Assets/Login-reg.png";
 import Logo from "../Assets/Logo2.png";
 import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function SignUp(props) {
   function signUpProcess() {
@@ -18,28 +19,30 @@ function SignUp(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      fetch("https://bootcampapi.techcs.io/api/fe/v1/authorization/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        response.json();
-        if (response.status === 409) {
-          document.getElementById("repetitive").classList.remove("d-none");
-          document.getElementById("unValid").classList.add("d-none");
-        } else {
+      axios
+        .post(
+          "https://bootcampapi.techcs.io/api/fe/v1/authorization/signup",
+          data,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        )
+        .then((response) => {
           document.getElementById("repetitive").classList.add("d-none");
           document.getElementById("unValid").classList.add("d-none");
           props.setIsOauth(true);
           props.setEmail(data.email);
-          props.setToken(
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImVydHVncnVsZXZyZW5zZWxAZ21haWwuY29tIiwiaWQiOiJNbW54TUNHTGUxV2Fjb0NuV2ZnTCIsImlhdCI6MTYzNDEzODY3MH0.7gm4kn4GHvvvY2VPTLhDapF15f_DEXF0UKanTqFTiCA"
-          );
+          props.setToken(response.data.access_token);
           goHome();
-        }
-      });
+        })
+        .catch((err) => {
+          document.getElementById("repetitive").classList.remove("d-none");
+          document.getElementById("unValid").classList.add("d-none");
+          document.getElementById("signUpMail").classList.add("inputErr");
+          document.getElementById("signUpPass").classList.add("inputErr");
+        });
     } else {
       document.getElementById("unValid").classList.remove("d-none");
       document.getElementById("repetitive").classList.add("d-none");

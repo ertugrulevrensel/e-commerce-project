@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BuyModal from "./BuyModal";
 
 function GivenOffer(props) {
+  useEffect(() => {
+    console.log("given");
+    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+      // withCredentials: true,
+      headers: { Authorization: `Bearer ${props.getToken}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        props.setGivenOffer(data);
+      });
+  }, []);
   function toggleBuy() {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
@@ -19,7 +30,8 @@ function GivenOffer(props) {
                 <p>{offer.product.title}</p>
                 <div className="receivedOfferValue grayBackground border-r-8">
                   <p>
-                    Verilen Teklif: <b>{offer.offeredPrice}</b>
+                    Verilen Teklif:{" "}
+                    <b>{Number(offer.offeredPrice.toFixed(2))}</b>
                   </p>
                 </div>
               </div>

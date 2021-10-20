@@ -18,22 +18,22 @@ function Account(props) {
     if (!props.getIsOauth) {
       history.push("/");
     }
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-      // withCredentials: true,
-      headers: { Authorization: `Bearer ${props.getToken}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setGivenOffer(data);
-      });
+    // fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
+    //   // withCredentials: true,
+    //   headers: { Authorization: `Bearer ${props.getToken}` },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setGivenOffer(data);
+    //   });
 
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
-      headers: { Authorization: `Bearer ${props.getToken}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setReceivedOffer(data);
-      });
+    // fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
+    //   headers: { Authorization: `Bearer ${props.getToken}` },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setReceivedOffer(data);
+    //   });
   }, []); //eslint-disable-line
 
   function selectList(list) {
@@ -87,9 +87,11 @@ function Account(props) {
             getGivenOffer={getGivenOffer}
             setStatus={setStatus}
             getToken={props.getToken}
+            setGivenOffer={setGivenOffer}
           />
           <ReceivedOffer
             getReceivedOffer={getReceivedOffer}
+            setReceivedOffer={setReceivedOffer}
             setStatus={setStatus}
             getToken={props.getToken}
           />

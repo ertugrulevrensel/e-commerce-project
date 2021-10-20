@@ -6,6 +6,7 @@ import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import FileUpload from "../Components/FileUpload";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function AddProduct(props) {
   const [getAddingStatus, setAddingStatus] = useState();
@@ -15,29 +16,30 @@ function AddProduct(props) {
     if (!props.getIsOauth) {
       history.push("/");
     }
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/color/all")
-      .then((response) => response.json())
-      .then((data) => {
-        props.setColor(data);
-      });
+    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/color/all").then(
+      (response) => props.setColor(response.data)
+    );
     //get all brands and set brand state
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all")
-      .then((response) => response.json())
-      .then((data) => {
-        props.setBrand(data);
-      });
+    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all").then(
+      (response) => props.setBrand(response.data)
+    );
     //get all status and set status state
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/status/all")
-      .then((response) => response.json())
-      .then((data) => {
-        props.setStatus(data);
-      });
+    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/status/all").then(
+      (response) => props.setStatus(response.data)
+    );
   }, []); // eslint-disable-line
   function saveProduct() {
     var infos = [];
     var isOffer = document.querySelector("[name=isOfferable]").checked;
     infos = document.querySelectorAll("[name=addProductInfo]");
 
+    document.querySelectorAll("[name=addProductInfo]").forEach((item) => {
+      if (item.value === "") {
+        item.classList.add("inputErr");
+      } else {
+        item.classList.remove("inputErr");
+      }
+    });
     var body = {
       title: infos[0].value,
       description: infos[1].value,
@@ -72,6 +74,10 @@ function AddProduct(props) {
       response.json();
       if (response.status === 401) {
         setAddingStatus("Giriş Yapmadınız.");
+        document.getElementById("failAdd").classList.remove("d-none");
+        document.getElementById("succesAdd").classList.add("d-none");
+      } else if (response.status === 400) {
+        setAddingStatus("Ürün Bilgileri Eksik.");
         document.getElementById("failAdd").classList.remove("d-none");
         document.getElementById("succesAdd").classList.add("d-none");
       } else if (response.status === 200 || response.status === 201) {
@@ -211,12 +217,13 @@ function AddProduct(props) {
             </div>
           </div>
           <div className="saveButtonDiv d-flex full-w ">
-            <input
-              type="submit"
-              value="Kaydet"
+            <button
+              type="button"
               onClick={() => saveProduct()}
               className="bg4b9ce2 colorf0f8ff border-r-8 c-pointer"
-            ></input>
+            >
+              Kaydet
+            </button>
           </div>
         </form>
         <div

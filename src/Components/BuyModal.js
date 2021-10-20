@@ -21,6 +21,7 @@ function BuyModal(props) {
         document.getElementById("succesBuy").classList.remove("d-none");
         document.getElementById("failSignBuy").classList.add("d-none");
         props.setStatus("Satın Alındı.");
+        props.setIsProductSold("true");
       } else if (response.status === 401) {
         document.getElementById("failSignBuy").classList.remove("d-none");
         document.getElementById("succesBuy").classList.add("d-none");
@@ -34,8 +35,8 @@ function BuyModal(props) {
     >
       <div>
         <div className="d-flex flex-d-col modals align-center justify-center whiteBackground border-r-8">
-          <p>Satın Al</p>
-          <p>Satın almak istiyor musunuz?</p>
+          <p className="buyTxt">Satın Al</p>
+          <p className="buyTitle">Satın almak istiyor musunuz?</p>
           <div className="d-flex buyModalButton full-w">
             <button
               onClick={() => toggleModal()}

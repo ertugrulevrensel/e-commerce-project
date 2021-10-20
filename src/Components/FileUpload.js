@@ -18,7 +18,7 @@ function FileUpload(props) {
   }
 
   const initApp = () => {
-    const droparea = document.querySelector(".uploadArea");
+    const droparea = document.getElementById("uploadSection");
     const active = () => droparea.classList.add("green-border");
     const inactive = () => droparea.classList.remove("green-border");
     const prevents = (e) => e.preventDefault();
@@ -35,7 +35,7 @@ function FileUpload(props) {
   };
   useEffect(() => {
     initApp();
-  });
+  }, ""); // eslint-disable-line
 
   function postFile(file) {
     if (file.length > 1) {
@@ -52,41 +52,38 @@ function FileUpload(props) {
     } else {
       document.getElementById("failUpload").classList.add("d-none");
       var percentCompleted = 0;
-      const config = {
-        onUploadProgress: function (progressEvent) {
-          percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setProgressPercent(percentCompleted);
-          if (percentCompleted === 100) {
-            document.getElementById("uploadSection").classList.add("d-none");
-            document.getElementById("progressBarArea").classList.add("d-none");
-            document.getElementById("uploadDetail").classList.add("d-none");
-            document.getElementById("viewUploadImg").classList.remove("d-none");
-          } else {
-            document.getElementById("uploadDetail").classList.add("d-none");
-            document.getElementById("uploadSection").classList.remove("d-none");
-            document.getElementById("viewUploadImg").classList.add("d-none");
-            document
-              .getElementById("progressBarArea")
-              .classList.remove("d-none");
-            document.getElementById("progressBlue").style.width =
-              percentCompleted;
-          }
-        },
-      };
+      function config(progressEvent) {
+        percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        setProgressPercent(percentCompleted);
+        if (percentCompleted === 100) {
+          document.getElementById("uploadSection").classList.add("d-none");
+          document.getElementById("progressBarArea").classList.add("d-none");
+          document.getElementById("uploadDetail").classList.add("d-none");
+          document.getElementById("viewUploadImg").classList.remove("d-none");
+        } else {
+          document.getElementById("uploadDetail").classList.add("d-none");
+          document.getElementById("uploadSection").classList.remove("d-none");
+          document.getElementById("viewUploadImg").classList.add("d-none");
+          document.getElementById("progressBarArea").classList.remove("d-none");
+          document.getElementById("progressBlue").style.width =
+            percentCompleted;
+        }
+      }
       const formData = new FormData();
       formData.append("file", file[0], file[0].name);
       axios
         .post(
           "https://bootcampapi.techcs.io/api/fe/v1/file/upload/image",
           formData,
-          config,
+          // config,
           {
             headers: {
               Authorization: `Bearer ${props.getToken}`,
               "Content-Type": "multipart/form-data",
             },
+            onUploadProgress: config,
           }
         )
         .then((response) => {
@@ -94,6 +91,7 @@ function FileUpload(props) {
           document
             .getElementById("viewImg")
             .setAttribute("src", response.data.url);
+          // document.getElementById("viewUploadImg").classList.remove("d-none");
         });
     }
   }

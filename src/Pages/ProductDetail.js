@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./ProductDetail.scss";
-import BuyModal from "../Components/BuyModal";
 import Header from "../Components/Header";
-import OfferModal from "../Components/OfferModal";
 import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
 import ProductButton from "../Components/ProductButton";
+import axios from "axios";
 
 function ProductDetail(props) {
   var tmp;
@@ -15,17 +14,16 @@ function ProductDetail(props) {
     }
   });
   // const [getCancelOfferID, setCancelOfferID] = useState("");
-  const [getofferValue, setOfferValue] = useState("0");
+
   const [getProduct, setProduct] = useState(tmp);
   const [getStatus, setStatus] = useState();
-
   useEffect(() => {
-    fetch(`https://bootcampapi.techcs.io/api/fe/v1/product/${props.getID}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProduct(data);
-      });
-  }, []); // eslint-disable-line
+    axios(
+      `https://bootcampapi.techcs.io/api/fe/v1/product/${
+        window.location.href.split("/")[4]
+      }`
+    ).then((response) => setProduct(response.data));
+  }, ""); // eslint-disable-line
 
   return (
     <>
@@ -34,11 +32,11 @@ function ProductDetail(props) {
         <div className="d-flex whiteBackground responsiveDetail">
           <img
             className="productDetailImg border-r-8"
-            src={getProduct.imageUrl}
+            src={getProduct?.imageUrl}
             alt=""
           ></img>
           <div className="productDetailArea full-w">
-            <p className="productTitle">{getProduct.title}</p>
+            <p className="productTitle">{getProduct?.title}</p>
             <div className="d-flex">
               <div className="productDescription">
                 <p>
@@ -52,33 +50,34 @@ function ProductDetail(props) {
                 </p>
               </div>
               <div className="productDescription">
-                <p>{getProduct.brand.title}</p>
-                <p>{getProduct.color.title}</p>
-                <p>{getProduct.status.title}</p>
+                <p>{getProduct?.brand.title}</p>
+                <p>{getProduct?.color.title}</p>
+                <p>{getProduct?.status.title}</p>
               </div>
             </div>
             <p className="marginT30 priceValue">
-              <b>{getProduct.price} TL</b>
+              <b>{getProduct?.price} TL</b>
             </p>
             <ProductButton
               getProduct={getProduct}
-              getofferValue={getofferValue}
               getCancelOfferID={props.getCancelOfferID}
               setStatus={setStatus}
-              setOfferValue={setOfferValue}
+              setProduct={setProduct}
               getToken={props.getToken}
+              getID={props.getID}
+              getIsOauth={props.getIsOauth}
             />
 
             <div className="productDesc">
               <p>
                 <b>Açıklama</b>
               </p>
-              <p>{getProduct.description}</p>
+              <p>{getProduct?.description}</p>
             </div>
           </div>
         </div>
       </div>
-      <OfferModal
+      {/* <OfferModal
         getID={props.getID}
         getProduct={getProduct}
         getIsOauth={props.getIsOauth}
@@ -89,7 +88,7 @@ function ProductDetail(props) {
         product={getProduct}
         getToken={props.getToken}
         setStatus={setStatus}
-      />
+      /> */}
       <div
         id="succesBuy"
         className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"

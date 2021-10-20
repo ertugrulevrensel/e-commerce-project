@@ -33,7 +33,8 @@ function OfferModal(props) {
   }
   function goOffer(price) {
     var url =
-      "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" + props.getID;
+      "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" +
+      window.location.href.split("/")[4];
     fetch(url, {
       method: "POST",
       headers: {
@@ -79,11 +80,11 @@ function OfferModal(props) {
         <div className="bgf0f8ff full-w d-flex border-r-8 align-center">
           <img
             className="border-r-8"
-            src={props.getProduct.imageUrl}
+            src={props.getProduct?.imageUrl}
             alt=""
           ></img>
-          <p>{props.getProduct.title}</p>
-          <p className="buyPrice">{props.getProduct.price} TL</p>
+          <p className="titleFont">{props.getProduct?.title}</p>
+          <p className="buyPrice">{props.getProduct?.price} TL</p>
         </div>
         <div className="offerArea full-w">
           <div className="d-flex full-w align-center border-r-8">
