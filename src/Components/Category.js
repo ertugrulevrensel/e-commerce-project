@@ -3,12 +3,11 @@ import "./Category.scss";
 import { connect } from "react-redux";
 import { getCategory, setCategoryID } from "../actions";
 
-function Category({ categorys, getCategory, setCategoryID, categoryID }) {
+function Category({ categorys, getCategory, setCategoryID }) {
   useEffect(() => {
     getCategory();
   }, []);
   function settedCategoryID(id) {
-    //document.getElementById("allCategory").classList.remove("checkedLi");
     setCategoryID(id);
     document.getElementById("allCategory").classList.remove("checkedLi");
     for (let i = 0; i < categorys.length; i++) {
@@ -57,7 +56,6 @@ function Category({ categorys, getCategory, setCategoryID, categoryID }) {
 
 const mapStatetoProps = (state) => ({
   categorys: state.categorys,
-  categoryID: state.categoryID,
 });
 
 export default connect(mapStatetoProps, { getCategory, setCategoryID })(

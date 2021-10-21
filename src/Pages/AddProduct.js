@@ -6,26 +6,30 @@ import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import FileUpload from "../Components/FileUpload";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 import axios from "axios";
 
-function AddProduct(props) {
+function AddProduct({ isAuth, categorys, token }) {
   const [getAddingStatus, setAddingStatus] = useState();
   const [getImageUrl, setImageUrl] = useState();
+  const [color, setColor] = useState([]);
+  const [brand, setBrand] = useState([]);
+  const [status, setStatus] = useState([]);
   let history = useHistory();
   useEffect(() => {
-    if (!props.getIsOauth) {
+    if (!isAuth) {
       history.push("/");
     }
     axios("https://bootcampapi.techcs.io/api/fe/v1/detail/color/all").then(
-      (response) => props.setColor(response.data)
+      (response) => setColor(response.data)
     );
     //get all brands and set brand state
     axios("https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all").then(
-      (response) => props.setBrand(response.data)
+      (response) => setBrand(response.data)
     );
     //get all status and set status state
     axios("https://bootcampapi.techcs.io/api/fe/v1/detail/status/all").then(
-      (response) => props.setStatus(response.data)
+      (response) => setStatus(response.data)
     );
   }, []); // eslint-disable-line
   function saveProduct() {
@@ -66,7 +70,7 @@ function AddProduct(props) {
     fetch("https://bootcampapi.techcs.io/api/fe/v1/product/create", {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${props.getToken}`,
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
@@ -89,7 +93,7 @@ function AddProduct(props) {
   }
   return (
     <div>
-      <Header getIsOauth={props.getIsOauth} />
+      <Header />
       <div className="responsivePad10">
         <form className=" width80 addProductArea whiteBackground">
           <div className="d-flex">
@@ -124,7 +128,7 @@ function AddProduct(props) {
                     <option value="" disabled selected>
                       Kategori seç
                     </option>
-                    {props.category.map((item) => {
+                    {categorys?.map((item) => {
                       return (
                         <option key={item.id} value={[item.title, item.id]}>
                           {item.title}
@@ -143,7 +147,7 @@ function AddProduct(props) {
                     <option value="" disabled selected>
                       Marka seç
                     </option>
-                    {props.brand.map((item) => {
+                    {brand?.map((item) => {
                       return (
                         <option key={item.id} value={[item.title, item.id]}>
                           {item.title}
@@ -164,7 +168,7 @@ function AddProduct(props) {
                     <option value="" disabled selected>
                       Renk seç
                     </option>
-                    {props.color.map((item) => {
+                    {color?.map((item) => {
                       return (
                         <option key={item.id} value={[item.title, item.id]}>
                           {item.title}
@@ -183,7 +187,7 @@ function AddProduct(props) {
                     <option value="" disabled selected>
                       Kullanım durumu seç
                     </option>
-                    {props.status.map((item) => {
+                    {status?.map((item) => {
                       return (
                         <option key={item.id} value={[item.title, item.id]}>
                           {item.title}
@@ -213,7 +217,7 @@ function AddProduct(props) {
               <p className="bold">
                 <b>Ürün Görseli</b>
               </p>
-              <FileUpload getToken={props.getToken} setImageUrl={setImageUrl} />
+              <FileUpload setImageUrl={setImageUrl} />
             </div>
           </div>
           <div className="saveButtonDiv d-flex full-w ">
@@ -245,4 +249,9 @@ function AddProduct(props) {
   );
 }
 
-export default AddProduct;
+const mapStatetoProps = (state) => ({
+  isAuth: state.isAuth,
+  categorys: state.categorys,
+  token: state.token,
+});
+export default connect(mapStatetoProps)(AddProduct);

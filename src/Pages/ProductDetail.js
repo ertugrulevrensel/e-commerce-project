@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./ProductDetail.scss";
 import Header from "../Components/Header";
 import ProductButton from "../Components/ProductButton";
@@ -8,7 +8,6 @@ import { getProduct } from "../actions";
 function ProductDetail({ getProduct, product }) {
   useEffect(() => {
     getProduct(window.location.href.split("/")[4]);
-    console.log(product);
   }, ""); // eslint-disable-line
 
   return (

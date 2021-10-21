@@ -5,6 +5,7 @@ import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
 import axios from "axios";
 import deleteImg from "../Assets/delete.svg";
+import { connect } from "react-redux";
 
 function FileUpload(props) {
   const [getUploadStatus, setUploadStatus] = useState("Yükleme Başarısız.");
@@ -80,7 +81,7 @@ function FileUpload(props) {
           // config,
           {
             headers: {
-              Authorization: `Bearer ${props.getToken}`,
+              Authorization: `Bearer ${props.token}`,
               "Content-Type": "multipart/form-data",
             },
             onUploadProgress: config,
@@ -92,6 +93,10 @@ function FileUpload(props) {
             .getElementById("viewImg")
             .setAttribute("src", response.data.url);
           // document.getElementById("viewUploadImg").classList.remove("d-none");
+        })
+        .catch((err) => {
+          setUploadStatus("Görsel Yüklenemedi.");
+          document.getElementById("failUpload").classList.remove("d-none");
         });
     }
   }
@@ -169,4 +174,7 @@ function FileUpload(props) {
   );
 }
 
-export default FileUpload;
+const mapStatetoProps = (state) => ({
+  token: state.token,
+});
+export default connect(mapStatetoProps)(FileUpload);

@@ -8,8 +8,15 @@ import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { getReceivedOfferList, getGivenOfferList } from "../actions";
 
-function Account({ email, isAuth }) {
+function Account({
+  email,
+  isAuth,
+  getReceivedOfferList,
+  getGivenOfferList,
+  token,
+}) {
   // const [getGivenOffer, setGivenOffer] = useState([]);
   // const [getReceivedOffer, setReceivedOffer] = useState([]);
   const [getStatus, setStatus] = useState("");
@@ -19,22 +26,8 @@ function Account({ email, isAuth }) {
     if (!isAuth) {
       history.push("/");
     }
-    // fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-    //   // withCredentials: true,
-    //   headers: { Authorization: `Bearer ${props.getToken}` },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setGivenOffer(data);
-    //   });
-
-    // fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
-    //   headers: { Authorization: `Bearer ${props.getToken}` },
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setReceivedOffer(data);
-    //   });
+    getReceivedOfferList(token);
+    getGivenOfferList(token);
   }, []); //eslint-disable-line
 
   function selectList(list) {
@@ -84,18 +77,8 @@ function Account({ email, isAuth }) {
               <p>Teklif Verdiklerim</p>
             </div>
           </div>
-          <GivenOffer
-            // getGivenOffer={getGivenOffer}
-            setStatus={setStatus}
-            // getToken={props.getToken}
-            // setGivenOffer={setGivenOffer}
-          />
-          <ReceivedOffer
-            // getReceivedOffer={getReceivedOffer}
-            // setReceivedOffer={setReceivedOffer}
-            setStatus={setStatus}
-            // getToken={props.getToken}
-          />
+          <ReceivedOffer setStatus={setStatus} />
+          <GivenOffer setStatus={setStatus} />
         </div>
         <div
           id="succesBuy"
@@ -118,5 +101,9 @@ function Account({ email, isAuth }) {
 const mapStatetoProps = (state) => ({
   isAuth: state.isAuth,
   email: state.email,
+  token: state.token,
 });
-export default connect(mapStatetoProps)(Account);
+export default connect(mapStatetoProps, {
+  getReceivedOfferList,
+  getGivenOfferList,
+})(Account);

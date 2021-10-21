@@ -6,7 +6,6 @@ import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { setIsAuth, setToken, setEmail, signUpProcess } from "../actions";
-import axios from "axios";
 
 function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
   function signUps() {
@@ -21,16 +20,6 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      // axios
-      //   .post(
-      //     "https://bootcampapi.techcs.io/api/fe/v1/authorization/signup",
-      //     data,
-      //     {
-      //       headers: {
-      //         "Content-Type": "application/json",
-      //       },
-      //     }
-      //   )
       signUpProcess(data)
         .then((response) => {
           document.getElementById("repetitive").classList.add("d-none");
@@ -97,20 +86,13 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
               Üye Ol
             </button>
             <p>
-              Hesabın var mı?{" "}
+              Hesabın var mı? {/* eslint-disable-next-line */}
               <a className="c-pointer" onClick={() => goLogin()}>
                 <b>Giriş Yap</b>
               </a>
             </p>
           </div>
         </div>
-        {/* <div
-          id="failSign"
-          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
-        >
-          <img src={fail} alt=""></img>
-          <p>Emailiniz veya şifreniz hatalı.</p>
-        </div> */}
         <div
           id="repetitive"
           className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"

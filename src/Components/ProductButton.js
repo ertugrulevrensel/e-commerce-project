@@ -4,15 +4,15 @@ import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
 import OfferModal from "./OfferModal";
 import BuyModal from "./BuyModal";
+import CancelModal from "./CancelModal";
 import { connect } from "react-redux";
-import { cancelOffer, getGivenOfferList } from "../actions";
+import { getGivenOfferList } from "../actions";
 
 function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
-  // const [isGivenOffer, setIsGivenOffer] = useState(false);
   const [isProductSold, setIsProductSold] = useState("false");
   const [getofferValue, setOfferValue] = useState("-1");
   const [getStatus, setStatus] = useState();
-  const [getProduct, setProduct] = useState([]);
+  const [getProductState, setProduct] = useState([]);
   useEffect(() => {
     axios(
       `https://bootcampapi.techcs.io/api/fe/v1/product/${
@@ -20,7 +20,7 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
       }`
     ).then((response) => setProduct(response.data));
     if (token.length > 0) {
-      getGivenOfferList();
+      getGivenOfferList(token);
     }
     if (Number(getofferValue) > 0) {
       document.getElementById("buyButton").classList.remove("d-none");
@@ -38,42 +38,9 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
       document.getElementById("offerButtonn").classList.add("d-none");
       document.getElementById("notSaleDiv").classList.remove("d-none");
     }
-    console.log("useEffect probutton");
-  }, "");
+  }, ""); // eslint-disable-line
   function cancelOffered() {
-    let cancelID = "";
-    givenOfferList.map((item) => {
-      if (item.product.id === window.location.href.split("/")[4]) {
-        cancelID = item.id;
-      }
-    });
-    cancelOffer(cancelID, token).then((response) => {
-      if (response.status === 200 || response.status === 201) {
-        document.getElementById("succesBuy").classList.remove("d-none");
-        document.getElementById("failCancelOffer").classList.add("d-none");
-        document.getElementById("offeredValuediv").classList.add("d-none");
-        setStatus("Teklif Geri Çeklidi.");
-        setOfferValue("0");
-      } else if (response.status === 401) {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
-        document.getElementById("succesBuy").classList.add("d-none");
-        setStatus("Lütfen Giriş Yapınız.");
-      } else {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
-        document.getElementById("succesBuy").classList.add("d-none");
-        setStatus("Teklif Geri Çekme Başarısız.");
-      }
-    });
-    // axios
-    //   .delete(
-    //     `https://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getCancelOfferID}`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${props.getToken}`,
-    //         "Content-Type": "application/json",
-    //       },
-    //     }
-    //   )
+    document.getElementById("cancelModal").classList.toggle("d-none");
   }
   function toggleOffer() {
     document.getElementById("offerModal").classList.toggle("d-none");
@@ -90,7 +57,14 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
             className="d-none grayBackground d-flex semi-w border-r-8"
           >
             <p>
-              Verilen Teklif: <b>{getofferValue}</b>
+              Verilen Teklif:{" "}
+              <b>
+                {
+                  givenOfferList?.filter(
+                    (offer) => offer.product.id === product.id
+                  )[0]?.offeredPrice
+                }
+              </b>
             </p>
           </div>
           <div className="d-flex productButton margin30">
@@ -101,7 +75,8 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
             >
               Satın Al
             </button>
-            {getofferValue > 0 ? (
+            {givenOfferList.filter((offer) => offer.product.id === product.id)
+              .length ? (
               <button
                 id="backOfferButton"
                 onClick={() => cancelOffered()}
@@ -134,20 +109,25 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
           </button>
         </div>
       ) : null}
-      <OfferModal setOfferValue={setOfferValue} product={getProduct} />
-      <BuyModal product={getProduct} setIsProductSold={setIsProductSold} />
-      <div
-        id="succesBuy"
-        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
-      >
-        <img src={succes} alt=""></img>
-        <p>{getStatus}</p>
-      </div>
+      <OfferModal setOfferValue={setOfferValue} product={getProductState} />
+      <BuyModal product={getProductState} setIsProductSold={setIsProductSold} />
+      <CancelModal
+        setStatus={setStatus}
+        setOfferValue={setOfferValue}
+        product={getProductState}
+      />
       <div
         id="failCancelOffer"
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
       >
         <img src={fail} alt=""></img>
+        <p>{getStatus}</p>
+      </div>
+      <div
+        id="succesCancel"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
         <p>{getStatus}</p>
       </div>
     </div>

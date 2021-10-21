@@ -3,36 +3,30 @@ import "./Modal.scss";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import { connect } from "react-redux";
-import { buyProduct } from "../actions";
+import { buyProduct, getProduct, getGivenOfferList } from "../actions";
 
-function BuyModal(props, { token }) {
+function BuyModal(props) {
   const [getStatus, setStatus] = useState();
   function toggleModal() {
-    document.getElementById("succesBuy").classList.add("d-none");
+    document.getElementById("succesBuys").classList.add("d-none");
     document.getElementById("failSignBuy").classList.add("d-none");
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   function buyProducts(id) {
-    buyProduct(id, token).then((response) => {
+    buyProduct(id, props.token).then((response) => {
       if (response.status === 201 || response.status === 200) {
-        document.getElementById("succesBuy").classList.remove("d-none");
+        document.getElementById("succesBuys").classList.remove("d-none");
         document.getElementById("failSignBuy").classList.add("d-none");
         setStatus("Satın Alındı.");
-        props.setIsProductSold("true");
+        props.getProduct(id);
+        getGivenOfferList(props.token);
+        //props.setIsProductSold("true");
       } else if (response.status === 401) {
         document.getElementById("failSignBuy").classList.remove("d-none");
-        document.getElementById("succesBuy").classList.add("d-none");
+        document.getElementById("succesBuys").classList.add("d-none");
         setStatus("Lütfen Giriş Yapınız.");
       }
     });
-    // let url = "https://bootcampapi.techcs.io/api/fe/v1/product/purchase/" + id;
-    // fetch(url, {
-    //   method: "PUT",
-    //   headers: {
-    //     Authorization: `Bearer ${props.getToken}`,
-    //   },
-    //   body: JSON.stringify(id),
-    // })
   }
   return (
     <div
@@ -80,4 +74,6 @@ function BuyModal(props, { token }) {
 const mapStatetoProps = (state) => ({
   token: state.token,
 });
-export default connect(mapStatetoProps)(BuyModal);
+export default connect(mapStatetoProps, { getProduct, getGivenOfferList })(
+  BuyModal
+);

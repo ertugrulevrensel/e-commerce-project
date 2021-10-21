@@ -6,7 +6,7 @@ import { getProductList } from "../actions";
 function ProductList({ productList, getProductList, categoryID }) {
   useEffect(() => {
     getProductList();
-  }, "");
+  }, ""); // eslint-disable-line
   let history = useHistory();
   function goDetail(id) {
     // if (props.getIsOauth) {

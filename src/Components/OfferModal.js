@@ -4,8 +4,8 @@ import exit from "../Assets/x.png";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import { connect } from "react-redux";
-import { giveOffer } from "../actions";
-function OfferModal(props, { token }) {
+import { giveOffer, getGivenOfferList } from "../actions";
+function OfferModal(props) {
   function toggleModal() {
     document.getElementById("offerModal").classList.toggle("d-none");
     document.getElementById("failSign").classList.add("d-none");
@@ -27,16 +27,16 @@ function OfferModal(props, { token }) {
     }
   }
   function goOffer(price) {
-    giveOffer(window.location.href.split("/")[4], token)
-      .then((response) => {
-        document.getElementById("succes").classList.remove("d-none");
-        document.getElementById("failSign").classList.add("d-none");
-        document.getElementById("failOffer").classList.add("d-none");
-        document.getElementById("offeredValuediv").classList.remove("d-none");
-        props.setOfferValue(Number(price.toFixed(2)));
-      })
-      .catch((err) => {
-        if (err.response.status === 401) {
+    giveOffer(window.location.href.split("/")[4], props.token, price).then(
+      (response) => {
+        if (response.status === 200 || response.status === 201) {
+          props.getGivenOfferList(props.token);
+          document.getElementById("succes").classList.remove("d-none");
+          document.getElementById("failSign").classList.add("d-none");
+          document.getElementById("failOffer").classList.add("d-none");
+          document.getElementById("offeredValuediv").classList.remove("d-none");
+          props.setOfferValue(Number(price.toFixed(2)));
+        } else if (response.status === 401) {
           document.getElementById("failSign").classList.remove("d-none");
           document.getElementById("succes").classList.add("d-none");
           document.getElementById("failOffer").classList.add("d-none");
@@ -45,19 +45,8 @@ function OfferModal(props, { token }) {
           document.getElementById("failSign").classList.add("d-none");
           document.getElementById("succes").classList.add("d-none");
         }
-      })
-      .then((data) => console.log("teklif id: ", data));
-    // var url =
-    //   "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" +
-    //   window.location.href.split("/")[4];
-    // fetch(url, {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${props.getToken}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ offeredPrice: Number(price.toFixed(2)) }),
-    // })
+      }
+    );
   }
 
   return (
@@ -162,4 +151,4 @@ function OfferModal(props, { token }) {
 const mapStatetoProps = (state) => ({
   token: state.token,
 });
-export default connect(mapStatetoProps)(OfferModal);
+export default connect(mapStatetoProps, { getGivenOfferList })(OfferModal);

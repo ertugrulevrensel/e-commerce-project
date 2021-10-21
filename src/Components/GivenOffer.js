@@ -3,16 +3,13 @@ import BuyModal from "./BuyModal";
 import { connect } from "react-redux";
 import { getGivenOfferList } from "../actions";
 
-function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
-  useEffect(() => {
-    getGivenOfferList(token);
-  }, []);
+function GivenOffer(props) {
   function toggleBuy() {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   return (
     <div id="givenOffers" className="d-none">
-      {givenOfferList?.map((offer) => {
+      {props.givenOfferList?.map((offer) => {
         return (
           <div
             key={offer.id}
@@ -35,7 +32,10 @@ function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
                 <p className="color4b9ce2">Teklif Verildi</p>
               </div>
             ) : offer.status === "accepted" ? (
-              !offer.product.isSold && offer.product.isOfferable ? (
+              !offer.product.isSold &&
+              offer.product.isOfferable &&
+              !(offer.isSold === "sold") &&
+              !props.product?.isSold ? (
                 <div className="d-flex receivedOfferButton align-center">
                   <p className="color4b9ce2">Onaylandı</p>
                   <button
@@ -44,10 +44,6 @@ function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
                   >
                     Satın Al
                   </button>
-                  <BuyModal
-                    product={offer.product}
-                    setStatus={props.setStatus}
-                  />
                 </div>
               ) : (
                 <div className="d-flex receivedOfferButton align-center">
@@ -59,6 +55,7 @@ function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
                 <p className="colorf77474">Reddedildi</p>
               </div>
             )}
+            <BuyModal product={offer.product} setStatus={props.setStatus} />
           </div>
         );
       })}
@@ -68,5 +65,6 @@ function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
 const mapStatetoProps = (state) => ({
   givenOfferList: state.givenOfferList,
   token: state.token,
+  product: state.product,
 });
 export default connect(mapStatetoProps, { getGivenOfferList })(GivenOffer);

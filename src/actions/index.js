@@ -32,54 +32,6 @@ export const getCategory = () => (dispatch) => {
       });
     });
 };
-export const getColors = () => async (dispatch) => {
-  await axios
-    .get("https://bootcampapi.techcs.io/api/fe/v1/detail/color/all")
-    .then((res) =>
-      dispatch({
-        type: "FETCH_COLOR_LIST",
-        payload: res.data,
-      })
-    )
-    .catch((err) => {
-      dispatch({
-        type: "FETCH_COLOR_LIST",
-        payload: err.response.status,
-      });
-    });
-};
-export const getBrands = () => async (dispatch) => {
-  await axios
-    .get("https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all")
-    .then((res) =>
-      dispatch({
-        type: "FETCH_BRAND_LIST",
-        payload: res.data,
-      })
-    )
-    .catch((err) => {
-      dispatch({
-        type: "FETCH_BRAND_LIST",
-        payload: err.response.status,
-      });
-    });
-};
-export const getProductStatus = () => async (dispatch) => {
-  await axios
-    .get("https://bootcampapi.techcs.io/api/fe/v1/detail/status/all")
-    .then((res) =>
-      dispatch({
-        type: "FETCH_STATUS_LIST",
-        payload: res.data,
-      })
-    )
-    .catch((err) => {
-      dispatch({
-        type: "FETCH_STATUS_LIST",
-        payload: err.response.status,
-      });
-    });
-};
 export const setToken = (token) => {
   return {
     type: "SET_TOKEN",
@@ -115,18 +67,14 @@ export const getProduct = (id) => async (dispatch) => {
   );
 };
 export const getGivenOfferList = (token) => (dispatch) => {
-  console.log("object");
-  fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-    // withCredentials: true,
+  axios("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
     headers: { Authorization: `Bearer ${token}` },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch({
-        type: "FETCH_GIVEN_OFFER",
-        payload: data,
-      });
+  }).then((res) => {
+    dispatch({
+      type: "FETCH_GIVEN_OFFER",
+      payload: res.data,
     });
+  });
 };
 export const getReceivedOfferList = (token) => (dispatch) => {
   axios("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
@@ -151,16 +99,15 @@ export const cancelOffer = (id, token) => {
     }
   );
 };
-export const giveOffer = (id, token) => {
-  return axios.post(
-    `https://bootcampapi.techcs.io/api/fe/v1/product/offer/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+export const giveOffer = (id, token, price) => {
+  return fetch(`https://bootcampapi.techcs.io/api/fe/v1/product/offer/${id}`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ offeredPrice: Number(price.toFixed(2)) }),
+  });
 };
 export const buyProduct = (id, token) => {
   return fetch(
@@ -195,22 +142,4 @@ export const signUpProcess = (data) => (dispatch) => {
       },
     }
   );
-};
-export const acceptOffer = (id, token) => (dispatch) => {
-  fetch(`https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/${id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(id),
-  });
-};
-export const rejectOffer = (id, token) => (dispatch) => {
-  fetch(`https://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/${id}`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(id),
-  });
 };

@@ -1,19 +1,23 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getReceivedOfferList, acceptOffer, rejectOffer } from "../actions";
+import { getReceivedOfferList } from "../actions";
 
-function ReceivedOffer(
-  props,
-  { token, getReceivedOfferList, receivedOfferList }
-) {
-  useEffect(() => {
-    getReceivedOfferList(token);
-  }, []);
+function ReceivedOffer(props) {
+  useEffect(() => {}, []);
   function receivedOfferAccept(id) {
-    acceptOffer(id, token).then((response) => {
+    var url =
+      "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
+    fetch(url, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+      body: JSON.stringify(id),
+    }).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
+        props.getReceivedOfferList(props.token);
         props.setStatus("Teklif Kabul Edildi.");
       } else if (response.status === 401) {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
@@ -27,11 +31,20 @@ function ReceivedOffer(
     });
   }
   function receivedOfferReject(id) {
-    rejectOffer(id, token).then((response) => {
+    var url =
+      "https://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/" + id;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      },
+      body: JSON.stringify(id),
+    }).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
         props.setStatus("Teklif Reddedildi");
+        props.getReceivedOfferList(props.token);
       } else if (response.status === 401) {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
         document.getElementById("succesBuy").classList.add("d-none");
@@ -45,7 +58,7 @@ function ReceivedOffer(
   }
   return (
     <div id="receivedOffers">
-      {receivedOfferList?.map((offer) => {
+      {props.receivedOfferList?.map((offer) => {
         return (
           <div
             key={offer.id}

@@ -1,20 +1,15 @@
 // import axios from "axios";
 
 export const INITIAL_STATE = {
-  token: "", //
-  email: "", //
-  isAuth: false, //
-  //productID: "",
-  productList: [], //
-  categorys: [], //
-  colors: [], //
-  brands: [], //
-  productStatus: [], //
+  token: "",
+  email: "",
+  isAuth: false,
+  productList: [],
+  categorys: [],
   categoryID: undefined,
   product: [],
   givenOfferList: [],
   receivedOfferList: [],
-  //cancelOfferID: "",
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
@@ -35,21 +30,6 @@ export const reducer = (state = INITIAL_STATE, action) => {
         categorys: action.payload,
       };
     }
-    case "FETCH_COLOR_LIST":
-      return {
-        ...state,
-        colors: action.payload,
-      };
-    case "FETCH_BRAND_LIST":
-      return {
-        ...state,
-        brands: action.payload,
-      };
-    case "FETCH_STATUS_LIST":
-      return {
-        ...state,
-        productStatus: action.payload,
-      };
     case "SET_TOKEN":
       return {
         ...state,

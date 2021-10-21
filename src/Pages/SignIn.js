@@ -22,7 +22,6 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
     ) {
       signInProcess(data)
         .then((response) => {
-          console.log(response);
           document.getElementById("failSign").classList.add("d-none");
           setIsAuth(true);
           setEmail(data.email);
@@ -84,7 +83,7 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
               Giriş Yap
             </button>
             <p>
-              Hesabın yok mu?{" "}
+              Hesabın yok mu? {/* eslint-disable-next-line */}
               <a className="c-pointer" onClick={() => goRegister()}>
                 <b>Üye Ol</b>
               </a>
