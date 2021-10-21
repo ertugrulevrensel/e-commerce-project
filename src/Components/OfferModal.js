@@ -3,14 +3,9 @@ import "./Modal.scss";
 import exit from "../Assets/x.png";
 import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
-
-function OfferModal(props) {
-  // var tmp;
-  // props.getProductList.map((product) => {
-  //   if (product.id === props.getID) {
-  //     tmp = product;
-  //   }
-  // });
+import { connect } from "react-redux";
+import { giveOffer } from "../actions";
+function OfferModal(props, { token }) {
   function toggleModal() {
     document.getElementById("offerModal").classList.toggle("d-none");
     document.getElementById("failSign").classList.add("d-none");
@@ -25,36 +20,26 @@ function OfferModal(props) {
       var element = document.getElementsByName("offerPercent");
       for (let i = 0; i < element.length; i++) {
         if (element[i].checked) {
-          let offer = element[i].value * props.getProduct.price;
+          let offer = element[i].value * props.product.price;
           goOffer(offer);
         }
       }
     }
   }
   function goOffer(price) {
-    var url =
-      "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" +
-      window.location.href.split("/")[4];
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${props.getToken}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ offeredPrice: Number(price.toFixed(2)) }),
-    })
+    giveOffer(window.location.href.split("/")[4], token)
       .then((response) => {
-        response.json();
-        if (response.status === 401) {
+        document.getElementById("succes").classList.remove("d-none");
+        document.getElementById("failSign").classList.add("d-none");
+        document.getElementById("failOffer").classList.add("d-none");
+        document.getElementById("offeredValuediv").classList.remove("d-none");
+        props.setOfferValue(Number(price.toFixed(2)));
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
           document.getElementById("failSign").classList.remove("d-none");
           document.getElementById("succes").classList.add("d-none");
           document.getElementById("failOffer").classList.add("d-none");
-        } else if (response.status === 201 || response.status === 200) {
-          document.getElementById("succes").classList.remove("d-none");
-          document.getElementById("failSign").classList.add("d-none");
-          document.getElementById("failOffer").classList.add("d-none");
-          document.getElementById("offeredValuediv").classList.remove("d-none");
-          props.setOfferValue(Number(price.toFixed(2)));
         } else {
           document.getElementById("failOffer").classList.remove("d-none");
           document.getElementById("failSign").classList.add("d-none");
@@ -62,6 +47,17 @@ function OfferModal(props) {
         }
       })
       .then((data) => console.log("teklif id: ", data));
+    // var url =
+    //   "https://bootcampapi.techcs.io/api/fe/v1/product/offer/" +
+    //   window.location.href.split("/")[4];
+    // fetch(url, {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${props.getToken}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ offeredPrice: Number(price.toFixed(2)) }),
+    // })
   }
 
   return (
@@ -80,11 +76,11 @@ function OfferModal(props) {
         <div className="bgf0f8ff full-w d-flex border-r-8 align-center">
           <img
             className="border-r-8"
-            src={props.getProduct?.imageUrl}
+            src={props.product?.imageUrl}
             alt=""
           ></img>
-          <p className="titleFont">{props.getProduct?.title}</p>
-          <p className="buyPrice">{props.getProduct?.price} TL</p>
+          <p className="titleFont">{props.product?.title}</p>
+          <p className="buyPrice">{props.product?.price} TL</p>
         </div>
         <div className="offerArea full-w">
           <div className="d-flex full-w align-center border-r-8">
@@ -163,5 +159,7 @@ function OfferModal(props) {
     </div>
   );
 }
-
-export default OfferModal;
+const mapStatetoProps = (state) => ({
+  token: state.token,
+});
+export default connect(mapStatetoProps)(OfferModal);

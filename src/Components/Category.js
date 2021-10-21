@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Category.scss";
+import { connect } from "react-redux";
+import { getCategory, setCategoryID } from "../actions";
 
-function Category(props) {
-  function categoryID(id) {
+function Category({ categorys, getCategory, setCategoryID, categoryID }) {
+  useEffect(() => {
+    getCategory();
+  }, []);
+  function settedCategoryID(id) {
     //document.getElementById("allCategory").classList.remove("checkedLi");
-    props.setCategoryID(id);
+    setCategoryID(id);
     document.getElementById("allCategory").classList.remove("checkedLi");
-    for (let i = 0; i < props.category.length; i++) {
-      if (props.category[i].id === id) {
+    for (let i = 0; i < categorys.length; i++) {
+      if (categorys[i].id === id) {
         document.getElementById(id).classList.add("checkedLi");
       } else {
-        document
-          .getElementById(props.category[i].id)
-          .classList.remove("checkedLi");
+        document.getElementById(categorys[i].id).classList.remove("checkedLi");
       }
     }
   }
   function showAllCategory() {
-    props.setCategoryID(undefined);
+    setCategoryID(undefined);
     document
       .getElementsByClassName("checkedLi")[0]
       .classList.remove("checkedLi");
@@ -33,12 +36,12 @@ function Category(props) {
       >
         Hepsi
       </button>
-      {props.category.map((item) => {
+      {categorys.map((item) => {
         return (
           <button
             id={item.id}
             className="c-pointer"
-            onClick={() => categoryID(item.id)}
+            onClick={() => settedCategoryID(item.id)}
             key={item.id}
           >
             {item.title}
@@ -52,4 +55,11 @@ function Category(props) {
   );
 }
 
-export default Category;
+const mapStatetoProps = (state) => ({
+  categorys: state.categorys,
+  categoryID: state.categoryID,
+});
+
+export default connect(mapStatetoProps, { getCategory, setCategoryID })(
+  Category
+);

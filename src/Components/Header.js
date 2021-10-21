@@ -5,8 +5,9 @@ import Add from "../Assets/Add-product.png";
 import Profile from "../Assets/Profile.png";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react/cjs/react.development";
+import { connect } from "react-redux";
 
-function Header(props) {
+function Header({ isAuth }) {
   let history = useHistory();
   function goHome() {
     history.push("/");
@@ -21,7 +22,7 @@ function Header(props) {
     history.push("/myaccount/");
   }
   useEffect(() => {
-    if (props.getIsOauth) {
+    if (isAuth) {
       document.getElementById("myAccountButton").classList.remove("d-none");
       document.getElementById("loginButton").classList.add("d-none");
     } else {
@@ -61,5 +62,7 @@ function Header(props) {
     </header>
   );
 }
-
-export default Header;
+const mapStatetoProps = (state) => ({
+  isAuth: state.isAuth,
+});
+export default connect(mapStatetoProps)(Header);

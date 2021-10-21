@@ -1,13 +1,27 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import succes from "../Assets/succes.png";
+import fail from "../Assets/fail.png";
 import OfferModal from "./OfferModal";
 import BuyModal from "./BuyModal";
+import { connect } from "react-redux";
+import { cancelOffer, getGivenOfferList } from "../actions";
 
-function ProductButton(props) {
+function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
   // const [isGivenOffer, setIsGivenOffer] = useState(false);
   const [isProductSold, setIsProductSold] = useState("false");
   const [getofferValue, setOfferValue] = useState("-1");
+  const [getStatus, setStatus] = useState();
+  const [getProduct, setProduct] = useState([]);
   useEffect(() => {
+    axios(
+      `https://bootcampapi.techcs.io/api/fe/v1/product/${
+        window.location.href.split("/")[4]
+      }`
+    ).then((response) => setProduct(response.data));
+    if (token.length > 0) {
+      getGivenOfferList();
+    }
     if (Number(getofferValue) > 0) {
       document.getElementById("buyButton").classList.remove("d-none");
       document.getElementById("backOfferButton").classList.remove("d-none");
@@ -26,34 +40,40 @@ function ProductButton(props) {
     }
     console.log("useEffect probutton");
   }, "");
-  function cancelOffer() {
-    axios
-      .delete(
-        `https://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getCancelOfferID}`,
-        {
-          headers: {
-            Authorization: `Bearer ${props.getToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status === 200 || response.status === 201) {
-          document.getElementById("succesBuy").classList.remove("d-none");
-          document.getElementById("failCancelOffer").classList.add("d-none");
-          document.getElementById("offeredValuediv").classList.add("d-none");
-          props.setStatus("Teklif Geri Çeklidi.");
-          props.setOfferValue("0");
-        } else if (response.status === 401) {
-          document.getElementById("failCancelOffer").classList.remove("d-none");
-          document.getElementById("succesBuy").classList.add("d-none");
-          props.setStatus("Lütfen Giriş Yapınız.");
-        } else {
-          document.getElementById("failCancelOffer").classList.remove("d-none");
-          document.getElementById("succesBuy").classList.add("d-none");
-          props.setStatus("Teklif Geri Çekme Başarısız.");
-        }
-      });
+  function cancelOffered() {
+    let cancelID = "";
+    givenOfferList.map((item) => {
+      if (item.product.id === window.location.href.split("/")[4]) {
+        cancelID = item.id;
+      }
+    });
+    cancelOffer(cancelID, token).then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        document.getElementById("succesBuy").classList.remove("d-none");
+        document.getElementById("failCancelOffer").classList.add("d-none");
+        document.getElementById("offeredValuediv").classList.add("d-none");
+        setStatus("Teklif Geri Çeklidi.");
+        setOfferValue("0");
+      } else if (response.status === 401) {
+        document.getElementById("failCancelOffer").classList.remove("d-none");
+        document.getElementById("succesBuy").classList.add("d-none");
+        setStatus("Lütfen Giriş Yapınız.");
+      } else {
+        document.getElementById("failCancelOffer").classList.remove("d-none");
+        document.getElementById("succesBuy").classList.add("d-none");
+        setStatus("Teklif Geri Çekme Başarısız.");
+      }
+    });
+    // axios
+    //   .delete(
+    //     `https://bootcampapi.techcs.io/api/fe/v1/account/cancel-offer/${props.getCancelOfferID}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${props.getToken}`,
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   )
   }
   function toggleOffer() {
     document.getElementById("offerModal").classList.toggle("d-none");
@@ -63,7 +83,7 @@ function ProductButton(props) {
   }
   return (
     <div className="responsiveButton">
-      {!props.getProduct?.isSold && props.getProduct?.isOfferable ? (
+      {!product?.isSold && product?.isOfferable ? (
         <div>
           <div
             id="offeredValuediv"
@@ -81,10 +101,10 @@ function ProductButton(props) {
             >
               Satın Al
             </button>
-            {getofferValue > 0 && !(props.getCancelOfferID === "") ? (
+            {getofferValue > 0 ? (
               <button
                 id="backOfferButton"
-                onClick={() => cancelOffer()}
+                onClick={() => cancelOffered()}
                 className="productOfferButton full-w border-r-8"
               >
                 Teklifi Geri Çek
@@ -100,11 +120,11 @@ function ProductButton(props) {
             )}
           </div>
         </div>
-      ) : props.getProduct?.isSold ? (
+      ) : product?.isSold ? (
         <div id="notSalediv" className="notOnSale semi-w border-r-8">
           Bu Ürün Satışta Değil
         </div>
-      ) : !props.getProduct?.isOfferable ? (
+      ) : !product?.isOfferable ? (
         <div className="d-flex productButton margin30">
           <button
             onClick={() => toggleBuy()}
@@ -114,21 +134,30 @@ function ProductButton(props) {
           </button>
         </div>
       ) : null}
-      <OfferModal
-        getID={props.getID}
-        getProduct={props.getProduct}
-        getIsOauth={props.getIsOauth}
-        setOfferValue={setOfferValue}
-        getToken={props.getToken}
-        setIsProductSold={setIsProductSold}
-      />
-      <BuyModal
-        product={props.getProduct}
-        getToken={props.getToken}
-        setStatus={props.setStatus}
-      />
+      <OfferModal setOfferValue={setOfferValue} product={getProduct} />
+      <BuyModal product={getProduct} setIsProductSold={setIsProductSold} />
+      <div
+        id="succesBuy"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
+        <p>{getStatus}</p>
+      </div>
+      <div
+        id="failCancelOffer"
+        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+      >
+        <img src={fail} alt=""></img>
+        <p>{getStatus}</p>
+      </div>
     </div>
   );
 }
 
-export default ProductButton;
+const mapStatetoProps = (state) => ({
+  product: state.product,
+  givenOfferList: state.givenOfferList,
+  token: state.token,
+});
+
+export default connect(mapStatetoProps, { getGivenOfferList })(ProductButton);

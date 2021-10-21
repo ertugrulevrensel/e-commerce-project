@@ -1,32 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Modal.scss";
 import fail from "../Assets/fail.png";
+import succes from "../Assets/succes.png";
+import { connect } from "react-redux";
+import { buyProduct } from "../actions";
 
-function BuyModal(props) {
+function BuyModal(props, { token }) {
+  const [getStatus, setStatus] = useState();
   function toggleModal() {
     document.getElementById("succesBuy").classList.add("d-none");
     document.getElementById("failSignBuy").classList.add("d-none");
     document.getElementById("buyModal").classList.toggle("d-none");
   }
-  function buyProduct(id) {
-    let url = "https://bootcampapi.techcs.io/api/fe/v1/product/purchase/" + id;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${props.getToken}`,
-      },
-      body: JSON.stringify(id),
-    }).then((response) => {
+  function buyProducts(id) {
+    buyProduct(id, token).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("succesBuy").classList.remove("d-none");
         document.getElementById("failSignBuy").classList.add("d-none");
-        props.setStatus("Satın Alındı.");
+        setStatus("Satın Alındı.");
         props.setIsProductSold("true");
       } else if (response.status === 401) {
         document.getElementById("failSignBuy").classList.remove("d-none");
         document.getElementById("succesBuy").classList.add("d-none");
+        setStatus("Lütfen Giriş Yapınız.");
       }
     });
+    // let url = "https://bootcampapi.techcs.io/api/fe/v1/product/purchase/" + id;
+    // fetch(url, {
+    //   method: "PUT",
+    //   headers: {
+    //     Authorization: `Bearer ${props.getToken}`,
+    //   },
+    //   body: JSON.stringify(id),
+    // })
   }
   return (
     <div
@@ -45,7 +51,7 @@ function BuyModal(props) {
               Vazgeç
             </button>
             <button
-              onClick={() => buyProduct(props.product.id)}
+              onClick={() => buyProducts(props.product.id)}
               className="full-w bg4b9ce2 border-r-8 colorf0f8ff"
             >
               Satın Al
@@ -58,10 +64,20 @@ function BuyModal(props) {
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
       >
         <img src={fail} alt=""></img>
-        <p>Giriş Yapmadınız.</p>
+        <p>{getStatus}</p>
+      </div>
+      <div
+        id="succesBuys"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
+        <p>{getStatus}</p>
       </div>
     </div>
   );
 }
 
-export default BuyModal;
+const mapStatetoProps = (state) => ({
+  token: state.token,
+});
+export default connect(mapStatetoProps)(BuyModal);

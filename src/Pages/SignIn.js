@@ -4,10 +4,11 @@ import img from "../Assets/Login-reg.png";
 import fail from "../Assets/fail.png";
 import Logo from "../Assets/Logo2.png";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
+import { connect } from "react-redux";
+import { setIsAuth, setToken, setEmail, signInProcess } from "../actions";
 
-function SignIn(props) {
-  function signInProcess() {
+function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
+  function logIn() {
     var data = {
       email: document.getElementById("signInMail").value,
       password: document.getElementById("signInPass").value,
@@ -19,21 +20,13 @@ function SignIn(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      axios
-        .post(
-          "https://bootcampapi.techcs.io/api/fe/v1/authorization/signin",
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+      signInProcess(data)
         .then((response) => {
+          console.log(response);
           document.getElementById("failSign").classList.add("d-none");
-          props.setIsOauth(true);
-          props.setEmail(data.email);
-          props.setToken(response.data.access_token);
+          setIsAuth(true);
+          setEmail(data.email);
+          setToken(response.data.access_token);
           goHome();
         })
         .catch((err) => {
@@ -46,7 +39,7 @@ function SignIn(props) {
     }
   }
   let history = useHistory();
-  if (props.getIsOauth) {
+  if (isAuth) {
     history.push("/");
   }
   function goHome() {
@@ -87,7 +80,7 @@ function SignIn(props) {
                 placeholder="•••••"
               ></input>
             </div>
-            <button onClick={() => signInProcess()} className="full-w">
+            <button onClick={() => logIn()} className="full-w">
               Giriş Yap
             </button>
             <p>
@@ -110,4 +103,14 @@ function SignIn(props) {
   );
 }
 
-export default SignIn;
+const mapStatetoProps = (state) => ({
+  token: state.token,
+  isAuth: state.isAuth,
+  email: state.email,
+});
+export default connect(mapStatetoProps, {
+  setIsAuth,
+  setToken,
+  setEmail,
+  signInProcess,
+})(SignIn);

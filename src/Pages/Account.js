@@ -7,15 +7,16 @@ import ReceivedOffer from "../Components/ReceivedOffer";
 import succes from "../Assets/succes.png";
 import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
-function Account(props) {
-  const [getGivenOffer, setGivenOffer] = useState([]);
-  const [getReceivedOffer, setReceivedOffer] = useState([]);
+function Account({ email, isAuth }) {
+  // const [getGivenOffer, setGivenOffer] = useState([]);
+  // const [getReceivedOffer, setReceivedOffer] = useState([]);
   const [getStatus, setStatus] = useState("");
   let history = useHistory();
 
   useEffect(() => {
-    if (!props.getIsOauth) {
+    if (!isAuth) {
       history.push("/");
     }
     // fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
@@ -60,11 +61,11 @@ function Account(props) {
 
   return (
     <div>
-      <Header getIsOauth={props.getIsOauth} />
+      <Header />
       <div className="width80">
         <div className="d-flex profileDetail whiteBackground border-r-8 align-center">
           <img src={profile} alt=""></img>
-          <p>{props.getEmail}</p>
+          <p>{email}</p>
         </div>
         <div className="whiteBackground offersArea">
           <div className="d-flex offerListButton">
@@ -84,16 +85,16 @@ function Account(props) {
             </div>
           </div>
           <GivenOffer
-            getGivenOffer={getGivenOffer}
+            // getGivenOffer={getGivenOffer}
             setStatus={setStatus}
-            getToken={props.getToken}
-            setGivenOffer={setGivenOffer}
+            // getToken={props.getToken}
+            // setGivenOffer={setGivenOffer}
           />
           <ReceivedOffer
-            getReceivedOffer={getReceivedOffer}
-            setReceivedOffer={setReceivedOffer}
+            // getReceivedOffer={getReceivedOffer}
+            // setReceivedOffer={setReceivedOffer}
             setStatus={setStatus}
-            getToken={props.getToken}
+            // getToken={props.getToken}
           />
         </div>
         <div
@@ -114,5 +115,8 @@ function Account(props) {
     </div>
   );
 }
-
-export default Account;
+const mapStatetoProps = (state) => ({
+  isAuth: state.isAuth,
+  email: state.email,
+});
+export default connect(mapStatetoProps)(Account);

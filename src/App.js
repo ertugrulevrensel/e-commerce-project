@@ -21,41 +21,41 @@ function App() {
 
   useEffect(() => {
     //get all categories and set category state
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
-      .then((response) => response.json())
-      .then((data) => {
-        setCategory(data);
-      });
+    // fetch("https://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setCategory(data);
+    //   });
   }, []);
   return (
     <Router>
       <Switch>
         <Route path="/" exact>
           <Home
-            getID={getID}
-            setID={setID}
-            getProductList={getProductList}
-            setProductList={setProductList}
-            category={getCategory}
-            getIsOauth={getIsOauth}
-            setCancelOfferID={setCancelOfferID}
-            getToken={getToken}
+          // getID={getID}
+          // setID={setID}
+          // getProductList={getProductList}
+          // setProductList={setProductList}
+          // category={getCategory}
+          // getIsOauth={getIsOauth}
+          // setCancelOfferID={setCancelOfferID}
+          // getToken={getToken}
           />
         </Route>
         <Route path="/login">
           <SignIn
-            getIsOauth={getIsOauth}
-            setIsOauth={setIsOauth}
-            setEmail={setEmail}
-            setToken={setToken}
+          // getIsOauth={getIsOauth}
+          // setIsOauth={setIsOauth}
+          // setEmail={setEmail}
+          // setToken={setToken}
           />
         </Route>
         <Route path="/register">
           <SignUp
-            getIsOauth={getIsOauth}
-            setIsOauth={setIsOauth}
-            setEmail={setEmail}
-            setToken={setToken}
+          // getIsOauth={getIsOauth}
+          // setIsOauth={setIsOauth}
+          // setEmail={setEmail}
+          // setToken={setToken}
           />
         </Route>
         <Route path="/myaccount/">
@@ -69,12 +69,12 @@ function App() {
         </Route>
         <Route path="/product/">
           <ProductDetail
-            getID={getID}
-            setID={setID}
-            getIsOauth={getIsOauth}
-            getToken={getToken}
-            getProductList={getProductList}
-            getCancelOfferID={getCancelOfferID}
+          // getID={getID}
+          // setID={setID}
+          // getIsOauth={getIsOauth}
+          // getToken={getToken}
+          // getProductList={getProductList}
+          // getCancelOfferID={getCancelOfferID}
           />
         </Route>
         <Route path="/addproduct">

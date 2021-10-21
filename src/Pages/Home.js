@@ -1,51 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./Home.scss";
 import Header from "../Components/Header";
 import Banner from "../Assets/Banner.png";
 import Category from "../Components/Category";
 import ProductList from "../Components/ProductList";
-
-function Home(props) {
-  const [getCategoryID, setCategoryID] = useState();
-  useEffect(() => {
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/product/all")
-      .then((response) => response.json())
-      .then((data) => {
-        if (getCategoryID === undefined) {
-          props.setProductList(data);
-        } else {
-          var categoryFilter = [];
-          data.map((item) => {
-            if (item.category.id === getCategoryID) {
-              categoryFilter.push(item);
-            }
-          });
-          props.setProductList(categoryFilter);
-        }
-      });
-  }, [getCategoryID]); //eslint-disable-line
+function Home() {
   return (
     <div className="full-w">
-      <Header getIsOauth={props.getIsOauth} />
+      <Header />
       <div className="width80 homeBody">
         <div className="banner border-r-8">
           <img src={Banner} alt=""></img>
         </div>
-        <Category category={props.category} setCategoryID={setCategoryID} />
-        <ProductList
-          getID={props.getID}
-          setID={props.setID}
-          getIsOauth={props.getIsOauth}
-          getProductList={props.getProductList}
-          setProductList={props.setProductList}
-          getProduct={props.getProduct}
-          setProduct={props.setProduct}
-          setCancelOfferID={props.setCancelOfferID}
-          getToken={props.getToken}
-        />
+        <Category />
+        <ProductList />
       </div>
     </div>
   );
 }
-
 export default Home;

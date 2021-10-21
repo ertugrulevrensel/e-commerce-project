@@ -1,24 +1,18 @@
 import React, { useEffect } from "react";
 import BuyModal from "./BuyModal";
+import { connect } from "react-redux";
+import { getGivenOfferList } from "../actions";
 
-function GivenOffer(props) {
+function GivenOffer(props, { token, getGivenOfferList, givenOfferList }) {
   useEffect(() => {
-    console.log("given");
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-      // withCredentials: true,
-      headers: { Authorization: `Bearer ${props.getToken}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        props.setGivenOffer(data);
-      });
+    getGivenOfferList(token);
   }, []);
   function toggleBuy() {
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   return (
     <div id="givenOffers" className="d-none">
-      {props.getGivenOffer.map((offer) => {
+      {givenOfferList?.map((offer) => {
         return (
           <div
             key={offer.id}
@@ -52,7 +46,6 @@ function GivenOffer(props) {
                   </button>
                   <BuyModal
                     product={offer.product}
-                    getToken={props.getToken}
                     setStatus={props.setStatus}
                   />
                 </div>
@@ -72,5 +65,8 @@ function GivenOffer(props) {
     </div>
   );
 }
-
-export default GivenOffer;
+const mapStatetoProps = (state) => ({
+  givenOfferList: state.givenOfferList,
+  token: state.token,
+});
+export default connect(mapStatetoProps, { getGivenOfferList })(GivenOffer);

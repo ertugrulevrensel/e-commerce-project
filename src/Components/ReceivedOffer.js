@@ -1,27 +1,16 @@
 import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getReceivedOfferList, acceptOffer, rejectOffer } from "../actions";
 
-function ReceivedOffer(props) {
+function ReceivedOffer(
+  props,
+  { token, getReceivedOfferList, receivedOfferList }
+) {
   useEffect(() => {
-    console.log("rece");
-    fetch("https://bootcampapi.techcs.io/api/fe/v1/account/received-offers", {
-      headers: { Authorization: `Bearer ${props.getToken}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        props.setReceivedOffer(data);
-      });
+    getReceivedOfferList(token);
   }, []);
   function receivedOfferAccept(id) {
-    console.log(props.getReceivedOffer);
-    var url =
-      "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
-    fetch(url, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${props.getToken}`,
-      },
-      body: JSON.stringify(id),
-    }).then((response) => {
+    acceptOffer(id, token).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
@@ -38,15 +27,7 @@ function ReceivedOffer(props) {
     });
   }
   function receivedOfferReject(id) {
-    var url =
-      "https://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/" + id;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${props.getToken}`,
-      },
-      body: JSON.stringify(id),
-    }).then((response) => {
+    rejectOffer(id, token).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
@@ -64,7 +45,7 @@ function ReceivedOffer(props) {
   }
   return (
     <div id="receivedOffers">
-      {props.getReceivedOffer.map((offer) => {
+      {receivedOfferList?.map((offer) => {
         return (
           <div
             key={offer.id}
@@ -82,7 +63,7 @@ function ReceivedOffer(props) {
                 </div>
               </div>
             </div>
-            {offer.status === "offered" && !(offer.isSold === "sold") ? (
+            {offer?.status === "offered" && !(offer?.isSold === "sold") ? (
               <div className="d-flex receivedOfferButton align-center">
                 <button
                   onClick={() => receivedOfferAccept(offer.id)}
@@ -97,7 +78,7 @@ function ReceivedOffer(props) {
                   Reddet
                 </button>
               </div>
-            ) : offer.status === "accepted" || offer.isSold === "sold" ? (
+            ) : offer?.status === "accepted" || offer?.isSold === "sold" ? (
               <p className="color4b9ce2">Onaylandı</p>
             ) : (
               <p className="colorf77474">Reddedildi</p>
@@ -108,5 +89,10 @@ function ReceivedOffer(props) {
     </div>
   );
 }
-
-export default ReceivedOffer;
+const mapStatetoProps = (state) => ({
+  receivedOfferList: state.receivedOfferList,
+  token: state.token,
+});
+export default connect(mapStatetoProps, { getReceivedOfferList })(
+  ReceivedOffer
+);

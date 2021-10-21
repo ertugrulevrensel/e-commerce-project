@@ -4,10 +4,12 @@ import img from "../Assets/Login-reg.png";
 import Logo from "../Assets/Logo2.png";
 import fail from "../Assets/fail.png";
 import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
+import { setIsAuth, setToken, setEmail, signUpProcess } from "../actions";
 import axios from "axios";
 
-function SignUp(props) {
-  function signUpProcess() {
+function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
+  function signUps() {
     var data = {
       email: document.getElementById("signUpMail").value,
       password: document.getElementById("signUpPass").value,
@@ -19,22 +21,23 @@ function SignUp(props) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      axios
-        .post(
-          "https://bootcampapi.techcs.io/api/fe/v1/authorization/signup",
-          data,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        )
+      // axios
+      //   .post(
+      //     "https://bootcampapi.techcs.io/api/fe/v1/authorization/signup",
+      //     data,
+      //     {
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //       },
+      //     }
+      //   )
+      signUpProcess(data)
         .then((response) => {
           document.getElementById("repetitive").classList.add("d-none");
           document.getElementById("unValid").classList.add("d-none");
-          props.setIsOauth(true);
-          props.setEmail(data.email);
-          props.setToken(response.data.access_token);
+          setIsAuth(true);
+          setEmail(data.email);
+          setToken(response.data.access_token);
           goHome();
         })
         .catch((err) => {
@@ -49,7 +52,7 @@ function SignUp(props) {
     }
   }
   let history = useHistory();
-  if (props.getIsOauth) {
+  if (isAuth) {
     history.push("/");
   }
   function goHome() {
@@ -90,7 +93,7 @@ function SignUp(props) {
                 placeholder="•••••"
               ></input>
             </div>
-            <button onClick={() => signUpProcess()} className="full-w">
+            <button onClick={() => signUps()} className="full-w">
               Üye Ol
             </button>
             <p>
@@ -127,4 +130,14 @@ function SignUp(props) {
   );
 }
 
-export default SignUp;
+const mapStatetoProps = (state) => ({
+  token: state.token,
+  isAuth: state.isAuth,
+  email: state.email,
+});
+export default connect(mapStatetoProps, {
+  setIsAuth,
+  setToken,
+  setEmail,
+  signUpProcess,
+})(SignUp);
