@@ -43,14 +43,23 @@ function ReceivedOffer(props) {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("succesBuy").classList.add("d-none");
+        }, 3000);
         props.setStatus("Teklif Reddedildi");
         props.getReceivedOfferList(props.token);
       } else if (response.status === 401) {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAcceptOffer").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAcceptOffer").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Teklif Red Edilemedi.");
       }

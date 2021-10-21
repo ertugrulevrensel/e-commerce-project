@@ -1,5 +1,3 @@
-// import axios from "axios";
-
 export const INITIAL_STATE = {
   token: "",
   email: "",

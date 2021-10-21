@@ -16,13 +16,18 @@ function BuyModal(props) {
     buyProduct(id, props.token).then((response) => {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("succesBuys").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("succesBuys").classList.add("d-none");
+        }, 3000);
         document.getElementById("failSignBuy").classList.add("d-none");
         setStatus("Satın Alındı.");
         props.getProduct(id);
         getGivenOfferList(props.token);
-        //props.setIsProductSold("true");
       } else if (response.status === 401) {
         document.getElementById("failSignBuy").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failSignBuy").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesBuys").classList.add("d-none");
         setStatus("Lütfen Giriş Yapınız.");
       }

@@ -42,14 +42,23 @@ function FileUpload(props) {
     if (file.length > 1) {
       setUploadStatus("Birden fazla dosya yüklemeyiniz.");
       document.getElementById("failUpload").classList.remove("d-none");
+      setTimeout(() => {
+        document.getElementById("failUpload").classList.add("d-none");
+      }, 3000);
     } else if (file[0].size > 1024 * 400) {
       setUploadStatus("Dosya boyutu en fazla 100kb olmalıdır.");
       document.getElementById("failUpload").classList.remove("d-none");
+      setTimeout(() => {
+        document.getElementById("failUpload").classList.add("d-none");
+      }, 3000);
     } else if (
       !(file[0].type === "image/jpeg" || file[0].type === "image/png")
     ) {
       setUploadStatus("PNG veya JPEG formatında dosya yükleyiniz.");
       document.getElementById("failUpload").classList.remove("d-none");
+      setTimeout(() => {
+        document.getElementById("failUpload").classList.add("d-none");
+      }, 3000);
     } else {
       document.getElementById("failUpload").classList.add("d-none");
       var percentCompleted = 0;
@@ -92,7 +101,6 @@ function FileUpload(props) {
           document
             .getElementById("viewImg")
             .setAttribute("src", response.data.url);
-          // document.getElementById("viewUploadImg").classList.remove("d-none");
         })
         .catch((err) => {
           setUploadStatus("Görsel Yüklenemedi.");

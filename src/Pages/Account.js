@@ -17,8 +17,6 @@ function Account({
   getGivenOfferList,
   token,
 }) {
-  // const [getGivenOffer, setGivenOffer] = useState([]);
-  // const [getReceivedOffer, setReceivedOffer] = useState([]);
   const [getStatus, setStatus] = useState("");
   let history = useHistory();
 

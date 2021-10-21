@@ -30,6 +30,9 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
         })
         .catch((err) => {
           document.getElementById("failSign").classList.remove("d-none");
+          setTimeout(() => {
+            document.getElementById("failSign").classList.add("d-none");
+          }, 3000);
           document.getElementById("signInMail").classList.add("inputErr");
           document.getElementById("signInPass").classList.add("inputErr");
         });

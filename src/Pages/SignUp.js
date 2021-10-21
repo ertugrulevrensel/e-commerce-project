@@ -31,6 +31,9 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
         })
         .catch((err) => {
           document.getElementById("repetitive").classList.remove("d-none");
+          setTimeout(() => {
+            document.getElementById("repetitive").classList.add("d-none");
+          }, 3000);
           document.getElementById("unValid").classList.add("d-none");
           document.getElementById("signUpMail").classList.add("inputErr");
           document.getElementById("signUpPass").classList.add("inputErr");

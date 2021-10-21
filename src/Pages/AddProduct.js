@@ -79,15 +79,24 @@ function AddProduct({ isAuth, categorys, token }) {
       if (response.status === 401) {
         setAddingStatus("Giriş Yapmadınız.");
         document.getElementById("failAdd").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAdd").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesAdd").classList.add("d-none");
       } else if (response.status === 400) {
         setAddingStatus("Ürün Bilgileri Eksik.");
         document.getElementById("failAdd").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAdd").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesAdd").classList.add("d-none");
       } else if (response.status === 200 || response.status === 201) {
         setAddingStatus("Ürün Eklendi.");
         document.getElementById("failAdd").classList.add("d-none");
         document.getElementById("succesAdd").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("succesAdd").classList.add("d-none");
+        }, 3000);
       }
     });
   }

@@ -9,20 +9,6 @@ function ProductList({ productList, getProductList, categoryID }) {
   }, ""); // eslint-disable-line
   let history = useHistory();
   function goDetail(id) {
-    // if (props.getIsOauth) {
-    //   fetch("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {
-    //     headers: { Authorization: `Bearer ${props.getToken}` },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       for (let i = 0; i < data.length; i++) {
-    //         if (data[i].product.id === id) {
-    //           props.setCancelOfferID(data[i].id);
-    //         }
-    //       }
-    //     });
-    // }
-    // props.setID(id);
     history.push(`/product/${id}`);
   }
   return (

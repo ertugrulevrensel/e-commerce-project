@@ -32,16 +32,25 @@ function OfferModal(props) {
         if (response.status === 200 || response.status === 201) {
           props.getGivenOfferList(props.token);
           document.getElementById("succes").classList.remove("d-none");
+          setTimeout(() => {
+            document.getElementById("succes").classList.add("d-none");
+          }, 3000);
           document.getElementById("failSign").classList.add("d-none");
           document.getElementById("failOffer").classList.add("d-none");
           document.getElementById("offeredValuediv").classList.remove("d-none");
           props.setOfferValue(Number(price.toFixed(2)));
         } else if (response.status === 401) {
           document.getElementById("failSign").classList.remove("d-none");
+          setTimeout(() => {
+            document.getElementById("failSign").classList.add("d-none");
+          }, 3000);
           document.getElementById("succes").classList.add("d-none");
           document.getElementById("failOffer").classList.add("d-none");
         } else {
           document.getElementById("failOffer").classList.remove("d-none");
+          setTimeout(() => {
+            document.getElementById("failOffer").classList.add("d-none");
+          }, 3000);
           document.getElementById("failSign").classList.add("d-none");
           document.getElementById("succes").classList.add("d-none");
         }
