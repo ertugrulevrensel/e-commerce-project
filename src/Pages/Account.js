@@ -24,8 +24,10 @@ function Account({
     if (!isAuth) {
       history.push("/");
     }
-    getReceivedOfferList(token);
-    getGivenOfferList(token);
+    if (isAuth) {
+      getReceivedOfferList(token);
+      getGivenOfferList(token);
+    }
   }, []); //eslint-disable-line
 
   function selectList(list) {

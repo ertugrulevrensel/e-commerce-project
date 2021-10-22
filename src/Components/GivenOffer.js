@@ -1,11 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import BuyModal from "./BuyModal";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getGivenOfferList } from "../actions";
+import fail from "../Assets/fail.png";
+import succes from "../Assets/succes.png";
 
 function GivenOffer(props) {
+  const [status, setStatus] = useState();
+  let history = useHistory();
+  function goProductDetail(id) {
+    history.push(`/product/${id}`);
+  }
   function toggleBuy() {
     document.getElementById("buyModal").classList.toggle("d-none");
+    console.log(props.givenOfferList);
   }
   return (
     <div id="givenOffers" className="d-none">
@@ -16,9 +25,19 @@ function GivenOffer(props) {
             className="receivedOffer border-r-8 d-flex full-w"
           >
             <div className="d-flex full-w">
-              <img src={offer.product.imageUrl} alt=""></img>
+              <img
+                className="c-pointer border-r-8"
+                onClick={() => goProductDetail(offer.product.id)}
+                src={offer.product.imageUrl}
+                alt=""
+              ></img>
               <div className="pad15">
-                <p>{offer.product.title}</p>
+                <p
+                  className="c-pointer"
+                  onClick={() => goProductDetail(offer.product.id)}
+                >
+                  {offer.product.title}
+                </p>
                 <div className="receivedOfferValue grayBackground border-r-8">
                   <p>
                     Verilen Teklif:{" "}
@@ -44,6 +63,7 @@ function GivenOffer(props) {
                   >
                     Satın Al
                   </button>
+                  <BuyModal product={offer.product} setStatus={setStatus} />
                 </div>
               ) : (
                 <div className="d-flex receivedOfferButton align-center">
@@ -55,10 +75,23 @@ function GivenOffer(props) {
                 <p className="colorf77474">Reddedildi</p>
               </div>
             )}
-            <BuyModal product={offer.product} setStatus={props.setStatus} />
           </div>
         );
       })}
+      <div
+        id="failSignBuy"
+        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+      >
+        <img src={fail} alt=""></img>
+        <p>{status}</p>
+      </div>
+      <div
+        id="succesBuys"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
+        <p>{status}</p>
+      </div>
     </div>
   );
 }

@@ -19,10 +19,10 @@ function App() {
         <Route path="/register">
           <SignUp />
         </Route>
-        <Route path="/myaccount/">
+        <Route path="/myaccount">
           <Account />
         </Route>
-        <Route path="/product/">
+        <Route path="/product">
           <ProductDetail />
         </Route>
         <Route path="/addproduct">

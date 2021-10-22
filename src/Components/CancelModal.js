@@ -18,28 +18,29 @@ function CancelModal(props) {
     });
     cancelOffer(cancelID, props.token).then((response) => {
       if (response.status === 200 || response.status === 201) {
-        document.getElementById("succesCancel").classList.remove("d-none");
+        document.getElementById("succesBuys").classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("succesCancel").classList.add("d-none");
+          document.getElementById("succesBuys").classList.add("d-none");
         }, 3000);
-        document.getElementById("failCancelOffer").classList.add("d-none");
+        document.getElementById("failSignBuy").classList.add("d-none");
         document.getElementById("offeredValuediv").classList.add("d-none");
         props.setStatus("Teklif Geri Çeklidi.");
         props.setOfferValue("0");
         props.getGivenOfferList(props.token);
+        document.getElementById("cancelModal").classList.add("d-none");
       } else if (response.status === 401) {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
+        document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("failCancelOffer").classList.add("d-none");
+          document.getElementById("failSignBuy").classList.add("d-none");
         }, 3000);
-        document.getElementById("succesBuy").classList.add("d-none");
+        document.getElementById("succesBuys").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
-        document.getElementById("failCancelOffer").classList.remove("d-none");
+        document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("failCancelOffer").classList.add("d-none");
+          document.getElementById("failSignBuy").classList.add("d-none");
         }, 3000);
-        document.getElementById("succesBuy").classList.add("d-none");
+        document.getElementById("succesBuys").classList.add("d-none");
         props.setStatus("Teklif Geri Çekme Başarısız.");
       }
     });

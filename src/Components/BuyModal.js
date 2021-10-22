@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Modal.scss";
-import fail from "../Assets/fail.png";
-import succes from "../Assets/succes.png";
 import { connect } from "react-redux";
 import { buyProduct, getProduct, getGivenOfferList } from "../actions";
 
 function BuyModal(props) {
-  const [getStatus, setStatus] = useState();
+  // const [getStatus, setStatus] = useState();
   function toggleModal() {
     document.getElementById("succesBuys").classList.add("d-none");
     document.getElementById("failSignBuy").classList.add("d-none");
@@ -20,16 +18,17 @@ function BuyModal(props) {
           document.getElementById("succesBuys").classList.add("d-none");
         }, 3000);
         document.getElementById("failSignBuy").classList.add("d-none");
-        setStatus("Satın Alındı.");
+        props.setStatus("Satın Alındı.");
         props.getProduct(id);
         getGivenOfferList(props.token);
+        document.getElementById("buyModal").classList.add("d-none");
       } else if (response.status === 401) {
         document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failSignBuy").classList.add("d-none");
         }, 3000);
         document.getElementById("succesBuys").classList.add("d-none");
-        setStatus("Lütfen Giriş Yapınız.");
+        props.setStatus("Lütfen Giriş Yapınız.");
       }
     });
   }
@@ -58,7 +57,7 @@ function BuyModal(props) {
           </div>
         </div>
       </div>
-      <div
+      {/* <div
         id="failSignBuy"
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
       >
@@ -71,7 +70,7 @@ function BuyModal(props) {
       >
         <img src={succes} alt=""></img>
         <p>{getStatus}</p>
-      </div>
+      </div> */}
     </div>
   );
 }

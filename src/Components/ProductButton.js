@@ -9,7 +9,6 @@ import { connect } from "react-redux";
 import { getGivenOfferList } from "../actions";
 
 function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
-  const [isProductSold, setIsProductSold] = useState("false");
   const [getofferValue, setOfferValue] = useState("-1");
   const [getStatus, setStatus] = useState();
   const [getProductState, setProduct] = useState([]);
@@ -32,11 +31,6 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
       document.getElementById("backOfferButton").classList.add("d-none");
       document.getElementById("offerButtonn").classList.remove("d-none");
       document.getElementById("notSaleDiv").classList.add("d-none");
-    } else if (isProductSold === "true") {
-      document.getElementById("buyButton").classList.add("d-none");
-      document.getElementById("backOfferButton").classList.add("d-none");
-      document.getElementById("offerButtonn").classList.add("d-none");
-      document.getElementById("notSaleDiv").classList.remove("d-none");
     }
   }, ""); // eslint-disable-line
   function cancelOffered() {
@@ -109,14 +103,18 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
           </button>
         </div>
       ) : null}
-      <OfferModal setOfferValue={setOfferValue} product={getProductState} />
-      <BuyModal product={getProductState} setIsProductSold={setIsProductSold} />
+      <OfferModal
+        setOfferValue={setOfferValue}
+        product={getProductState}
+        setStatus={setStatus}
+      />
+      <BuyModal product={getProductState} setStatus={setStatus} />
       <CancelModal
         setStatus={setStatus}
         setOfferValue={setOfferValue}
         product={getProductState}
       />
-      <div
+      {/* <div
         id="failCancelOffer"
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
       >
@@ -125,6 +123,20 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
       </div>
       <div
         id="succesCancel"
+        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
+      >
+        <img src={succes} alt=""></img>
+        <p>{getStatus}</p>
+      </div> */}
+      <div
+        id="failSignBuy"
+        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+      >
+        <img src={fail} alt=""></img>
+        <p>{getStatus}</p>
+      </div>
+      <div
+        id="succesBuys"
         className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
       >
         <img src={succes} alt=""></img>

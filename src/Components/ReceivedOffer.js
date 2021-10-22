@@ -1,9 +1,12 @@
-import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { getReceivedOfferList } from "../actions";
 
 function ReceivedOffer(props) {
-  useEffect(() => {}, []);
+  let history = useHistory();
+  function goProductDetail(id) {
+    history.push(`/product/${id}`);
+  }
   function receivedOfferAccept(id) {
     var url =
       "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
@@ -17,14 +20,23 @@ function ReceivedOffer(props) {
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("succesBuy").classList.add("d-none");
+        }, 3000);
         props.getReceivedOfferList(props.token);
         props.setStatus("Teklif Kabul Edildi.");
       } else if (response.status === 401) {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAcceptOffer").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
         document.getElementById("failAcceptOffer").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failAcceptOffer").classList.add("d-none");
+        }, 3000);
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Teklif Kabul Edilemedi.");
       }
@@ -74,9 +86,19 @@ function ReceivedOffer(props) {
             className="receivedOffer border-r-8 d-flex full-w align-center"
           >
             <div className="d-flex full-w">
-              <img src={offer.product.imageUrl} alt=""></img>
+              <img
+                className="c-pointer border-r-8"
+                onClick={() => goProductDetail(offer.product.id)}
+                src={offer.product.imageUrl}
+                alt=""
+              ></img>
               <div className="pad15">
-                <p>{offer.product.title}</p>
+                <p
+                  className="c-pointer"
+                  onClick={() => goProductDetail(offer.product.id)}
+                >
+                  {offer.product.title}
+                </p>
                 <div className="receivedOfferValue d-flex grayBackground border-r-8">
                   <p>
                     Alınan Teklif:{" "}
