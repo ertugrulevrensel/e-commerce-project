@@ -1,5 +1,15 @@
 import axios from "axios";
-
+const memo = (callback) => {
+  const cache = new Map();
+  return (...args) => {
+    const selector = JSON.stringify(args);
+    if (cache.has(selector)) return cache.get(selector);
+    const value = callback(...args);
+    cache.set(selector, value);
+    return value;
+  };
+};
+const memoizedAxiosGet = memo(axios.get);
 export const getProductList = () => (dispatch) => {
   axios
     .get("https://bootcampapi.techcs.io/api/fe/v1/product/all")
@@ -17,8 +27,9 @@ export const getProductList = () => (dispatch) => {
     });
 };
 export const getCategory = () => (dispatch) => {
-  axios
-    .get("https://bootcampapi.techcs.io/api/fe/v1/detail/category/all")
+  memoizedAxiosGet(
+    "https://bootcampapi.techcs.io/api/fe/v1/detail/category/all"
+  )
     .then((res) =>
       dispatch({
         type: "FETCH_CATEGORY_LIST",
@@ -57,14 +68,19 @@ export const setCategoryID = (id) => {
   };
 };
 export const getProduct = (id) => async (dispatch) => {
-  await axios(`https://bootcampapi.techcs.io/api/fe/v1/product/${id}`).then(
-    (res) => {
+  await axios(`https://bootcampapi.techcs.io/api/fe/v1/product/${id}`)
+    .then((res) => {
       dispatch({
         type: "FETCH_PRODUCT",
         payload: res.data,
       });
-    }
-  );
+    })
+    .catch((err) => {
+      dispatch({
+        type: "FETCH_PRODUCT",
+        payload: err.response.status,
+      });
+    });
 };
 export const getGivenOfferList = (token) => (dispatch) => {
   axios("https://bootcampapi.techcs.io/api/fe/v1/account/given-offers", {

@@ -2,8 +2,10 @@ import React from "react";
 import { cancelOffer, getGivenOfferList, getProduct } from "../actions";
 import { connect } from "react-redux";
 import "./Modal.scss";
+import { useParams } from "react-router-dom";
 
 function CancelModal(props) {
+  let { id } = useParams();
   function toggleModal() {
     document.getElementById("succesCancel").classList.add("d-none");
     document.getElementById("failCancelOffer").classList.add("d-none");
@@ -12,7 +14,7 @@ function CancelModal(props) {
   function CancelProductsOffers() {
     let cancelID = "";
     props.givenOfferList?.map((item) => {
-      if (item.product.id === window.location.href.split("/")[4]) {
+      if (item.product.id === id) {
         cancelID = item.id;
       }
     });

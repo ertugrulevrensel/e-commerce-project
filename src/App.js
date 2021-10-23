@@ -10,9 +10,6 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/" exact>
-          <Home />
-        </Route>
         <Route path="/login">
           <SignIn />
         </Route>
@@ -22,11 +19,14 @@ function App() {
         <Route path="/myaccount">
           <Account />
         </Route>
-        <Route path="/product">
+        <Route path="/product/:id">
           <ProductDetail />
         </Route>
         <Route path="/addproduct">
           <AddProduct />
+        </Route>
+        <Route path={["/:categoryid", "/"]}>
+          <Home />
         </Route>
       </Switch>
     </Router>

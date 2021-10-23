@@ -16,21 +16,32 @@ function AddProduct({ isAuth, categorys, token }) {
   const [brand, setBrand] = useState([]);
   const [status, setStatus] = useState([]);
   let history = useHistory();
+  const memo = (callback) => {
+    const cache = new Map();
+    return (...args) => {
+      const selector = JSON.stringify(args);
+      if (cache.has(selector)) return cache.get(selector);
+      const value = callback(...args);
+      cache.set(selector, value);
+      return value;
+    };
+  };
+  const memoizedAxiosGet = memo(axios.get);
   useEffect(() => {
     if (!isAuth) {
       history.push("/");
     }
-    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/color/all").then(
-      (response) => setColor(response.data)
-    );
+    memoizedAxiosGet(
+      "https://bootcampapi.techcs.io/api/fe/v1/detail/color/all"
+    ).then((response) => setColor(response.data));
     //get all brands and set brand state
-    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all").then(
-      (response) => setBrand(response.data)
-    );
+    memoizedAxiosGet(
+      "https://bootcampapi.techcs.io/api/fe/v1/detail/brand/all"
+    ).then((response) => setBrand(response.data));
     //get all status and set status state
-    axios("https://bootcampapi.techcs.io/api/fe/v1/detail/status/all").then(
-      (response) => setStatus(response.data)
-    );
+    memoizedAxiosGet(
+      "https://bootcampapi.techcs.io/api/fe/v1/detail/status/all"
+    ).then((response) => setStatus(response.data));
   }, []); // eslint-disable-line
   function saveProduct() {
     var infos = [];
@@ -95,7 +106,7 @@ function AddProduct({ isAuth, categorys, token }) {
         document.getElementById("failAdd").classList.add("d-none");
         document.getElementById("succesAdd").classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("succesAdd").classList.add("d-none");
+          document.getElementById("succesAdd").classList?.add("d-none");
         }, 3000);
       }
     });

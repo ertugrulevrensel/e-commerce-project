@@ -10,10 +10,11 @@ import { connect } from "react-redux";
 function FileUpload(props) {
   const [getUploadStatus, setUploadStatus] = useState("Yükleme Başarısız.");
   const [getProgressPercent, setProgressPercent] = useState(0);
+
   function deleteImage() {
     document.getElementById("viewUploadImg").classList.add("d-none");
     document.getElementById("uploadSection").classList.remove("d-none");
-    document.getElementById("inputElement").files = undefined;
+    document.getElementById("inputElement").value = "";
     document.getElementById("progressBarArea").classList.add("d-none");
     document.getElementById("uploadDetail").classList.remove("d-none");
   }
@@ -147,11 +148,16 @@ function FileUpload(props) {
         </div>
         <div
           id="progressBarArea"
-          className="d-none full-w d-flex justify-center"
+          className="d-none full-w d-flex flex-d-col justify-center align-center"
         >
+          <p>%{getProgressPercent}</p>
           <div className="progressBar">
-            <div id="progressBlue" style={{ width: getProgressPercent }}></div>
+            <div
+              id="progressBlue"
+              style={{ width: `${getProgressPercent}%` }}
+            ></div>
           </div>
+          <p>Yükleniyor</p>
         </div>
       </section>
       <div id="viewUploadImg" className="d-none d-flex p-relative">

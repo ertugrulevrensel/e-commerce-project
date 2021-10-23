@@ -14,6 +14,9 @@ button {
 p {
   text-transform: capitalize;
 }
+.text-d-none {
+  text-decoration: none;
+}
 input {
   outline: none;
 }

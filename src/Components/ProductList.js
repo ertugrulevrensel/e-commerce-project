@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import "./ProductList.scss";
 import { connect } from "react-redux";
 import { getProductList } from "../actions";
 function ProductList({ productList, getProductList, categoryID }) {
+  let { categoryid } = useParams();
   useEffect(() => {
     getProductList();
-  }, ""); // eslint-disable-line
+  }, []); // eslint-disable-line
   let history = useHistory();
   function goDetail(id) {
     history.push(`/product/${id}`);
   }
   return (
     <div className="d-grid productList">
-      {(categoryID === undefined
+      {(categoryid === undefined
         ? productList
-        : productList.filter((products) => products.category.id === categoryID)
+        : productList.filter((products) => products.category.id === categoryid)
       ).map((product) => {
         return (
           <div

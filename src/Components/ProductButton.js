@@ -7,17 +7,18 @@ import BuyModal from "./BuyModal";
 import CancelModal from "./CancelModal";
 import { connect } from "react-redux";
 import { getGivenOfferList } from "../actions";
+import { useParams } from "react-router-dom";
 
 function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
   const [getofferValue, setOfferValue] = useState("-1");
   const [getStatus, setStatus] = useState();
   const [getProductState, setProduct] = useState([]);
+  let { id } = useParams();
   useEffect(() => {
-    axios(
-      `https://bootcampapi.techcs.io/api/fe/v1/product/${
-        window.location.href.split("/")[4]
-      }`
-    ).then((response) => setProduct(response.data));
+    console.log(id);
+    axios(`https://bootcampapi.techcs.io/api/fe/v1/product/${id}`).then(
+      (response) => setProduct(response.data)
+    );
     if (token.length > 0) {
       getGivenOfferList(token);
     }
@@ -114,20 +115,6 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
         setOfferValue={setOfferValue}
         product={getProductState}
       />
-      {/* <div
-        id="failCancelOffer"
-        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
-      >
-        <img src={fail} alt=""></img>
-        <p>{getStatus}</p>
-      </div>
-      <div
-        id="succesCancel"
-        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
-      >
-        <img src={succes} alt=""></img>
-        <p>{getStatus}</p>
-      </div> */}
       <div
         id="failSignBuy"
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"

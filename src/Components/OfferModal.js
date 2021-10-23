@@ -5,7 +5,9 @@ import fail from "../Assets/fail.png";
 import succes from "../Assets/succes.png";
 import { connect } from "react-redux";
 import { giveOffer, getGivenOfferList } from "../actions";
+import { useParams } from "react-router-dom";
 function OfferModal(props) {
+  let { id } = useParams();
   function toggleModal() {
     document.getElementById("offerModal").classList.toggle("d-none");
     document.getElementById("failSign").classList.add("d-none");
@@ -27,36 +29,34 @@ function OfferModal(props) {
     }
   }
   function goOffer(price) {
-    giveOffer(window.location.href.split("/")[4], props.token, price).then(
-      (response) => {
-        if (response.status === 200 || response.status === 201) {
-          props.getGivenOfferList(props.token);
-          props.setStatus("Teklif Verildi.");
-          document.getElementById("succesBuys").classList.remove("d-none");
-          setTimeout(() => {
-            document.getElementById("succesBuys").classList.add("d-none");
-          }, 3000);
-          document.getElementById("offerModal").classList.add("d-none");
+    giveOffer(id, props.token, price).then((response) => {
+      if (response.status === 200 || response.status === 201) {
+        props.getGivenOfferList(props.token);
+        props.setStatus("Teklif Verildi.");
+        document.getElementById("succesBuys").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("succesBuys").classList.add("d-none");
+        }, 3000);
+        document.getElementById("offerModal").classList.add("d-none");
+        document.getElementById("failSignBuy").classList.add("d-none");
+        document.getElementById("offeredValuediv").classList.remove("d-none");
+        props.setOfferValue(Number(price.toFixed(2)));
+      } else if (response.status === 401) {
+        props.setStatus("Lütfen Giriş Yapınız.");
+        document.getElementById("failSignBuy").classList.remove("d-none");
+        setTimeout(() => {
           document.getElementById("failSignBuy").classList.add("d-none");
-          document.getElementById("offeredValuediv").classList.remove("d-none");
-          props.setOfferValue(Number(price.toFixed(2)));
-        } else if (response.status === 401) {
-          props.setStatus("Lütfen Giriş Yapınız.");
-          document.getElementById("failSignBuy").classList.remove("d-none");
-          setTimeout(() => {
-            document.getElementById("failSignBuy").classList.add("d-none");
-          }, 3000);
-          document.getElementById("succesBuys").classList.add("d-none");
-        } else {
-          props.setStatus("Teklif Yapılamadı.");
-          document.getElementById("failSignBuy").classList.remove("d-none");
-          setTimeout(() => {
-            document.getElementById("failSignBuy").classList.add("d-none");
-          }, 3000);
-          document.getElementById("succesBuys").classList.add("d-none");
-        }
+        }, 3000);
+        document.getElementById("succesBuys").classList.add("d-none");
+      } else {
+        props.setStatus("Teklif Yapılamadı.");
+        document.getElementById("failSignBuy").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failSignBuy").classList.add("d-none");
+        }, 3000);
+        document.getElementById("succesBuys").classList.add("d-none");
       }
-    );
+    });
   }
 
   return (
