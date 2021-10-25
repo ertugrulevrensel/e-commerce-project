@@ -1,25 +1,25 @@
 import React, { useEffect } from "react";
 import "./Category.scss";
 import { connect } from "react-redux";
-import { getCategory, setCategoryID } from "../actions";
+import { getCategory } from "../actions";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-function Category({ categorys, getCategory, setCategoryID }) {
+function Category({ categorys, getCategory }) {
   let { categoryid } = useParams();
   let history = useHistory();
   useEffect(() => {
+    //call category list
     getCategory();
   }, []); //eslint-disable-line
   function settedCategoryID(id) {
-    setCategoryID(id);
+    //if click any category button, go this category url
     for (let i = 0; i < categorys.length; i++) {
       if (categorys[i].id === id) {
-        history.push(`${id}`);
+        history.push(`/category/${id}`);
       }
     }
   }
   function showAllCategory() {
-    setCategoryID("");
     history.push("/");
   }
   return (
@@ -52,6 +52,4 @@ const mapStatetoProps = (state) => ({
   categorys: state.categorys,
 });
 
-export default connect(mapStatetoProps, { getCategory, setCategoryID })(
-  Category
-);
+export default connect(mapStatetoProps, { getCategory })(Category);

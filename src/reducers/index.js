@@ -4,10 +4,10 @@ export const INITIAL_STATE = {
   isAuth: false,
   productList: [],
   categorys: [],
-  categoryID: undefined,
   product: [],
   givenOfferList: [],
   receivedOfferList: [],
+  loading: false,
 };
 
 export const reducer = (state = INITIAL_STATE, action) => {
@@ -16,11 +16,13 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         productList: action.payload,
+        loading: false,
       };
     case "FETCH_PRODUCT":
       return {
         ...state,
         product: action.payload,
+        loading: false,
       };
     case "FETCH_CATEGORY_LIST": {
       return {
@@ -38,15 +40,15 @@ export const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         isAuth: action.payload,
       };
+    case "SET_LOADING":
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case "SET_EMAIL":
       return {
         ...state,
         email: action.payload,
-      };
-    case "SET_CATEGORYID":
-      return {
-        ...state,
-        categoryID: action.payload,
       };
     case "FETCH_GIVEN_OFFER":
       return {

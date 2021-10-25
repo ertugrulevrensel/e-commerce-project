@@ -61,3 +61,8 @@
     background-color: #4b9ce2;
   }
 }
+@media screen and (max-width: 760px) {
+  .uploadFont {
+    display: none;
+  }
+}

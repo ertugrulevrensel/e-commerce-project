@@ -4,15 +4,17 @@ import { connect } from "react-redux";
 import { buyProduct, getProduct, getGivenOfferList } from "../actions";
 
 function BuyModal(props) {
-  // const [getStatus, setStatus] = useState();
+  //close buy modal when click cancel button
   function toggleModal() {
     document.getElementById("succesBuys").classList.add("d-none");
     document.getElementById("failSignBuy").classList.add("d-none");
     document.getElementById("buyModal").classList.toggle("d-none");
   }
+  // buying functions
   function buyProducts(id) {
     buyProduct(id, props.token).then((response) => {
       if (response.status === 201 || response.status === 200) {
+        // if response status is success, show success notification
         document.getElementById("succesBuys").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("succesBuys").classList.add("d-none");
@@ -23,6 +25,7 @@ function BuyModal(props) {
         getGivenOfferList(props.token);
         document.getElementById("buyModal").classList.add("d-none");
       } else if (response.status === 401) {
+        // if response status is fil, show fail notification
         document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failSignBuy").classList.add("d-none");

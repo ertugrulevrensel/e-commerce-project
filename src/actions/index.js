@@ -55,16 +55,16 @@ export const setIsAuth = (auth) => {
     payload: auth,
   };
 };
+export const setLoading = (load) => {
+  return {
+    type: "SET_LOADING",
+    payload: load,
+  };
+};
 export const setEmail = (mail) => {
   return {
     type: "SET_EMAIL",
     payload: mail,
-  };
-};
-export const setCategoryID = (id) => {
-  return {
-    type: "SET_CATEGORYID",
-    payload: id,
   };
 };
 export const getProduct = (id) => async (dispatch) => {

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./Account.scss";
-import profile from "../Assets/Profile-image.png";
+import profile from "../Assets/Profile-image.webp";
 import GivenOffer from "../Components/GivenOffer";
 import Header from "../Components/Header";
 import ReceivedOffer from "../Components/ReceivedOffer";
-import succes from "../Assets/succes.png";
-import fail from "../Assets/fail.png";
+import succes from "../Assets/succes.webp";
+import fail from "../Assets/fail.webp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { getReceivedOfferList, getGivenOfferList } from "../actions";
@@ -22,16 +22,20 @@ function Account({
 
   useEffect(() => {
     if (!isAuth) {
+      //if not is auth, go home
       history.push("/");
     }
     if (isAuth) {
+      //if is auth, call given and received function
       getReceivedOfferList(token);
       getGivenOfferList(token);
     }
   }, []); //eslint-disable-line
 
   function selectList(list) {
+    //fetch selected list
     if (list === "received") {
+      //if select received, fetch received list
       document
         .getElementById("receivedOfferListButton")
         .classList.add("selectedList");
@@ -41,6 +45,7 @@ function Account({
       document.getElementById("givenOffers").classList.add("d-none");
       document.getElementById("receivedOffers").classList.remove("d-none");
     } else {
+      //if select given, fetch given list
       document
         .getElementById("receivedOfferListButton")
         .classList.remove("selectedList");

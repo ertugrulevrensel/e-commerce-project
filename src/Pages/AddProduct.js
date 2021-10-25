@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import "./AddProduct.scss";
 import Header from "../Components/Header";
-import fail from "../Assets/fail.png";
-import succes from "../Assets/succes.png";
+import fail from "../Assets/fail.webp";
+import succes from "../Assets/succes.webp";
 import FileUpload from "../Components/FileUpload";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { setLoading } from "../actions";
 import axios from "axios";
 
-function AddProduct({ isAuth, categorys, token }) {
+function AddProduct({ isAuth, categorys, token, loading, setLoading }) {
+  //create state
   const [getAddingStatus, setAddingStatus] = useState();
   const [getImageUrl, setImageUrl] = useState();
   const [color, setColor] = useState([]);
   const [brand, setBrand] = useState([]);
   const [status, setStatus] = useState([]);
   let history = useHistory();
+  //memo process
   const memo = (callback) => {
     const cache = new Map();
     return (...args) => {
@@ -26,11 +29,13 @@ function AddProduct({ isAuth, categorys, token }) {
       return value;
     };
   };
+  //if not is auth, go home
+  if (!isAuth) {
+    history.push("/");
+  }
   const memoizedAxiosGet = memo(axios.get);
   useEffect(() => {
-    if (!isAuth) {
-      history.push("/");
-    }
+    //get all color and set color state
     memoizedAxiosGet(
       "https://bootcampapi.techcs.io/api/fe/v1/detail/color/all"
     ).then((response) => setColor(response.data));
@@ -44,10 +49,12 @@ function AddProduct({ isAuth, categorys, token }) {
     ).then((response) => setStatus(response.data));
   }, []); // eslint-disable-line
   function saveProduct() {
+    //create product process
+    //take input values
     var infos = [];
     var isOffer = document.querySelector("[name=isOfferable]").checked;
     infos = document.querySelectorAll("[name=addProductInfo]");
-
+    //if input value is undefined, show error
     document.querySelectorAll("[name=addProductInfo]").forEach((item) => {
       if (item.value === "") {
         item.classList.add("inputErr");
@@ -55,6 +62,7 @@ function AddProduct({ isAuth, categorys, token }) {
         item.classList.remove("inputErr");
       }
     });
+    //create body variable for use in axios
     var body = {
       title: infos[0].value,
       description: infos[1].value,
@@ -78,6 +86,8 @@ function AddProduct({ isAuth, categorys, token }) {
       isOfferable: isOffer,
       imageUrl: getImageUrl,
     };
+    //call create product process
+    setLoading(true);
     fetch("https://bootcampapi.techcs.io/api/fe/v1/product/create", {
       method: "POST",
       headers: {
@@ -88,6 +98,8 @@ function AddProduct({ isAuth, categorys, token }) {
     }).then((response) => {
       response.json();
       if (response.status === 401) {
+        //if response is fail, show fail notification
+        setLoading(false);
         setAddingStatus("Giriş Yapmadınız.");
         document.getElementById("failAdd").classList.remove("d-none");
         setTimeout(() => {
@@ -95,6 +107,8 @@ function AddProduct({ isAuth, categorys, token }) {
         }, 3000);
         document.getElementById("succesAdd").classList.add("d-none");
       } else if (response.status === 400) {
+        //if response is fail, show fail notification
+        setLoading(false);
         setAddingStatus("Ürün Bilgileri Eksik.");
         document.getElementById("failAdd").classList.remove("d-none");
         setTimeout(() => {
@@ -102,6 +116,11 @@ function AddProduct({ isAuth, categorys, token }) {
         }, 3000);
         document.getElementById("succesAdd").classList.add("d-none");
       } else if (response.status === 200 || response.status === 201) {
+        //if response is success, show success notification and clear form
+        setLoading(false);
+        document.querySelectorAll("[name=addProductInfo]").forEach((item) => {
+          item.value = "";
+        });
         setAddingStatus("Ürün Eklendi.");
         document.getElementById("failAdd").classList.add("d-none");
         document.getElementById("succesAdd").classList.remove("d-none");
@@ -114,6 +133,7 @@ function AddProduct({ isAuth, categorys, token }) {
   return (
     <div>
       <Header />
+      {loading === true ? <div class="spinnerUpload"></div> : null}
       <div className="responsivePad10">
         <form className=" width80 addProductArea whiteBackground">
           <div className="d-flex">
@@ -273,5 +293,6 @@ const mapStatetoProps = (state) => ({
   isAuth: state.isAuth,
   categorys: state.categorys,
   token: state.token,
+  loading: state.loading,
 });
-export default connect(mapStatetoProps)(AddProduct);
+export default connect(mapStatetoProps, { setLoading })(AddProduct);

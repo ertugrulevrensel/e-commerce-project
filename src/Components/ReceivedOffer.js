@@ -5,9 +5,11 @@ import { getReceivedOfferList } from "../actions";
 function ReceivedOffer(props) {
   let history = useHistory();
   function goProductDetail(id) {
+    //if clicked any product name or image, go this product detail page
     history.push(`/product/${id}`);
   }
   function receivedOfferAccept(id) {
+    //if click accept button, call accept process
     var url =
       "https://bootcampapi.techcs.io/api/fe/v1/account/accept-offer/" + id;
     fetch(url, {
@@ -17,6 +19,7 @@ function ReceivedOffer(props) {
       },
       body: JSON.stringify(id),
     }).then((response) => {
+      //if response is success, show success notification and refresh received offer list
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
@@ -26,6 +29,7 @@ function ReceivedOffer(props) {
         props.getReceivedOfferList(props.token);
         props.setStatus("Teklif Kabul Edildi.");
       } else if (response.status === 401) {
+        //if response is fail, show fail notification
         document.getElementById("failAcceptOffer").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failAcceptOffer").classList.add("d-none");
@@ -33,6 +37,7 @@ function ReceivedOffer(props) {
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
+        //if response is fail, show fail notification
         document.getElementById("failAcceptOffer").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failAcceptOffer").classList.add("d-none");
@@ -43,6 +48,7 @@ function ReceivedOffer(props) {
     });
   }
   function receivedOfferReject(id) {
+    //if click reject button, call reject process
     var url =
       "https://bootcampapi.techcs.io/api/fe/v1/account/reject-offer/" + id;
     fetch(url, {
@@ -52,6 +58,7 @@ function ReceivedOffer(props) {
       },
       body: JSON.stringify(id),
     }).then((response) => {
+      //if response is success, show success notification and refresh received offer list
       if (response.status === 201 || response.status === 200) {
         document.getElementById("failAcceptOffer").classList.add("d-none");
         document.getElementById("succesBuy").classList.remove("d-none");
@@ -61,6 +68,7 @@ function ReceivedOffer(props) {
         props.setStatus("Teklif Reddedildi");
         props.getReceivedOfferList(props.token);
       } else if (response.status === 401) {
+        //if response is fail, show fail notification
         document.getElementById("failAcceptOffer").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failAcceptOffer").classList.add("d-none");
@@ -68,6 +76,7 @@ function ReceivedOffer(props) {
         document.getElementById("succesBuy").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
+        //if response is fail, show fail notification
         document.getElementById("failAcceptOffer").classList.remove("d-none");
         setTimeout(() => {
           document.getElementById("failAcceptOffer").classList.add("d-none");

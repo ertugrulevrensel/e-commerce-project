@@ -1,18 +1,20 @@
 import React from "react";
 import "./SignIn-Up.scss";
-import img from "../Assets/Login-reg.png";
-import fail from "../Assets/fail.png";
-import Logo from "../Assets/Logo2.png";
+import img from "../Assets/Login-reg.webp";
+import fail from "../Assets/fail.webp";
+import Logo from "../Assets/Logo2.webp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { setIsAuth, setToken, setEmail, signInProcess } from "../actions";
 
 function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
   function logIn() {
+    //get email and password
     var data = {
       email: document.getElementById("signInMail").value,
       password: document.getElementById("signInPass").value,
     };
+    //email and password validation
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
@@ -20,8 +22,10 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
+      //sign in process
       signInProcess(data)
         .then((response) => {
+          //if response is success, redirect home and set is auth true
           document.getElementById("failSign").classList.add("d-none");
           setIsAuth(true);
           setEmail(data.email);
@@ -29,6 +33,7 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
           goHome();
         })
         .catch((err) => {
+          //if response is fail, show fail notification
           document.getElementById("failSign").classList.remove("d-none");
           setTimeout(() => {
             document.getElementById("failSign").classList.add("d-none");
@@ -42,12 +47,15 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
   }
   let history = useHistory();
   if (isAuth) {
+    //if already is auth, automatically redirected home
     history.push("/");
   }
   function goHome() {
+    //if click logo, go home page
     history.push("/");
   }
   function goRegister() {
+    //if click register, go register page
     history.push("/register");
   }
   return (

@@ -1,13 +1,14 @@
 import React from "react";
 import "./Modal.scss";
-import exit from "../Assets/x.png";
-import fail from "../Assets/fail.png";
-import succes from "../Assets/succes.png";
+import exit from "../Assets/x.webp";
+import fail from "../Assets/fail.webp";
+import succes from "../Assets/succes.webp";
 import { connect } from "react-redux";
 import { giveOffer, getGivenOfferList } from "../actions";
 import { useParams } from "react-router-dom";
 function OfferModal(props) {
   let { id } = useParams();
+  //close offer modal when click X button
   function toggleModal() {
     document.getElementById("offerModal").classList.toggle("d-none");
     document.getElementById("failSign").classList.add("d-none");
@@ -16,9 +17,11 @@ function OfferModal(props) {
   }
   function offerProduct() {
     if (document.getElementById("customOffer").value > 0) {
+      //if custom offer value >0, go offer function with custom offer value
       let offerCustom = Number(document.getElementById("customOffer").value);
       goOffer(offerCustom);
     } else {
+      //if custom offer value <=0, go offer function with radio input value
       var element = document.getElementsByName("offerPercent");
       for (let i = 0; i < element.length; i++) {
         if (element[i].checked) {
@@ -29,8 +32,10 @@ function OfferModal(props) {
     }
   }
   function goOffer(price) {
+    //call offer function
     giveOffer(id, props.token, price).then((response) => {
       if (response.status === 200 || response.status === 201) {
+        //if response is success, show success notification and close modal
         props.getGivenOfferList(props.token);
         props.setStatus("Teklif Verildi.");
         document.getElementById("succesBuys").classList.remove("d-none");
@@ -42,6 +47,7 @@ function OfferModal(props) {
         document.getElementById("offeredValuediv").classList.remove("d-none");
         props.setOfferValue(Number(price.toFixed(2)));
       } else if (response.status === 401) {
+        //if response is fail, show fail notification
         props.setStatus("Lütfen Giriş Yapınız.");
         document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {
@@ -49,6 +55,7 @@ function OfferModal(props) {
         }, 3000);
         document.getElementById("succesBuys").classList.add("d-none");
       } else {
+        //if response is fail, show fail notification
         props.setStatus("Teklif Yapılamadı.");
         document.getElementById("failSignBuy").classList.remove("d-none");
         setTimeout(() => {

@@ -8,3 +8,16 @@
     object-fit: contain;
   }
 }
+#gotoTop {
+  top: 90%;
+  left: 95%;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+@media screen and (max-width: 760px) {
+  #gotoTop {
+    top: 90%;
+    left: 85%;
+  }
+}

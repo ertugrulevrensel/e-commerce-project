@@ -1,8 +1,8 @@
 import React from "react";
 import "./Header.scss";
-import Logo from "../Assets/Logo.png";
-import Add from "../Assets/Add-product.png";
-import Profile from "../Assets/Profile.png";
+import Logo from "../Assets/Logo.webp";
+import Add from "../Assets/Add-product.webp";
+import Profile from "../Assets/Profile.webp";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react/cjs/react.development";
 import { connect } from "react-redux";
@@ -10,22 +10,28 @@ import { connect } from "react-redux";
 function Header({ isAuth }) {
   let history = useHistory();
   function goHome() {
+    //if click logo, go home page
     history.push("/");
   }
   function goLogin() {
+    //if login button, go login page
     history.push("/login");
   }
   function goAddProduct() {
+    //if add product button, go add product page
     history.push("/addproduct");
   }
   function goMyAccount() {
+    //if myaccount button, go myaccount page
     history.push("/myaccount/");
   }
   useEffect(() => {
     if (isAuth) {
+      //if not is auth, show only login button in header
       document.getElementById("myAccountButton").classList.remove("d-none");
       document.getElementById("loginButton").classList.add("d-none");
     } else {
+      //if is auth, show myaccount and add product button in header
       document.getElementById("myAccountButton").classList.add("d-none");
       document.getElementById("loginButton").classList.remove("d-none");
       document.getElementById("addProductButton").classList.add("d-none");

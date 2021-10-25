@@ -1,18 +1,20 @@
 import React from "react";
 import "./SignIn-Up.scss";
-import img from "../Assets/Login-reg.png";
-import Logo from "../Assets/Logo2.png";
-import fail from "../Assets/fail.png";
+import img from "../Assets/Login-reg.webp";
+import Logo from "../Assets/Logo2.webp";
+import fail from "../Assets/fail.webp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { setIsAuth, setToken, setEmail, signUpProcess } from "../actions";
 
 function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
   function signUps() {
+    //get email and password
     var data = {
       email: document.getElementById("signUpMail").value,
       password: document.getElementById("signUpPass").value,
     };
+    //email and password validation
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
@@ -20,8 +22,10 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
+      //sign up process
       signUpProcess(data)
         .then((response) => {
+          //if response is success, redirect home and set is auth true
           document.getElementById("repetitive").classList.add("d-none");
           document.getElementById("unValid").classList.add("d-none");
           setIsAuth(true);
@@ -30,6 +34,7 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
           goHome();
         })
         .catch((err) => {
+          //if response is fail, show fail notification
           document.getElementById("repetitive").classList.remove("d-none");
           setTimeout(() => {
             document.getElementById("repetitive").classList.add("d-none");
@@ -45,12 +50,15 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
   }
   let history = useHistory();
   if (isAuth) {
+    //if already is auth, automatically redirected home
     history.push("/");
   }
   function goHome() {
+    //if click logo, go home page
     history.push("/");
   }
   function goLogin() {
+    //if click login, go login page
     history.push("/login");
   }
   return (

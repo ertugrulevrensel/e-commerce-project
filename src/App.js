@@ -6,6 +6,7 @@ import SignUp from "./Pages/SignUp";
 import ProductDetail from "./Pages/ProductDetail";
 import AddProduct from "./Pages/AddProduct";
 import Account from "./Pages/Account";
+import NotFound from "./Pages/NotFound";
 function App() {
   return (
     <Router>
@@ -25,8 +26,11 @@ function App() {
         <Route path="/addproduct">
           <AddProduct />
         </Route>
-        <Route path={["/:categoryid", "/"]}>
+        <Route path={["/category/:categoryid", "/"]} exact>
           <Home />
+        </Route>
+        <Route>
+          <NotFound />
         </Route>
       </Switch>
     </Router>

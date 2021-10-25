@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import BuyModal from "./BuyModal";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getGivenOfferList } from "../actions";
-import fail from "../Assets/fail.png";
-import succes from "../Assets/succes.png";
+import fail from "../Assets/fail.webp";
+import succes from "../Assets/succes.webp";
 
 function GivenOffer(props) {
   const [status, setStatus] = useState();
   let history = useHistory();
+  //if clicked any product name or image, go this product detail page
   function goProductDetail(id) {
     history.push(`/product/${id}`);
   }
   function toggleBuy() {
+    //open buy modal when click buy button
     document.getElementById("buyModal").classList.toggle("d-none");
     console.log(props.givenOfferList);
   }

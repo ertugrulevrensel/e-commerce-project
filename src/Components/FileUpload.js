@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import uploads from "../Assets/upload.png";
+import uploads from "../Assets/upload.webp";
 import "./FileUpload.scss";
-import succes from "../Assets/succes.png";
-import fail from "../Assets/fail.png";
+import succes from "../Assets/succes.webp";
+import fail from "../Assets/fail.webp";
 import axios from "axios";
 import deleteImg from "../Assets/delete.svg";
 import { connect } from "react-redux";
@@ -12,6 +12,7 @@ function FileUpload(props) {
   const [getProgressPercent, setProgressPercent] = useState(0);
 
   function deleteImage() {
+    //if click X button, delete value in input
     document.getElementById("viewUploadImg").classList.add("d-none");
     document.getElementById("uploadSection").classList.remove("d-none");
     document.getElementById("inputElement").value = "";
@@ -20,6 +21,7 @@ function FileUpload(props) {
   }
 
   const initApp = () => {
+    //drag and drop process setting
     const droparea = document.getElementById("uploadSection");
     const active = () => droparea.classList.add("green-border");
     const inactive = () => droparea.classList.remove("green-border");
@@ -40,6 +42,7 @@ function FileUpload(props) {
   }, ""); // eslint-disable-line
 
   function postFile(file) {
+    //Checking the uploaded image
     if (file.length > 1) {
       setUploadStatus("Birden fazla dosya yüklemeyiniz.");
       document.getElementById("failUpload").classList.remove("d-none");
@@ -61,6 +64,7 @@ function FileUpload(props) {
         document.getElementById("failUpload").classList.add("d-none");
       }, 3000);
     } else {
+      //progress bar process
       document.getElementById("failUpload").classList.add("d-none");
       var percentCompleted = 0;
       function config(progressEvent) {
@@ -69,11 +73,13 @@ function FileUpload(props) {
         );
         setProgressPercent(percentCompleted);
         if (percentCompleted === 100) {
+          //when upload is complete, show image
           document.getElementById("uploadSection").classList.add("d-none");
           document.getElementById("progressBarArea").classList.add("d-none");
           document.getElementById("uploadDetail").classList.add("d-none");
           document.getElementById("viewUploadImg").classList.remove("d-none");
         } else {
+          //set blue div width
           document.getElementById("uploadDetail").classList.add("d-none");
           document.getElementById("uploadSection").classList.remove("d-none");
           document.getElementById("viewUploadImg").classList.add("d-none");
@@ -84,11 +90,11 @@ function FileUpload(props) {
       }
       const formData = new FormData();
       formData.append("file", file[0], file[0].name);
+      //upload image process
       axios
         .post(
           "https://bootcampapi.techcs.io/api/fe/v1/file/upload/image",
           formData,
-          // config,
           {
             headers: {
               Authorization: `Bearer ${props.token}`,
@@ -98,22 +104,26 @@ function FileUpload(props) {
           }
         )
         .then((response) => {
+          //if response is success, show image
           props.setImageUrl(response.data.url);
           document
             .getElementById("viewImg")
             .setAttribute("src", response.data.url);
         })
         .catch((err) => {
+          //if respone is fail, show fail notification
           setUploadStatus("Görsel Yüklenemedi.");
           document.getElementById("failUpload").classList.remove("d-none");
         });
     }
   }
   function getInputFile() {
+    //take file in input and send function
     postFile(document.getElementById("inputElement").files);
   }
 
   const getDropFile = (e) => {
+    //take file in input and send function
     const file = e.dataTransfer.files;
     postFile(file);
   };

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import succes from "../Assets/succes.png";
-import fail from "../Assets/fail.png";
+import succes from "../Assets/succes.webp";
+import fail from "../Assets/fail.webp";
 import OfferModal from "./OfferModal";
 import BuyModal from "./BuyModal";
 import CancelModal from "./CancelModal";
@@ -16,31 +16,24 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
   let { id } = useParams();
   useEffect(() => {
     console.log(id);
+    //call product
     axios(`https://bootcampapi.techcs.io/api/fe/v1/product/${id}`).then(
       (response) => setProduct(response.data)
     );
     if (token.length > 0) {
       getGivenOfferList(token);
     }
-    if (Number(getofferValue) > 0) {
-      document.getElementById("buyButton").classList.remove("d-none");
-      document.getElementById("backOfferButton").classList.remove("d-none");
-      document.getElementById("offerButtonn").classList.add("d-none");
-      document.getElementById("notSaleDiv").classList.add("d-none");
-    } else if (Number(getofferValue) === 0) {
-      document.getElementById("buyButton").classList.remove("d-none");
-      document.getElementById("backOfferButton").classList.add("d-none");
-      document.getElementById("offerButtonn").classList.remove("d-none");
-      document.getElementById("notSaleDiv").classList.add("d-none");
-    }
   }, ""); // eslint-disable-line
   function cancelOffered() {
+    //show cancel offer modal
     document.getElementById("cancelModal").classList.toggle("d-none");
   }
   function toggleOffer() {
+    //show offer modal
     document.getElementById("offerModal").classList.toggle("d-none");
   }
   function toggleBuy() {
+    //show buy modal
     document.getElementById("buyModal").classList.toggle("d-none");
   }
   return (
