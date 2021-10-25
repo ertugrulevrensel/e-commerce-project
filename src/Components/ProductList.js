@@ -18,42 +18,50 @@ function ProductList({ productList, getProductList, setLoading, loading }) {
   return (
     <>
       {loading === true ? (
-        <div class="spinner"></div>
+        <div className="spinner"></div>
       ) : (
         <div className="d-grid productList">
-          {(categoryid === undefined
-            ? productList
-            : productList?.filter(
-                (products) => products.category.id === categoryid
-              )
-          ).map((product) => {
-            return (
-              <div
-                className="d-flex flex-d-col product border-r-8 c-pointer"
-                onClick={() => goDetail(product.id)}
-                key={product.id}
-              >
-                <div className="d-flex flex-d-col productImg">
-                  <img
-                    className="border-r-8"
-                    src={product.imageUrl}
-                    alt=""
-                  ></img>
-                </div>
-                <div className="d-flex space-between">
-                  <p className="brand">
-                    <b>{product.brand.title}</b>
-                  </p>
-                  <div className="d-flex productColor">
-                    <b>Renk: </b> <p> {product.color.title}</p>
+          {productList === 404 || productList === 429 ? (
+            <>
+              <div>Sayfa yüklenemedi. Lütfen tekrar deneyiniz.</div>
+            </>
+          ) : (
+            <>
+              {(categoryid === undefined
+                ? productList
+                : productList?.filter(
+                    (products) => products.category.id === categoryid
+                  )
+              ).map((product) => {
+                return (
+                  <div
+                    className="d-flex flex-d-col product border-r-8 c-pointer"
+                    onClick={() => goDetail(product.id)}
+                    key={product.id}
+                  >
+                    <div className="d-flex flex-d-col productImg">
+                      <img
+                        className="border-r-8"
+                        src={product.imageUrl}
+                        alt=""
+                      ></img>
+                    </div>
+                    <div className="d-flex space-between">
+                      <p className="brand">
+                        <b>{product.brand.title}</b>
+                      </p>
+                      <div className="d-flex productColor">
+                        <b>Renk: </b> <p> {product.color.title}</p>
+                      </div>
+                    </div>
+                    <div className="productPrice">
+                      <b>{product.price} TL</b>
+                    </div>
                   </div>
-                </div>
-                <div className="productPrice">
-                  <b>{product.price} TL</b>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </>
+          )}
         </div>
       )}
     </>
