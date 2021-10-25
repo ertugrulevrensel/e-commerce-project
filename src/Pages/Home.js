@@ -20,7 +20,7 @@ function Home() {
       document
         .getElementsByClassName("checkedLi")[0]
         ?.classList.remove("checkedLi");
-      document.getElementById(`${categoryid}`)?.classList.add("checkedLi");
+      document.getElementById(`${categoryid}`)?.classList?.add("checkedLi");
     }
   }, [categoryid]);
   const toggleVisible = () => {
