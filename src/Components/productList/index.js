@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "./ProductList.scss";
 import { connect } from "react-redux";
-import { getProductList, setLoading } from "../actions";
+import { getProductList, setLoading } from "../../actions";
 function ProductList({ productList, getProductList, setLoading, loading }) {
   let { categoryid } = useParams();
   useEffect(() => {

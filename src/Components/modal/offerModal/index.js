@@ -1,10 +1,10 @@
 import React from "react";
-import "./Modal.scss";
-import exit from "../Assets/x.webp";
-import fail from "../Assets/fail.webp";
-import succes from "../Assets/succes.webp";
+import "../Modal.scss";
+import exit from "../../../Assets/x.webp";
+import fail from "../../../Assets/fail.webp";
+import succes from "../../../Assets/succes.webp";
 import { connect } from "react-redux";
-import { giveOffer, getGivenOfferList } from "../actions";
+import { giveOffer, getGivenOfferList } from "../../../actions";
 import { useParams } from "react-router-dom";
 function OfferModal(props) {
   let { id } = useParams();

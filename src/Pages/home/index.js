@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import "./Home.scss";
-import Header from "../Components/Header";
-import Banner from "../Assets/Banner.webp";
-import Category from "../Components/Category";
-import ProductList from "../Components/ProductList";
+import Header from "../../Components/header";
+import Banner from "../../Assets/Banner.webp";
+import Category from "../../Components/category";
+import ProductList from "../../Components/productList";
 import { useParams } from "react-router-dom";
-import gotoTopImg from "../Assets/go-up.png";
+import gotoTopImg from "../../Assets/go-up.png";
 function Home() {
   let { categoryid } = useParams();
   useEffect(() => {

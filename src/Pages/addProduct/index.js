@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useEffect } from "react/cjs/react.development";
 import "./AddProduct.scss";
-import Header from "../Components/Header";
-import fail from "../Assets/fail.webp";
-import succes from "../Assets/succes.webp";
-import FileUpload from "../Components/FileUpload";
+import Header from "../../Components/header";
+import fail from "../../Assets/fail.webp";
+import succes from "../../Assets/succes.webp";
+import FileUpload from "../../Components/fileUpload";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { setLoading } from "../actions";
+import { setLoading } from "../../actions";
 import axios from "axios";
 
 function AddProduct({ isAuth, categorys, token, loading, setLoading }) {

@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import succes from "../Assets/succes.webp";
-import fail from "../Assets/fail.webp";
-import OfferModal from "./OfferModal";
-import BuyModal from "./BuyModal";
-import CancelModal from "./CancelModal";
+import succes from "../../Assets/succes.webp";
+import fail from "../../Assets/fail.webp";
+import OfferModal from "../modal/offerModal";
+import BuyModal from "../modal/buyModal";
+import CancelModal from "../modal/cancelModal";
 import { connect } from "react-redux";
-import { getGivenOfferList } from "../actions";
+import { getGivenOfferList } from "../../actions";
 import { useParams } from "react-router-dom";
 
 function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {

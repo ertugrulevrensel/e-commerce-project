@@ -54,11 +54,13 @@ export const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         givenOfferList: action.payload,
+        loading: false,
       };
     case "FETCH_RECEIVED_OFFER":
       return {
         ...state,
         receivedOfferList: action.payload,
+        loading: false,
       };
     default:
       return state;

@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import "./Account.scss";
-import profile from "../Assets/Profile-image.webp";
-import GivenOffer from "../Components/GivenOffer";
-import Header from "../Components/Header";
-import ReceivedOffer from "../Components/ReceivedOffer";
-import succes from "../Assets/succes.webp";
-import fail from "../Assets/fail.webp";
+import profile from "../../Assets/Profile-image.webp";
+import GivenOffer from "../../Components/offerList/givenOfferList";
+import Header from "../../Components/header";
+import ReceivedOffer from "../../Components/offerList/receivedOfferList";
+import succes from "../../Assets/succes.webp";
+import fail from "../../Assets/fail.webp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { getReceivedOfferList, getGivenOfferList } from "../actions";
+import {
+  getReceivedOfferList,
+  getGivenOfferList,
+  setLoading,
+} from "../../actions";
 
 function Account({
   email,
@@ -16,6 +20,8 @@ function Account({
   getReceivedOfferList,
   getGivenOfferList,
   token,
+  loading,
+  setLoading,
 }) {
   const [getStatus, setStatus] = useState("");
   let history = useHistory();
@@ -27,6 +33,7 @@ function Account({
     }
     if (isAuth) {
       //if is auth, call given and received function
+      setLoading(true);
       getReceivedOfferList(token);
       getGivenOfferList(token);
     }
@@ -82,8 +89,14 @@ function Account({
               <p>Teklif Verdiklerim</p>
             </div>
           </div>
-          <ReceivedOffer setStatus={setStatus} />
-          <GivenOffer setStatus={setStatus} />
+          {loading === true ? (
+            <div className="spinner"></div>
+          ) : (
+            <>
+              <ReceivedOffer setStatus={setStatus} />
+              <GivenOffer setStatus={setStatus} />
+            </>
+          )}
         </div>
         <div
           id="succesBuy"
@@ -107,8 +120,10 @@ const mapStatetoProps = (state) => ({
   isAuth: state.isAuth,
   email: state.email,
   token: state.token,
+  loading: state.loading,
 });
 export default connect(mapStatetoProps, {
   getReceivedOfferList,
   getGivenOfferList,
+  setLoading,
 })(Account);

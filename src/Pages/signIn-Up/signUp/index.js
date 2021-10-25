@@ -1,18 +1,18 @@
 import React from "react";
-import "./SignIn-Up.scss";
-import img from "../Assets/Login-reg.webp";
-import fail from "../Assets/fail.webp";
-import Logo from "../Assets/Logo2.webp";
+import "../SignIn-Up.scss";
+import img from "../../../Assets/Login-reg.webp";
+import Logo from "../../../Assets/Logo2.webp";
+import fail from "../../../Assets/fail.webp";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { setIsAuth, setToken, setEmail, signInProcess } from "../actions";
+import { setIsAuth, setToken, setEmail, signUpProcess } from "../../../actions";
 
-function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
-  function logIn() {
+function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
+  function signUps() {
     //get email and password
     var data = {
-      email: document.getElementById("signInMail").value,
-      password: document.getElementById("signInPass").value,
+      email: document.getElementById("signUpMail").value,
+      password: document.getElementById("signUpPass").value,
     };
     //email and password validation
     const re =
@@ -22,11 +22,12 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
       data.password.length >= 8 &&
       data.password.length <= 20
     ) {
-      //sign in process
-      signInProcess(data)
+      //sign up process
+      signUpProcess(data)
         .then((response) => {
           //if response is success, redirect home and set is auth true
-          document.getElementById("failSign").classList.add("d-none");
+          document.getElementById("repetitive").classList.add("d-none");
+          document.getElementById("unValid").classList.add("d-none");
           setIsAuth(true);
           setEmail(data.email);
           setToken(response.data.access_token);
@@ -34,15 +35,17 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
         })
         .catch((err) => {
           //if response is fail, show fail notification
-          document.getElementById("failSign").classList.remove("d-none");
+          document.getElementById("repetitive").classList.remove("d-none");
           setTimeout(() => {
-            document.getElementById("failSign").classList.add("d-none");
+            document.getElementById("repetitive").classList.add("d-none");
           }, 3000);
-          document.getElementById("signInMail").classList.add("inputErr");
-          document.getElementById("signInPass").classList.add("inputErr");
+          document.getElementById("unValid").classList.add("d-none");
+          document.getElementById("signUpMail").classList.add("inputErr");
+          document.getElementById("signUpPass").classList.add("inputErr");
         });
     } else {
-      document.getElementById("failSign").classList.add("d-none");
+      document.getElementById("unValid").classList.remove("d-none");
+      document.getElementById("repetitive").classList.add("d-none");
     }
   }
   let history = useHistory();
@@ -54,9 +57,9 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
     //if click logo, go home page
     history.push("/");
   }
-  function goRegister() {
-    //if click register, go register page
-    history.push("/register");
+  function goLogin() {
+    //if click login, go login page
+    history.push("/login");
   }
   return (
     <>
@@ -73,40 +76,47 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
           </div>
           <div className="d-flex flex-d-col login border-r-8 align-center">
             <div className="d-flex align-center flex-d-col">
-              <b>Giriş Yap</b>
-              <p>Fırsatlardan yararlanmak için giriş yap!</p>
+              <b>Üye Ol</b>
+              <p>Fırsatlardan yararlanmak için üye ol!</p>
             </div>
             <div className="logInput full-w">
               <p>Email</p>
               <input
-                id="signInMail"
+                id="signUpMail"
                 type="text"
                 placeholder="Email@example.com"
               ></input>
               <p>Şifre</p>
               <input
-                id="signInPass"
+                id="signUpPass"
                 type="password"
                 placeholder="•••••"
               ></input>
             </div>
-            <button onClick={() => logIn()} className="full-w">
-              Giriş Yap
+            <button onClick={() => signUps()} className="full-w">
+              Üye Ol
             </button>
             <p>
-              Hesabın yok mu? {/* eslint-disable-next-line */}
-              <a className="c-pointer" onClick={() => goRegister()}>
-                <b>Üye Ol</b>
+              Hesabın var mı? {/* eslint-disable-next-line */}
+              <a className="c-pointer" onClick={() => goLogin()}>
+                <b>Giriş Yap</b>
               </a>
             </p>
           </div>
         </div>
         <div
-          id="failSign"
+          id="repetitive"
           className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
         >
           <img src={fail} alt=""></img>
-          <p>Emailiniz veya şifreniz hatalı.</p>
+          <p>Kullanıcı zaten kayıtlı.</p>
+        </div>
+        <div
+          id="unValid"
+          className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
+        >
+          <img src={fail} alt=""></img>
+          <p>Geçerli email ve şifre giriniz.</p>
         </div>
       </div>
     </>
@@ -122,5 +132,5 @@ export default connect(mapStatetoProps, {
   setIsAuth,
   setToken,
   setEmail,
-  signInProcess,
-})(SignIn);
+  signUpProcess,
+})(SignUp);

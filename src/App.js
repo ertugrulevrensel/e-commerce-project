@@ -1,12 +1,12 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Home from "./Pages/Home";
-import SignIn from "./Pages/SignIn";
-import SignUp from "./Pages/SignUp";
-import ProductDetail from "./Pages/ProductDetail";
-import AddProduct from "./Pages/AddProduct";
-import Account from "./Pages/Account";
-import NotFound from "./Pages/NotFound";
+import Home from "./Pages/home";
+import SignIn from "./Pages/signIn-Up/signIn";
+import SignUp from "./Pages/signIn-Up/signUp";
+import ProductDetail from "./Pages/productDetail";
+import AddProduct from "./Pages/addProduct";
+import Account from "./Pages/account";
+import NotFound from "./Pages/notFound";
 function App() {
   return (
     <Router>

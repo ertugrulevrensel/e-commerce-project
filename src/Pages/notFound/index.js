@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../Components/Header";
+import Header from "../../Components/header";
 import { useHistory } from "react-router-dom";
 
 function NotFound() {

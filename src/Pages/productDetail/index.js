@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import "./ProductDetail.scss";
-import Header from "../Components/Header";
-import ProductButton from "../Components/ProductButton";
+import Header from "../../Components/header";
+import ProductButton from "../../Components/productButton";
 import { connect } from "react-redux";
-import { getProduct, setLoading } from "../actions";
+import { getProduct, setLoading } from "../../actions";
 import { useParams, useHistory } from "react-router-dom";
 
 function ProductDetail({ getProduct, product, setLoading, loading }) {
@@ -23,10 +23,14 @@ function ProductDetail({ getProduct, product, setLoading, loading }) {
     <>
       <Header />
       <div className="width80 ">
-        {product === 404 ? (
+        {product === 404 || product === 429 ? (
           <div className="d-flex full-w align-center justify-center">
             <p>
-              Aradığınız ürün bulunamadı.{" "}
+              {product === 404 ? (
+                <p>Aradığınız ürün bulunamadı. </p>
+              ) : (
+                <p>Bir sorun oluştu. </p>
+              )}
               <b className="c-pointer color4b9ce2" onClick={() => goHome()}>
                 Anasayfaya
               </b>{" "}
@@ -36,7 +40,7 @@ function ProductDetail({ getProduct, product, setLoading, loading }) {
         ) : (
           <>
             {loading === true ? (
-              <div class="spinner"></div>
+              <div className="spinner"></div>
             ) : (
               <div className="d-flex whiteBackground responsiveDetail">
                 <div className="productDetailImg full-w">

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./Category.scss";
 import { connect } from "react-redux";
-import { getCategory } from "../actions";
+import { getCategory } from "../../actions";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 function Category({ categorys, getCategory }) {

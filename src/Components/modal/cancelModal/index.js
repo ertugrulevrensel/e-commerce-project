@@ -1,16 +1,16 @@
 import React from "react";
-import { cancelOffer, getGivenOfferList, getProduct } from "../actions";
+import { cancelOffer, getGivenOfferList, getProduct } from "../../../actions";
 import { connect } from "react-redux";
-import "./Modal.scss";
+import "../Modal.scss";
 import { useParams } from "react-router-dom";
 
 function CancelModal(props) {
   let { id } = useParams();
   //close cancel offer modal when click cancel button
   function toggleModal() {
-    document.getElementById("succesCancel").classList.add("d-none");
-    document.getElementById("failCancelOffer").classList.add("d-none");
-    document.getElementById("cancelModal").classList.toggle("d-none");
+    document.getElementById("succesCancel")?.classList.add("d-none");
+    document.getElementById("failCancelOffer")?.classList.add("d-none");
+    document.getElementById("cancelModal")?.classList.toggle("d-none");
   }
   function CancelProductsOffers() {
     //set cancel id
@@ -24,33 +24,33 @@ function CancelModal(props) {
     cancelOffer(cancelID, props.token).then((response) => {
       if (response.status === 200 || response.status === 201) {
         //if response is success, show success notification
-        document.getElementById("succesBuys").classList.remove("d-none");
+        document.getElementById("succesBuys")?.classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("succesBuys").classList.add("d-none");
+          document.getElementById("succesBuys")?.classList.add("d-none");
         }, 3000);
-        document.getElementById("failSignBuy").classList.add("d-none");
+        document.getElementById("failSignBuy")?.classList.add("d-none");
         //close offer value div
-        document.getElementById("offeredValuediv").classList.add("d-none");
+        document.getElementById("offeredValuediv")?.classList.add("d-none");
         props.setStatus("Teklif Geri Çeklidi.");
         props.setOfferValue("0");
         props.getGivenOfferList(props.token);
         //close cancel offer modal after response is success
-        document.getElementById("cancelModal").classList.add("d-none");
+        document.getElementById("cancelModal")?.classList.add("d-none");
       } else if (response.status === 401) {
         //if response is fail, show fail notification
-        document.getElementById("failSignBuy").classList.remove("d-none");
+        document.getElementById("failSignBuy")?.classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("failSignBuy").classList.add("d-none");
+          document.getElementById("failSignBuy")?.classList.add("d-none");
         }, 3000);
-        document.getElementById("succesBuys").classList.add("d-none");
+        document.getElementById("succesBuys")?.classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
       } else {
         //if response is fail, show fail notification
-        document.getElementById("failSignBuy").classList.remove("d-none");
+        document.getElementById("failSignBuy")?.classList.remove("d-none");
         setTimeout(() => {
-          document.getElementById("failSignBuy").classList.add("d-none");
+          document.getElementById("failSignBuy")?.classList.add("d-none");
         }, 3000);
-        document.getElementById("succesBuys").classList.add("d-none");
+        document.getElementById("succesBuys")?.classList.add("d-none");
         props.setStatus("Teklif Geri Çekme Başarısız.");
       }
     });

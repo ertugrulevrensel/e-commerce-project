@@ -10,14 +10,25 @@ This project made within the Çiçeksepeti react bootcamp.
 - Redux devtool extension
 - React dom
 - Axios
+- Babel
+- Testing library
+- Jest
 
-## Installation
+## Run Project
 
 In the project directory you can run:
 
 ```console
 npm install
 npm start
+```
+
+## Test Project
+
+To run unit tests you can run the following lines:
+
+```console
+npm run test
 ```
 
 ## Screenshots

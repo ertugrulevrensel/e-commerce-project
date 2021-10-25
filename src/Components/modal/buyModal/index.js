@@ -1,7 +1,7 @@
 import React from "react";
-import "./Modal.scss";
+import "../Modal.scss";
 import { connect } from "react-redux";
-import { buyProduct, getProduct, getGivenOfferList } from "../actions";
+import { buyProduct, getProduct, getGivenOfferList } from "../../../actions";
 
 function BuyModal(props) {
   //close buy modal when click cancel button

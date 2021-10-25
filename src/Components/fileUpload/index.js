@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import uploads from "../Assets/upload.webp";
+import uploads from "../../Assets/upload.webp";
 import "./FileUpload.scss";
-import succes from "../Assets/succes.webp";
-import fail from "../Assets/fail.webp";
+import succes from "../../Assets/succes.webp";
+import fail from "../../Assets/fail.webp";
 import axios from "axios";
-import deleteImg from "../Assets/delete.svg";
+import deleteImg from "../../Assets/delete.svg";
 import { connect } from "react-redux";
 
 function FileUpload(props) {
