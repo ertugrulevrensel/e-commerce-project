@@ -4,12 +4,12 @@ This project made within the Çiçeksepeti react bootcamp.
 
 ## Used Technologies
 
--React
--React redux
--Redux thunk
--Redux devtool extension
--React dom
--Axios
+- React
+- React redux
+- Redux thunk
+- Redux devtool extension
+- React dom
+- Axios
 
 ## Installation
 
