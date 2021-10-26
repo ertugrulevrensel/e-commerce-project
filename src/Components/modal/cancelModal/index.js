@@ -15,7 +15,7 @@ function CancelModal(props) {
   function CancelProductsOffers() {
     //set cancel id
     let cancelID = "";
-    props.givenOfferList?.map((item) => {
+    props.givenOfferList?.forEach((item) => {
       if (item.product.id === id) {
         cancelID = item.id;
       }
