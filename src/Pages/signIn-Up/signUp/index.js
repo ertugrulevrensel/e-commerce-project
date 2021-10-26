@@ -45,6 +45,9 @@ function SignUp({ setIsAuth, setToken, setEmail, isAuth, signUpProcess }) {
         });
     } else {
       document.getElementById("unValid").classList.remove("d-none");
+      setTimeout(() => {
+        document.getElementById("unValid").classList.add("d-none");
+      }, 3000);
       document.getElementById("repetitive").classList.add("d-none");
     }
   }

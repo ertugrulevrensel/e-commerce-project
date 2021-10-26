@@ -2,6 +2,8 @@
 
 This project made within the Çiçeksepeti react bootcamp.
 
+LIVE: https://evrensel-ciceksepeti-graduation-project.netlify.app/
+
 ## Used Technologies
 
 - React

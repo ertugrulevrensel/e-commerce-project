@@ -42,7 +42,10 @@ function SignIn({ setIsAuth, setToken, setEmail, isAuth, signInProcess }) {
           document.getElementById("signInPass").classList.add("inputErr");
         });
     } else {
-      document.getElementById("failSign").classList.add("d-none");
+      document.getElementById("failSign").classList.remove("d-none");
+      setTimeout(() => {
+        document.getElementById("failSign").classList.add("d-none");
+      }, 3000);
     }
   }
   let history = useHistory();
