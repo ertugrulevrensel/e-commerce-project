@@ -16,7 +16,6 @@ function GivenOffer(props) {
   function toggleBuy() {
     //open buy modal when click buy button
     document.getElementById("buyModal").classList.toggle("d-none");
-    console.log(props.givenOfferList);
   }
   return (
     <div id="givenOffers" className="d-none">

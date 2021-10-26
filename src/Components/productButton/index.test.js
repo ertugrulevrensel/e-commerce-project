@@ -6,7 +6,7 @@ import App from "../../App";
 import ProductDetail from "../../Pages/productDetail";
 import store from "../../store/store";
 
-describe("FileUpload Components", () => {
+describe("productButton Components", () => {
   HTMLMediaElement.prototype.play = jest.fn();
 
   it("should be render", () => {

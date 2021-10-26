@@ -10,12 +10,10 @@ import { getGivenOfferList } from "../../actions";
 import { useParams } from "react-router-dom";
 
 function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
-  const [getofferValue, setOfferValue] = useState("-1");
   const [getStatus, setStatus] = useState();
   const [getProductState, setProduct] = useState([]);
   let { id } = useParams();
   useEffect(() => {
-    console.log(id);
     //call product
     axios(`https://bootcampapi.techcs.io/api/fe/v1/product/${id}`).then(
       (response) => setProduct(response.data)
@@ -97,17 +95,9 @@ function ProductButton({ product, getGivenOfferList, givenOfferList, token }) {
           </button>
         </div>
       ) : null}
-      <OfferModal
-        setOfferValue={setOfferValue}
-        product={getProductState}
-        setStatus={setStatus}
-      />
+      <OfferModal product={getProductState} setStatus={setStatus} />
       <BuyModal product={getProductState} setStatus={setStatus} />
-      <CancelModal
-        setStatus={setStatus}
-        setOfferValue={setOfferValue}
-        product={getProductState}
-      />
+      <CancelModal setStatus={setStatus} product={getProductState} />
       <div
         id="failSignBuy"
         className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"

@@ -32,7 +32,6 @@ function CancelModal(props) {
         //close offer value div
         document.getElementById("offeredValuediv")?.classList.add("d-none");
         props.setStatus("Teklif Geri Çeklidi.");
-        props.setOfferValue("0");
         props.getGivenOfferList(props.token);
         //close cancel offer modal after response is success
         document.getElementById("cancelModal")?.classList.add("d-none");

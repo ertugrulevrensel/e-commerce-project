@@ -36,7 +36,7 @@ function Header({ isAuth }) {
       document.getElementById("loginButton").classList.remove("d-none");
       document.getElementById("addProductButton").classList.add("d-none");
     }
-  });
+  }, ""); //eslint-disable-line
   return (
     <header>
       <div className="d-flex width80 space-between">

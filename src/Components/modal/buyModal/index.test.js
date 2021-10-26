@@ -6,7 +6,7 @@ import App from "../../../App";
 import ProductDetail from "../../../Pages/productDetail";
 import store from "../../../store/store";
 
-describe("Header Components", () => {
+describe("buyModal Components", () => {
   HTMLMediaElement.prototype.play = jest.fn();
 
   it("should be render", () => {

@@ -32,6 +32,13 @@ function BuyModal(props) {
         }, 3000);
         document.getElementById("succesBuys").classList.add("d-none");
         props.setStatus("Lütfen Giriş Yapınız.");
+      } else {
+        document.getElementById("failSignBuy").classList.remove("d-none");
+        setTimeout(() => {
+          document.getElementById("failSignBuy").classList.add("d-none");
+        }, 3000);
+        document.getElementById("succesBuys").classList.add("d-none");
+        props.setStatus("Satın Alma Başarısız.");
       }
     });
   }
@@ -60,20 +67,6 @@ function BuyModal(props) {
           </div>
         </div>
       </div>
-      {/* <div
-        id="failSignBuy"
-        className="d-flex d-none p-fixed failSignModal border-r-8 align-center justify-center"
-      >
-        <img src={fail} alt=""></img>
-        <p>{getStatus}</p>
-      </div>
-      <div
-        id="succesBuys"
-        className="d-flex d-none p-fixed succesBuyModal border-r-8 align-center justify-center"
-      >
-        <img src={succes} alt=""></img>
-        <p>{getStatus}</p>
-      </div> */}
     </div>
   );
 }

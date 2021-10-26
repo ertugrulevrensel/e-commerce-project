@@ -5,7 +5,7 @@ import App from "../../App";
 import store from "../../store/store";
 import NotFound from ".";
 
-describe("FileUpload Components", () => {
+describe("notFound Page", () => {
   HTMLMediaElement.prototype.play = jest.fn();
 
   it("should be render", () => {
