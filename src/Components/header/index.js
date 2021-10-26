@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Header.scss";
 import Logo from "../../Assets/Logo.webp";
 import Add from "../../Assets/Add-product.webp";
 import Profile from "../../Assets/Profile.webp";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react/cjs/react.development";
 import { connect } from "react-redux";
 
 function Header({ isAuth }) {
