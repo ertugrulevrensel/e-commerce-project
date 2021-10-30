@@ -41,3 +41,21 @@ npm run test
 ![](./readme/sign-in.webp)
 ![](./readme/add-product.webp)
 ![](./readme/add-product-image.webp)
+
+## Performance
+
+### Localhost Desktop
+
+![](./readme/localhostDesktop.png)
+
+### Localhost Mobile
+
+![](./readme/localhostMobile.png)
+
+### Live Demo Desktop
+
+![](./readme/liveDemoDesktop.png)
+
+### Live Demo Mobile
+
+![](./readme/liveDemoMobile.png)
