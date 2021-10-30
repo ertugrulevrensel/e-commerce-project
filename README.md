@@ -46,16 +46,16 @@ npm run test
 
 ### Localhost Desktop
 
-![](./readme/localhostDesktop.png)
+![](./readme/localhostDesktop.PNG)
 
 ### Localhost Mobile
 
-![](./readme/localhostMobile.png)
+![](./readme/localhostMobile.PNG)
 
 ### Live Demo Desktop
 
-![](./readme/liveDemoDesktop.png)
+![](./readme/liveDemoDesktop.PNG)
 
 ### Live Demo Mobile
 
-![](./readme/liveDemoMobile.png)
+![](./readme/liveDemoMobile.PNG)
