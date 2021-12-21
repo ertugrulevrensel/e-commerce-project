@@ -1,4 +1,4 @@
-# Çiçeksepeti React Bootcamp Graduation Project
+# E-Commerce Project
 
 This project made within the Çiçeksepeti react bootcamp.
 
