@@ -1,5 +1,7 @@
 # E-Commerce Project
 
+** Projede kullanılan api ler artık mevcut olmadığından live site kullanım dışıdır.
+
 This project made within the Çiçeksepeti react bootcamp.
 
 LIVE: https://evrensel-ecommerce-project.netlify.app/
